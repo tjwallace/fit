@@ -10,13 +10,13 @@ module Fit
         end
         bit8 :field_count
         array :fields, :initial_length => :field_count do
+          hide :reserved_bits
+
           int8 :field_definition_number
           int8 :field_size
-          struct :base_type do
-            bit1 :endian_ability
-            bit2 :reserved_bits
-            bit5 :base_type_number
-          end
+          bit1 :endian_ability
+          bit2 :reserved_bits
+          bit5 :base_type_number
         end
       end
     end

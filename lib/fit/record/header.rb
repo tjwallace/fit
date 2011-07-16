@@ -1,6 +1,8 @@
 module Fit
   class Record
     class Header < BinData::Record
+      hide :reserved_bits
+
       bit1 :header_type
 
       bit1 :message_type, :onlyif => :normal?

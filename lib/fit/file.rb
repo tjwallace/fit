@@ -7,11 +7,15 @@ module Fit
       end
     end
 
-    attr_reader :header
+    attr_reader :header, :records
+
+    def initialize
+      @records = []
+    end
 
     def read(io)
       @header = Header.read(io)
-      @record = Record.read(io)
+      @records << Record.read(io)
       self
     end
 

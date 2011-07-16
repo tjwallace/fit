@@ -7,7 +7,7 @@ module Fit
       end
     end
 
-    attr_reader :header
+    attr_reader :header, :content
 
     def read(io)
       @header = Header.read(io)

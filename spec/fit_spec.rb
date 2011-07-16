@@ -1,7 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Fit" do
-  it "fails" do
-    fail "hey buddy, you should probably rename this file and start specing for real"
+describe Fit do
+  describe "VERSION" do
+    subject{ Fit::VERSION }
+
+    it { should be_a(String) }
+    it { should match(/\d{1,2}\.\d{1,2}\.\d{1,2}/) }
   end
 end
