@@ -15,7 +15,7 @@ module Fit
 
     def read(io)
       @header = Header.read(io)
-      @records << Record.read(io)
+      18.times{ @records << Record.read(io) }
       self
     end
 

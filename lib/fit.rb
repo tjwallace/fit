@@ -6,13 +6,14 @@ module Fit
   class File
     autoload :Header, 'fit/file/header'
   end
+  autoload :Field, 'fit/field'
 
   autoload :Record, 'fit/record'
   class Record
     autoload :Header, 'fit/record/header'
     module Message
       autoload :Definition, 'fit/record/message/definition'
-      autoload :Data, 'lib/record/message/data'
+      autoload :Data,       'fit/record/message/data'
     end
   end
 
