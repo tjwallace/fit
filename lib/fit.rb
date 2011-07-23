@@ -1,22 +1,24 @@
 require 'bindata'
+require 'active_support/core_ext/class'
+
+require 'fit/file'
+require 'fit/file/header'
+require 'fit/message_data'
+require 'fit/field'
+
+require 'fit/record'
+require 'fit/record/header'
+require 'fit/record/message/definition'
+require 'fit/record/message/data'
+
+require 'fit/version'
 
 module Fit
 
-  autoload :File, 'fit/file'
-  class File
-    autoload :Header, 'fit/file/header'
-  end
-  autoload :Field, 'fit/field'
-
-  autoload :Record, 'fit/record'
-  class Record
-    autoload :Header, 'fit/record/header'
-    module Message
-      autoload :Definition, 'fit/record/message/definition'
-      autoload :Data,       'fit/record/message/data'
+  class << self
+    def load_file(path)
+      File.read ::File.open(path)
     end
   end
 
 end
-
-require 'fit/version'

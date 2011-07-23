@@ -1,9 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe Fit::File::Header do
   context "given a sample FIT header" do
     subject do
-      described_class.read support_file('samples/file/header')
+      described_class.read example_file('file/header')
     end
 
     its(:header_size) { should == 12 }

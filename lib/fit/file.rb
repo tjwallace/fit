@@ -7,7 +7,7 @@ module Fit
       end
     end
 
-    attr_reader :header, :records
+    attr_reader :header, :records, :crc
 
     def initialize
       @records = []
@@ -15,7 +15,10 @@ module Fit
 
     def read(io)
       @header = Header.read(io)
-      18.times{ @records << Record.read(io) }
+      while io.pos < @header.end_pos
+        @records << Record.read(io)
+      end
+      @crc = io.read(2)
       self
     end
 

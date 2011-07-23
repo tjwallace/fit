@@ -12,15 +12,25 @@ module Fit
         attr_reader :values
 
         def initialize
-          @values = {}
+          @values = []
         end
 
         def read(io, definition)
+          raise "nil definition given!" if definition.nil?
+
           definition.fields.each do |field|
-            @values[field.field_definition_number] = field.data_class.read(io).snapshot
-          end if definition
+            @values << Field.new(field.data_class.read(io).snapshot,
+                                 MessageData.get_field(
+                                   field.global_message_number.snapshot,
+                                   field.field_definition_number.snapshot
+                                 ))
+          end
 
           self
+        end
+
+        def inspect
+          @values.inspect
         end
 
       end

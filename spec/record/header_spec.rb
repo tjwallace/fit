@@ -1,9 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe Fit::Record::Header do
   context "given a sample normal header" do
     subject do
-      described_class.read support_file('samples/record/normal_header')
+      described_class.read example_file('record/normal_header')
     end
 
     its(:header_type) { should == 0 }

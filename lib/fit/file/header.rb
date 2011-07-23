@@ -8,6 +8,10 @@ module Fit
       uint16 :profile_version
       uint32 :data_size
       string :data_type, :read_length => 4
+
+      def end_pos
+        header_size + data_size - 2
+      end
     end
   end
 end
