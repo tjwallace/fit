@@ -9,4 +9,7 @@ describe Fit::Record do
     its(:header) { should be_a(Fit::Record::Header) }
     its(:content) { should be_a(Fit::Record::Message::Definition) }
   end
+
+  context "given a sample data record" do
+  end
 end

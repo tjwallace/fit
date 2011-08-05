@@ -12,56 +12,61 @@ module Fit
           bit2 :reserved_bits
           bit5 :base_type_number
 
-          def global_message_number
-            parent.parent.global_message_number
+          def data
+            @data ||= MessageData.get_field(parent.parent.global_message_number.snapshot, field_definition_number.snapshot) || { :name => "field_#{field_definition_number.snapshot}", :scale => nil, :offset => 0 }
           end
 
-          def data_class
+          def name
+            data[:name]
+          end
+
+          def raw_name
+            "#{name}_raw"
+          end
+
+          def scale
+            data[:scale]
+          end
+
+          def type
             case base_type_number.snapshot
-            when 0
-              # FIXME enum
-              build_int_class 8, false
+            when 0 # enum
+              build_int_type 8, false
             when 1
-              build_int_class 8, true
+              build_int_type 8, true
             when 2
-              build_int_class 8, false
+              build_int_type 8, false
             when 3
-              build_int_class 16, true
+              build_int_type 16, true
             when 4
-              build_int_class 16, false
+              build_int_type 16, false
             when 5
-              build_int_class 32, true
+              build_int_type 32, true
             when 6
-              build_int_class 32, false
+              build_int_type 32, false
             when 7
-              BinData::Stringz
+              "stringz"
             when 8
-              BinData.const_get('Float' << endian_suffix.capitalize)
+              "float"
             when 9
-              BinData.const_get('Double' << endian_suffix.capitalize)
+              "double"
             when 10 # uint8z
-              build_int_class 8, false
+              build_int_type 8, false
             when 11 # uint16z
-              build_int_class 16, false
+              build_int_type 16, false
             when 12 # uint32z
-              build_int_class 32, false
-            when 13
-              # FIXME array of bytes - anonymous class?
-              build_int_class 8, false
+              build_int_type 32, false
+            when 13 # array of bytes
+              build_int_type 8, false
             else
-              raise "Can't map base_type_number #{base_type_number} to a data_class"
+              raise "Can't map base_type_number #{base_type_number} to a data type"
             end
           end
 
           private
 
-          def build_int_class(length, signed)
-            class_name = (signed ? '' : 'u') << 'int' << length.to_s << endian_suffix
-            BinData.const_get class_name.capitalize
-          end
-
-          def endian_suffix
-            parent.parent.architecture == 0 ? 'le' : 'be'
+          def build_int_type(length, signed)
+            (signed ? '' : 'u') << 'int' << length.to_s
           end
         end
 
@@ -77,3 +82,4 @@ module Fit
     end
   end
 end
+

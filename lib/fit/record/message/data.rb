@@ -1,36 +1,33 @@
 module Fit
   class Record
     module Message
-      class Data
+      class Data < BinData::Record
+
+        class_attribute :global_message_number, :instance_writer => false
 
         class << self
-          def read(io, definition)
-            self.new.read(io, definition)
-          end
-        end
+          def generate(definition)
+            Class.new(self) do
+              self.global_message_number = definition.global_message_number.snapshot
+              endian definition.architecture == 0 ? :big : :little
 
-        attr_reader :values
-
-        def initialize
-          @values = []
-        end
-
-        def read(io, definition)
-          raise "nil definition given!" if definition.nil?
-
-          definition.fields.each do |field|
-            @values << Field.new(field.data_class.read(io).snapshot,
-                                 MessageData.get_field(
-                                   field.global_message_number.snapshot,
-                                   field.field_definition_number.snapshot
-                                 ))
+              definition.fields.each do |field|
+                add_field field
+              end
+            end
           end
 
-          self
-        end
+          private
 
-        def inspect
-          @values.inspect
+          def add_field(field)
+            class_eval <<-EOV
+              #{field.type} :#{field.raw_name}
+
+              def #{field.name}
+                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}" if field.scale }
+              end
+            EOV
+          end
         end
 
       end
