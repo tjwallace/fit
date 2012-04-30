@@ -110,6 +110,7 @@ Fit::MessageData.add_name 5, "sdm_profile"
 Fit::MessageData.add_field 5, 254, "message_index", :type => 4, :scale => 1, :offset => 0
 Fit::MessageData.add_field 5, 0, "enabled", :type => 0, :scale => 1, :offset => 0
 Fit::MessageData.add_field 5, 1, "sdm_ant_id", :type => 11, :scale => 1, :offset => 0
+Fit::MessageData.add_field 5, 2, "sdm_cal_factor", :type => 4, :scale => 10, :offset => 0, :units => "%"
 Fit::MessageData.add_field 5, 3, "odometer", :type => 6, :scale => 100, :offset => 0, :units => "m"
 Fit::MessageData.add_field 5, 4, "speed_source", :type => 0, :scale => 1, :offset => 0
 
@@ -126,6 +127,7 @@ Fit::MessageData.add_field 6, 7, "bike_power_ant_id", :type => 11, :scale => 1, 
 Fit::MessageData.add_field 6, 8, "custom_wheelsize", :type => 4, :scale => 1000, :offset => 0, :units => "m"
 Fit::MessageData.add_field 6, 9, "auto_wheelsize", :type => 4, :scale => 1000, :offset => 0, :units => "m"
 Fit::MessageData.add_field 6, 10, "bike_weight", :type => 4, :scale => 10, :offset => 0, :units => "kg"
+Fit::MessageData.add_field 6, 11, "power_cal_factor", :type => 4, :scale => 10, :offset => 0, :units => "%"
 Fit::MessageData.add_field 6, 12, "auto_wheel_cal", :type => 0, :scale => 1, :offset => 0
 Fit::MessageData.add_field 6, 13, "auto_power_zero", :type => 0, :scale => 1, :offset => 0
 Fit::MessageData.add_field 6, 14, "id", :type => 2, :scale => 1, :offset => 0
@@ -159,6 +161,8 @@ Fit::MessageData.add_field 9, 2, "name", :type => 7, :scale => 1, :offset => 0
 Fit::MessageData.add_name 10, "met_zone"
 Fit::MessageData.add_field 10, 254, "message_index", :type => 4, :scale => 1, :offset => 0
 Fit::MessageData.add_field 10, 1, "high_bpm", :type => 2, :scale => 1, :offset => 0
+Fit::MessageData.add_field 10, 2, "calories", :type => 4, :scale => 10, :offset => 0, :units => "kcal / min"
+Fit::MessageData.add_field 10, 3, "fat_calories", :type => 2, :scale => 10, :offset => 0, :units => "kcal / min"
 
 Fit::MessageData.add_name 15, "goal"
 Fit::MessageData.add_field 15, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -201,10 +205,14 @@ Fit::MessageData.add_field 18, 10, "total_cycles", :type => 6, :scale => 1, :off
 Fit::MessageData.add_field 18, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides"
 Fit::MessageData.add_field 18, 11, "total_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::MessageData.add_field 18, 13, "total_fat_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
+Fit::MessageData.add_field 18, 14, "avg_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::MessageData.add_field 18, 15, "max_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
 Fit::MessageData.add_field 18, 16, "avg_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 18, 17, "max_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 18, 18, "avg_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 18, 18, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
 Fit::MessageData.add_field 18, 19, "max_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 18, 19, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
 Fit::MessageData.add_field 18, 20, "avg_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::MessageData.add_field 18, 21, "max_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::MessageData.add_field 18, 22, "total_ascent", :type => 4, :scale => 1, :offset => 0, :units => "m"
@@ -236,10 +244,14 @@ Fit::MessageData.add_field 19, 10, "total_cycles", :type => 6, :scale => 1, :off
 Fit::MessageData.add_field 19, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides"
 Fit::MessageData.add_field 19, 11, "total_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::MessageData.add_field 19, 12, "total_fat_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
+Fit::MessageData.add_field 19, 13, "avg_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::MessageData.add_field 19, 14, "max_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
 Fit::MessageData.add_field 19, 15, "avg_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 19, 16, "max_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 19, 17, "avg_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 19, 17, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
 Fit::MessageData.add_field 19, 18, "max_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 19, 18, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
 Fit::MessageData.add_field 19, 19, "avg_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::MessageData.add_field 19, 20, "max_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::MessageData.add_field 19, 21, "total_ascent", :type => 4, :scale => 1, :offset => 0, :units => "m"
@@ -257,8 +269,10 @@ Fit::MessageData.add_field 20, 2, "altitude", :type => 4, :scale => 5, :offset =
 Fit::MessageData.add_field 20, 3, "heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 20, 4, "cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
 Fit::MessageData.add_field 20, 5, "distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
+Fit::MessageData.add_field 20, 6, "speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
 Fit::MessageData.add_field 20, 7, "power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::MessageData.add_field 20, 8, "compressed_speed_distance", :type => 13, :scale => 1, :offset => 0
+Fit::MessageData.add_field 20, 9, "grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
 Fit::MessageData.add_field 20, 10, "resistance", :type => 2, :scale => 1, :offset => 0
 Fit::MessageData.add_field 20, 11, "time_from_course", :type => 5, :scale => 1000, :offset => 0, :units => "s"
 Fit::MessageData.add_field 20, 12, "cycle_length", :type => 2, :scale => 100, :offset => 0, :units => "m"
@@ -273,8 +287,11 @@ Fit::MessageData.add_field 21, 3, "data", :type => 6, :scale => 1, :offset => 0
 Fit::MessageData.add_field 21, 3, "timer_trigger", :type => 6, :scale => 1, :offset => 0
 Fit::MessageData.add_field 21, 3, "course_point_index", :type => 6, :scale => 1, :offset => 0
 Fit::MessageData.add_field 21, 3, "battery_level", :type => 6, :scale => 1000, :offset => 0, :units => "V"
+Fit::MessageData.add_field 21, 3, "virtual_partner_speed", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
 Fit::MessageData.add_field 21, 3, "hr_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm"
 Fit::MessageData.add_field 21, 3, "hr_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm"
+Fit::MessageData.add_field 21, 3, "speed_high_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::MessageData.add_field 21, 3, "speed_low_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
 Fit::MessageData.add_field 21, 3, "cad_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
 Fit::MessageData.add_field 21, 3, "cad_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
 Fit::MessageData.add_field 21, 3, "power_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "watts"
@@ -325,8 +342,10 @@ Fit::MessageData.add_field 27, 1, "duration_type", :type => 0, :scale => 1, :off
 Fit::MessageData.add_field 27, 2, "duration_value", :type => 6, :scale => 1, :offset => 0
 Fit::MessageData.add_field 27, 2, "duration_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
 Fit::MessageData.add_field 27, 2, "duration_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
+Fit::MessageData.add_field 27, 2, "duration_hr", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
 Fit::MessageData.add_field 27, 2, "duration_calories", :type => 6, :scale => 1, :offset => 0, :units => "calories"
 Fit::MessageData.add_field 27, 2, "duration_step", :type => 6, :scale => 1, :offset => 0
+Fit::MessageData.add_field 27, 2, "duration_power", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
 Fit::MessageData.add_field 27, 3, "target_type", :type => 0, :scale => 1, :offset => 0
 Fit::MessageData.add_field 27, 4, "target_value", :type => 6, :scale => 1, :offset => 0
 Fit::MessageData.add_field 27, 4, "target_hr_zone", :type => 6, :scale => 1, :offset => 0
@@ -335,10 +354,18 @@ Fit::MessageData.add_field 27, 4, "repeat_steps", :type => 6, :scale => 1, :offs
 Fit::MessageData.add_field 27, 4, "repeat_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
 Fit::MessageData.add_field 27, 4, "repeat_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
 Fit::MessageData.add_field 27, 4, "repeat_calories", :type => 6, :scale => 1, :offset => 0, :units => "calories"
+Fit::MessageData.add_field 27, 4, "repeat_hr", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
+Fit::MessageData.add_field 27, 4, "repeat_power", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
 Fit::MessageData.add_field 27, 5, "custom_target_value_low", :type => 6, :scale => 1, :offset => 0
+Fit::MessageData.add_field 27, 5, "custom_target_speed_low", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::MessageData.add_field 27, 5, "custom_target_heart_rate_low", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
 Fit::MessageData.add_field 27, 5, "custom_target_cadence_low", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 27, 5, "custom_target_power_low", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
 Fit::MessageData.add_field 27, 6, "custom_target_value_high", :type => 6, :scale => 1, :offset => 0
+Fit::MessageData.add_field 27, 6, "custom_target_speed_high", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::MessageData.add_field 27, 6, "custom_target_heart_rate_high", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
 Fit::MessageData.add_field 27, 6, "custom_target_cadence_high", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
+Fit::MessageData.add_field 27, 6, "custom_target_power_high", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
 Fit::MessageData.add_field 27, 7, "intensity", :type => 0, :scale => 1, :offset => 0
 
 Fit::MessageData.add_name 33, "totals"
@@ -353,10 +380,14 @@ Fit::MessageData.add_field 33, 4, "elapsed_time", :type => 6, :scale => 1, :offs
 Fit::MessageData.add_name 30, "weight_scale"
 Fit::MessageData.add_field 30, 253, "timestamp", :type => 6, :scale => 1, :offset => 0, :units => "s"
 Fit::MessageData.add_field 30, 0, "weight", :type => 4, :scale => 100, :offset => 0, :units => "kg"
+Fit::MessageData.add_field 30, 1, "percent_fat", :type => 4, :scale => 100, :offset => 0, :units => "%"
+Fit::MessageData.add_field 30, 2, "percent_hydration", :type => 4, :scale => 100, :offset => 0, :units => "%"
 Fit::MessageData.add_field 30, 3, "visceral_fat_mass", :type => 4, :scale => 100, :offset => 0, :units => "kg"
 Fit::MessageData.add_field 30, 4, "bone_mass", :type => 4, :scale => 100, :offset => 0, :units => "kg"
 Fit::MessageData.add_field 30, 5, "muscle_mass", :type => 4, :scale => 100, :offset => 0, :units => "kg"
+Fit::MessageData.add_field 30, 7, "basal_met", :type => 4, :scale => 4, :offset => 0, :units => "kcal/day"
 Fit::MessageData.add_field 30, 8, "physique_rating", :type => 2, :scale => 1, :offset => 0
+Fit::MessageData.add_field 30, 9, "active_met", :type => 4, :scale => 4, :offset => 0, :units => "kcal/day"
 Fit::MessageData.add_field 30, 10, "metabolic_age", :type => 2, :scale => 1, :offset => 0, :units => "years"
 Fit::MessageData.add_field 30, 11, "visceral_fat_rating", :type => 2, :scale => 1, :offset => 0
 Fit::MessageData.add_field 30, 12, "user_profile_index", :type => 4, :scale => 1, :offset => 0
