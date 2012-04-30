@@ -22,7 +22,7 @@ module Fit
         end
 
         def raw_name
-          "#{name}_raw"
+          "raw_#{name}"
         end
 
         def scale
