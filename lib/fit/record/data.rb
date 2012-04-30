@@ -15,7 +15,7 @@ module Fit
               #{field.type} :#{field.raw_name}
 
               def #{field.name}
-                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}" if field.scale }
+                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if field.scale }
               end
             RUBY
           end
