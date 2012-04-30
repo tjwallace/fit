@@ -22,7 +22,7 @@ module Fit
         end
 
         class_name = Fit::MessageData.get_name(definition.global_message_number.snapshot) ||
-          "Data#{definition.global_message_number.snapshot}"
+          "DataRecord#{definition.global_message_number.snapshot}"
 
         self.const_set(class_name.classify, klass)
       end
