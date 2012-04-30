@@ -11,8 +11,8 @@ require 'fit/field'
 
 require 'fit/record'
 require 'fit/record/header'
-require 'fit/record/message/definition'
-require 'fit/record/message/data'
+require 'fit/record/definition'
+require 'fit/record/data'
 
 require 'fit/version'
 

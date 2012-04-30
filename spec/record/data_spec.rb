@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Fit::Record::Message::Data do
+describe Fit::Record::Data do
   describe ".generate" do
     let(:definition) do
-      Fit::Record::Message::Definition.read example_file('record/message/definition')
+      Fit::Record::Definition.read example_file('record/message/definition')
     end
 
     subject { described_class.generate(definition) }

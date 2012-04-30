@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Fit::Record::Message::Definition do
+describe Fit::Record::Definition do
   context "given a sample definition message" do
     describe ".read" do
       subject do

@@ -16,8 +16,8 @@ module Fit
 
       @content = case @header.message_type.snapshot
       when 1
-        Message::Definition.read(io).tap do |definition|
-          @@definitions[@header.local_message_type.snapshot] = Message::Data.generate(definition)
+        Definition.read(io).tap do |definition|
+          @@definitions[@header.local_message_type.snapshot] = Data.generate(definition)
         end
       when 0
         definition = @@definitions[@header.local_message_type.snapshot]
