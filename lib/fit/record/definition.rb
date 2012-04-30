@@ -80,6 +80,10 @@ module Fit
       bit8 :field_count
       array :fields, :type => Field, :initial_length => :field_count
 
+      def endianness
+        architecture.snapshot == 0 ? :little : :big
+      end
+
     end
   end
 end

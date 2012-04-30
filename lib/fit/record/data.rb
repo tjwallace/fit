@@ -8,7 +8,7 @@ module Fit
         klass = Class.new(self) do
           self.global_message_number = definition.global_message_number.snapshot
 
-          endian definition.architecture == 0 ? :big : :little
+          endian definition.endianness
 
           definition.fields.each do |field|
             class_eval <<-RUBY
