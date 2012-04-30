@@ -5,29 +5,27 @@ module Fit
 
         class_attribute :global_message_number, :instance_writer => false
 
-        class << self
-          def generate(definition)
-            Class.new(self) do
-              self.global_message_number = definition.global_message_number.snapshot
-              endian definition.architecture == 0 ? :big : :little
+        def self.generate(definition)
+          klass = Class.new(self) do
+            self.global_message_number = definition.global_message_number.snapshot
 
-              definition.fields.each do |field|
-                add_field field
-              end
+            endian definition.architecture == 0 ? :big : :little
+
+            definition.fields.each do |field|
+              class_eval <<-RUBY
+                #{field.type} :#{field.raw_name}
+
+                def #{field.name}
+                  #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}" if field.scale }
+                end
+              RUBY
             end
           end
 
-          private
+          class_name = Fit::MessageData.get_name(definition.global_message_number.snapshot) ||
+            "Data#{definition.global_message_number.snapshot}"
 
-          def add_field(field)
-            class_eval <<-EOV
-              #{field.type} :#{field.raw_name}
-
-              def #{field.name}
-                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}" if field.scale }
-              end
-            EOV
-          end
+          self.const_set(class_name.classify, klass)
         end
 
       end
