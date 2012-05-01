@@ -4,7 +4,6 @@ require 'active_support/core_ext/class'
 require 'fit/file'
 require 'fit/file/header'
 require 'fit/message_data'
-require 'fit/field'
 
 require 'fit/record'
 require 'fit/record/header'
