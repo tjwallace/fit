@@ -11,7 +11,7 @@ module Fit
           endian definition.endianness
 
           definition.fields.each do |field|
-            class_eval <<-RUBY
+            class_eval <<-RUBY, __FILE__, __LINE__ + 1
               #{field.type} :#{field.raw_name}
 
               def #{field.name}
