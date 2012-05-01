@@ -15,10 +15,8 @@ require 'fit/version'
 
 module Fit
 
-  class << self
-    def load_file(path)
-      File.read ::File.open(path)
-    end
+  def self.load_file(path)
+    File.read ::File.open(path)
   end
 
 end

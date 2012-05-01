@@ -1,10 +1,8 @@
 module Fit
   class File
 
-    class << self
-      def read(io)
-        self.new.read(io)
-      end
+    def self.read(io)
+      new.read(io)
     end
 
     attr_reader :header, :records, :crc
