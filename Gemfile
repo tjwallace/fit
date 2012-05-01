@@ -2,7 +2,6 @@ source "http://rubygems.org"
 
 gem "bindata"
 gem "activesupport"
-gem "logging"
 
 group :development do
   gem "rspec"
