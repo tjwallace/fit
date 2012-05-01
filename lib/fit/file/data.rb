@@ -1,11 +1,11 @@
 module Fit
-  class Record
+  class File
     class Data < BinData::Record
 
       class_attribute :global_message_number, :instance_writer => false
 
       def self.generate(definition)
-        type = Fit::MessageData.get_name(definition.global_message_number.snapshot) ||
+        type = Definitions.get_name(definition.global_message_number.snapshot) ||
           "data_record_#{definition.global_message_number.snapshot}"
 
         Class.new(self) do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Fit::MessageData do
+describe Fit::File::Definitions do
   describe ".add_field" do
     context "without additional options" do
       it "adds field data" do

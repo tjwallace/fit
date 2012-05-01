@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Fit::Record do
+describe Fit::File::Record do
   before { described_class.clear_definitions! }
 
   describe ".read" do
@@ -9,8 +9,8 @@ describe Fit::Record do
     context "given a sample definition record" do
       let(:file) { example_file('record/definition_record') }
 
-      its(:header) { should be_a(Fit::Record::Header) }
-      its(:content) { should be_a(Fit::Record::Definition) }
+      its(:header) { should be_a(Fit::File::RecordHeader) }
+      its(:content) { should be_a(Fit::File::Definition) }
     end
 
     context "given a sample data record" do

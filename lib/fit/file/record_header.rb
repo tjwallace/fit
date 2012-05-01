@@ -1,6 +1,6 @@
 module Fit
-  class Record
-    class Header < BinData::Record
+  class File
+    class RecordHeader < BinData::Record
       hide :reserved_bits
 
       bit1 :header_type

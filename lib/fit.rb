@@ -3,12 +3,11 @@ require 'active_support/core_ext/class'
 
 require 'fit/file'
 require 'fit/file/header'
-require 'fit/message_data'
-
-require 'fit/record'
-require 'fit/record/header'
-require 'fit/record/definition'
-require 'fit/record/data'
+require 'fit/file/record'
+require 'fit/file/record_header'
+require 'fit/file/definition'
+require 'fit/file/data'
+require 'fit/file/definitions'
 
 require 'fit/version'
 

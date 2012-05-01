@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Fit::Record::Header do
+describe Fit::File::RecordHeader do
   context "given a sample normal header" do
     subject do
       described_class.read example_file('record/normal_header')

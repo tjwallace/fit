@@ -1,5 +1,5 @@
 module Fit
-  class Record
+  class File
     class Definition < BinData::Record
 
       class Field < BinData::Record
@@ -12,7 +12,7 @@ module Fit
         bit5 :base_type_number
 
         def data
-          @data ||= MessageData.get_field(parent.parent.global_message_number.snapshot,
+          @data ||= Definitions.get_field(parent.parent.global_message_number.snapshot,
                                           field_definition_number.snapshot) ||
                       { :name => "field_#{field_definition_number.snapshot}", :scale => nil }
         end
