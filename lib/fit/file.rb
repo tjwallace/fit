@@ -13,10 +13,13 @@ module Fit
 
     def read(io)
       @header = Header.read(io)
+
       while io.pos < @header.end_pos
         @records << Record.read(io)
       end
+
       @crc = io.read(2)
+
       self
     end
 
