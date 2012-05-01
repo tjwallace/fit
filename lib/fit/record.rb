@@ -2,9 +2,14 @@ module Fit
   class Record
 
     @@definitions = {}
+    cattr_reader :definitions, instance_reader: false
 
     def self.read(io)
       new.read(io)
+    end
+
+    def self.clear_definitions!
+      @@definitions.clear
     end
 
     attr_reader :header, :content

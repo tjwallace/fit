@@ -14,6 +14,8 @@ module Fit
     def read(io)
       @header = Header.read(io)
 
+      Record.clear_definitions!
+
       while io.pos < @header.end_pos
         @records << Record.read(io)
       end
