@@ -11,6 +11,8 @@ describe Fit::Record::Definition do
       its(:global_message_number) { should == 0 }
       its(:field_count) { should == 6 }
       it { should have(subject.field_count).fields }
+
+      its(:record_type) { should == :definition }
     end
   end
 end

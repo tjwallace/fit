@@ -84,6 +84,10 @@ module Fit
         architecture.snapshot == 0 ? :little : :big
       end
 
+      def record_type
+        :definition
+      end
+
     end
   end
 end

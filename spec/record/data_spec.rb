@@ -9,11 +9,6 @@ describe Fit::Record::Data do
     subject { described_class.generate(definition) }
 
     its(:ancestors) { should include(BinData::Record) }
-  end
-
-  describe ".read" do
-    subject do
-      described_class.read example_file('record/message/definition')
-    end
+    its("new.record_type") { should eq(:file_id) }
   end
 end

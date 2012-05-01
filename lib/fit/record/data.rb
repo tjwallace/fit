@@ -5,10 +5,19 @@ module Fit
       class_attribute :global_message_number, :instance_writer => false
 
       def self.generate(definition)
-        klass = Class.new(self) do
+        type = Fit::MessageData.get_name(definition.global_message_number.snapshot) ||
+          "data_record_#{definition.global_message_number.snapshot}"
+
+        Class.new(self) do
           self.global_message_number = definition.global_message_number.snapshot
 
           endian definition.endianness
+
+          class_eval <<-RUBY, __FILE__, __LINE__ + 1
+            def record_type
+              :#{type}
+            end
+          RUBY
 
           definition.fields.each do |field|
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
@@ -20,11 +29,6 @@ module Fit
             RUBY
           end
         end
-
-        class_name = Fit::MessageData.get_name(definition.global_message_number.snapshot) ||
-          "DataRecord#{definition.global_message_number.snapshot}"
-
-        self.const_set(class_name.classify, klass)
       end
 
     end
