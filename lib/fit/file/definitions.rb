@@ -381,7 +381,7 @@ Fit::File::Definitions.add_field 19, 94, "avg_right_pedal_smoothness", :type => 
 Fit::File::Definitions.add_field 19, 95, "avg_combined_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
 
 Fit::File::Definitions.add_name 101, "length"
-Fit::File::Definitions.add_field 101, 254, "4", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 254, "message_index", :type => 4, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 101, 253, "timestamp", :type => 6, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 101, 0, "event", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 101, 1, "event_type", :type => 0, :scale => 1, :offset => 0
