@@ -24,6 +24,9 @@ module Fit
               # string are not null terminated when they have the field length
               #{field.type} :#{field.raw_name} #{ ", :read_length => #{field.size}, :trim_padding => true" if field.type == "string" }
 
+              # some cases found where a field has several time the normal size (multiple elements ?)
+              #{ if(field.type != "string" and field.size > field.length) then n=field.size/field.length; (2..n).inject("") { |acc, i| acc + "\n#{field.type} :#{field.raw_name}__#{i.to_s}" } end }
+
               def #{field.name}
                 #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if field.scale }
               end
