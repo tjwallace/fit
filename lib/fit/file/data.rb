@@ -21,7 +21,8 @@ module Fit
 
           definition.fields.each do |field|
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
-              #{field.type} :#{field.raw_name}
+              # string are not null terminated when they have the field length
+              #{field.type} :#{field.raw_name} #{ ", :read_length => #{field.size}, :trim_padding => true" if field.type == "string" }
 
               def #{field.name}
                 #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if field.scale }
