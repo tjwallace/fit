@@ -28,7 +28,7 @@ module Fit
               #{ if(field.type != "string" and field.size > field.length) then n=field.size/field.length; (2..n).inject("") { |acc, i| acc + "\n#{field.type} :#{field.raw_name}__#{i.to_s}" } end }
 
               def #{field.name}
-                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if field.scale }
+                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if (field.scale && field.scale != 1)}
               end
             RUBY
           end
