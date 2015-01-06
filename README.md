@@ -9,7 +9,7 @@ require 'fit'
 
 fit_file = Fit.load_file(ARGV[0])
 
-records = fit_file.records.select{ |r| r.content.record_type == :record }.map{ |r| r.content }
+records = fit_file.records.select{ |r| r.content.record_type != :definition }.map{ |r| r.content }
 ```
 
 ## Contributing to fit
