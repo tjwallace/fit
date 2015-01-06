@@ -50,6 +50,7 @@ Fit::File::Definitions.add_name 1, "capabilities"
 Fit::File::Definitions.add_field 1, 0, "languages", :type => 10, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 1, 1, "sports", :type => 10, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 1, 21, "workouts_supported", :type => 12, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 1, 23, "connectivity_supported", :type => 12, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 37, "file_capabilities"
 Fit::File::Definitions.add_field 37, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -77,7 +78,9 @@ Fit::File::Definitions.add_field 39, 2, "field_num", :type => 2, :scale => 1, :o
 Fit::File::Definitions.add_field 39, 3, "count", :type => 4, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 2, "device_settings"
+Fit::File::Definitions.add_field 2, 0, "active_time_zone", :type => 2, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 2, 1, "utc_offset", :type => 6, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 2, 5, "time_zone_offset", :type => 1, :scale => 4, :offset => 0, :units => "hr"
 
 Fit::File::Definitions.add_name 3, "user_profile"
 Fit::File::Definitions.add_field 3, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -102,6 +105,7 @@ Fit::File::Definitions.add_field 3, 18, "position_setting", :type => 0, :scale =
 Fit::File::Definitions.add_field 3, 21, "temperature_setting", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 3, 22, "local_id", :type => 4, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 3, 23, "global_id", :type => 13, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 3, 30, "height_setting", :type => 0, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 4, "hrm_profile"
 Fit::File::Definitions.add_field 4, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -115,6 +119,8 @@ Fit::File::Definitions.add_field 5, 1, "sdm_ant_id", :type => 11, :scale => 1, :
 Fit::File::Definitions.add_field 5, 2, "sdm_cal_factor", :type => 4, :scale => 10, :offset => 0, :units => "%"
 Fit::File::Definitions.add_field 5, 3, "odometer", :type => 6, :scale => 100, :offset => 0, :units => "m"
 Fit::File::Definitions.add_field 5, 4, "speed_source", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 5, 5, "sdm_ant_id_trans_type", :type => 10, :scale => 1, :offset => 1
+Fit::File::Definitions.add_field 5, 7, "odometer_rollover", :type => 2, :scale => 1, :offset => 1
 
 Fit::File::Definitions.add_name 6, "bike_profile"
 Fit::File::Definitions.add_field 6, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -228,6 +234,64 @@ Fit::File::Definitions.add_field 18, 29, "nec_lat", :type => 5, :scale => 1, :of
 Fit::File::Definitions.add_field 18, 30, "nec_long", :type => 5, :scale => 1, :offset => 0, :units => "semicircles"
 Fit::File::Definitions.add_field 18, 31, "swc_lat", :type => 5, :scale => 1, :offset => 0, :units => "semicircles"
 Fit::File::Definitions.add_field 18, 32, "swc_long", :type => 5, :scale => 1, :offset => 0, :units => "semicircles"
+Fit::File::Definitions.add_field 18, 34, "normalized_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
+Fit::File::Definitions.add_field 18, 35, "training_stress_score", :type => 4, :scale => 10, :offset => 0, :units => "tss"
+Fit::File::Definitions.add_field 18, 36, "intensity_factor", :type => 4, :scale => 1000, :offset => 0, :units => "if"
+Fit::File::Definitions.add_field 18, 37, "left_right_balance", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 41, "avg_stroke_count", :type => 6, :scale => 10, :offset => 0, :units => "strokes/lap"
+Fit::File::Definitions.add_field 18, 42, "avg_stroke_distance", :type => 4, :scale => 100, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 18, 43, "swim_stroke", :type => 0, :scale => 1, :offset => 0, :units => "swim_stroke"
+Fit::File::Definitions.add_field 18, 44, "pool_length", :type => 4, :scale => 100, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 18, 46, "pool_length_unit", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 47, "num_active_lengths", :type => 4, :scale => 1, :offset => 0, :units => "lengths"
+Fit::File::Definitions.add_field 18, 48, "total_work", :type => 6, :scale => 1, :offset => 0, :units => "J"
+Fit::File::Definitions.add_field 18, 49, "avg_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 18, 50, "max_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 18, 51, "gps_accuracy", :type => 2, :scale => 1, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 18, 52, "avg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 53, "avg_pos_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 54, "avg_neg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 55, "max_pos_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 56, "max_neg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 57, "avg_temperature", :type => 1, :scale => 1, :offset => 0, :units => "C"
+Fit::File::Definitions.add_field 18, 58, "max_temperature", :type => 1, :scale => 1, :offset => 0, :units => "C"
+Fit::File::Definitions.add_field 18, 59, "total_moving_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 60, "avg_pos_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 61, "avg_neg_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 62, "max_pos_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 63, "max_neg_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 64, "min_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
+Fit::File::Definitions.add_field 18, 65, "time_in_hr_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 66, "time_in_speed_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 67, "time_in_cadence_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 68, "time_in_power_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 69, "avg_lap_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 18, 70, "best_lap_index", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 71, "min_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 18, 82, "player_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 83, "opponent_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 84, "opponent_name", :type => 7, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 18, 85, "stroke_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
+Fit::File::Definitions.add_field 18, 86, "zone_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
+Fit::File::Definitions.add_field 18, 87, "max_ball_speed", :type => 4, :scale => 100, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 88, "avg_ball_speed", :type => 4, :scale => 100, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 18, 89, "avg_vertical_oscillation", :type => 4, :scale => 10, :offset => 0, :units => "mm"
+Fit::File::Definitions.add_field 18, 90, "avg_stance_time_percent", :type => 4, :scale => 100, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 18, 91, "avg_stance_time", :type => 4, :scale => 10, :offset => 0, :units => "ms"
+Fit::File::Definitions.add_field 18, 92, "avg_fractional_cadence", :type => 2, :scale => 128, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 18, 93, "max_fractional_cadence", :type => 2, :scale => 128, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 18, 94, "total_fractional_cycles", :type => 2, :scale => 128, :offset => 0, :units => "cycles"
+Fit::File::Definitions.add_field 18, 95, "avg_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 18, 96, "min_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 18, 97, "max_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 18, 98, "avg_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 99, "min_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 100, "max_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 18, 101, "avg_left_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 18, 102, "avg_right_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 18, 103, "avg_left_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 18, 104, "avg_right_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 18, 105, "avg_combined_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
 
 Fit::File::Definitions.add_name 19, "lap"
 Fit::File::Definitions.add_field 19, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -262,6 +326,79 @@ Fit::File::Definitions.add_field 19, 23, "intensity", :type => 0, :scale => 1, :
 Fit::File::Definitions.add_field 19, 24, "lap_trigger", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 19, 25, "sport", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 19, 26, "event_group", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 32, "num_lengths", :type => 4, :scale => 1, :offset => 0, :units => "lengths"
+Fit::File::Definitions.add_field 19, 33, "normalized_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
+Fit::File::Definitions.add_field 19, 34, "left_right_balance", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 35, "first_length_index", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 37, "avg_stroke_distance", :type => 4, :scale => 100, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 19, 38, "swim_stroke", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 39, "sub_sport", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 40, "num_active_lengths", :type => 4, :scale => 1, :offset => 0, :units => "lengths"
+Fit::File::Definitions.add_field 19, 41, "total_work", :type => 6, :scale => 1, :offset => 0, :units => "J"
+Fit::File::Definitions.add_field 19, 42, "avg_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 19, 43, "max_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 19, 44, "gps_accuracy", :type => 2, :scale => 1, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 19, 45, "avg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 46, "avg_pos_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 47, "avg_neg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 48, "max_pos_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 49, "max_neg_grade", :type => 3, :scale => 100, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 50, "avg_temperature", :type => 1, :scale => 1, :offset => 0, :units => "C"
+Fit::File::Definitions.add_field 19, 51, "max_temperature", :type => 1, :scale => 1, :offset => 0, :units => "C"
+Fit::File::Definitions.add_field 19, 52, "total_moving_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 19, 53, "avg_pos_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 19, 54, "avg_neg_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 19, 55, "max_pos_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 19, 56, "max_neg_vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 19, 57, "time_in_hr_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 19, 58, "time_in_speed_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 19, 59, "time_in_cadence_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 19, 60, "time_in_power_zone", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 19, 61, "repetition_num", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 62, "min_altitude", :type => 4, :scale => 5, :offset => 500, :units => "m"
+Fit::File::Definitions.add_field 19, 63, "min_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
+Fit::File::Definitions.add_field 19, 71, "wkt_step_index", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 74, "opponent_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 75, "stroke_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
+Fit::File::Definitions.add_field 19, 76, "zone_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
+Fit::File::Definitions.add_field 19, 77, "avg_vertical_oscillation", :type => 4, :scale => 10, :offset => 0, :units => "mm"
+Fit::File::Definitions.add_field 19, 78, "avg_stance_time_percent", :type => 4, :scale => 100, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 19, 79, "avg_stance_time", :type => 4, :scale => 10, :offset => 0, :units => "ms"
+Fit::File::Definitions.add_field 19, 80, "avg_fractional_cadence", :type => 2, :scale => 128, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 19, 81, "max_fractional_cadence", :type => 2, :scale => 128, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 19, 82, "total_fractional_cycles", :type => 2, :scale => 128, :offset => 0, :units => "cycles"
+Fit::File::Definitions.add_field 19, 83, "player_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 19, 84, "avg_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 19, 85, "min_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 19, 86, "max_total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 19, 87, "avg_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 88, "min_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 89, "max_saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 19, 91, "avg_left_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 19, 92, "avg_right_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 19, 93, "avg_left_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 19, 94, "avg_right_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 19, 95, "avg_combined_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+
+Fit::File::Definitions.add_name 101, "length"
+Fit::File::Definitions.add_field 101, 254, "message_index", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 253, "timestamp", :type => 6, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 0, "event", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 1, "event_type", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 2, "start_time", :type => 6, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 3, "total_elapsed_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 101, 4, "total_timer_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 101, 5, "total_strokes", :type => 4, :scale => 1, :offset => 0, :units => "strokes"
+Fit::File::Definitions.add_field 101, 6, "avg_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 101, 7, "swim_stroke", :type => 0, :scale => 1, :offset => 0, :units => "swim_stroke"
+Fit::File::Definitions.add_field 101, 9, "avg_swimming_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strokes/min"
+Fit::File::Definitions.add_field 101, 10, "event_group", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 11, "total_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
+Fit::File::Definitions.add_field 101, 12, "length_type", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 18, "player_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 19, "opponent_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 101, 20, "stroke_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
+Fit::File::Definitions.add_field 101, 21, "zone_count", :type => 4, :scale => 1, :offset => 0, :units => "counts"
 
 Fit::File::Definitions.add_name 20, "record"
 Fit::File::Definitions.add_field 20, 253, "timestamp", :type => 6, :scale => 1, :offset => 0, :units => "s"
@@ -279,6 +416,37 @@ Fit::File::Definitions.add_field 20, 10, "resistance", :type => 2, :scale => 1, 
 Fit::File::Definitions.add_field 20, 11, "time_from_course", :type => 5, :scale => 1000, :offset => 0, :units => "s"
 Fit::File::Definitions.add_field 20, 12, "cycle_length", :type => 2, :scale => 100, :offset => 0, :units => "m"
 Fit::File::Definitions.add_field 20, 13, "temperature", :type => 1, :scale => 1, :offset => 0, :units => "C"
+Fit::File::Definitions.add_field 20, 17, "speed_1s", :type => 2, :scale => 16, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 20, 18, "cycles", :type => 2, :scale => 1, :offset => 0, :units => "cycles"
+Fit::File::Definitions.add_field 20, 19, "total_cycles", :type => 6, :scale => 1, :offset => 0, :units => "cycles"
+Fit::File::Definitions.add_field 20, 28, "compressed_accumulated_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
+Fit::File::Definitions.add_field 20, 29, "accumulated_power", :type => 6, :scale => 1, :offset => 0, :units => "watts"
+Fit::File::Definitions.add_field 20, 30, "left_right_balance", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 20, 31, "gps_accuracy", :type => 2, :scale => 1, :offset => 0, :units => "m"
+Fit::File::Definitions.add_field 20, 32, "vertical_speed", :type => 3, :scale => 1000, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 20, 33, "calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
+Fit::File::Definitions.add_field 20, 39, "vertical_oscillation", :type => 4, :scale => 10, :offset => 0, :units => "mm"
+Fit::File::Definitions.add_field 20, 40, "stance_time_percent", :type => 4, :scale => 100, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 41, "stance_time", :type => 4, :scale => 10, :offset => 0, :units => "ms"
+Fit::File::Definitions.add_field 20, 42, "activity_type", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 20, 43, "left_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 44, "right_torque_effectiveness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 45, "left_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 46, "right_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 47, "combined_pedal_smoothness", :type => 2, :scale => 2, :offset => 0, :units => "percent"
+Fit::File::Definitions.add_field 20, 48, "time128", :type => 2, :scale => 128, :offset => 0, :units => "s"
+Fit::File::Definitions.add_field 20, 49, "stroke_type", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 20, 50, "zone", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 20, 51, "ball_speed", :type => 4, :scale => 100, :offset => 0, :units => "m/s"
+Fit::File::Definitions.add_field 20, 52, "cadence256", :type => 4, :scale => 256, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 20, 53, "fractional_cadence", :type => 2, :scale => 128, :offset => 0, :units => "rpm"
+Fit::File::Definitions.add_field 20, 54, "total_hemoglobin_conc", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 20, 55, "total_hemoglobin_conc_min", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 20, 56, "total_hemoglobin_conc_max", :type => 4, :scale => 100, :offset => 0, :units => "g/dL"
+Fit::File::Definitions.add_field 20, 57, "saturated_hemoglobin_percent", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 20, 58, "saturated_hemoglobin_percent_min", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 20, 59, "saturated_hemoglobin_percent_max", :type => 4, :scale => 10, :offset => 0, :units => "%"
+Fit::File::Definitions.add_field 20, 62, "device_index", :type => 2, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 21, "event"
 Fit::File::Definitions.add_field 21, 253, "timestamp", :type => 6, :scale => 1, :offset => 0, :units => "s"
@@ -303,6 +471,12 @@ Fit::File::Definitions.add_field 21, 3, "distance_duration_alert", :type => 6, :
 Fit::File::Definitions.add_field 21, 3, "calorie_duration_alert", :type => 6, :scale => 1, :offset => 0, :units => "calories"
 Fit::File::Definitions.add_field 21, 3, "fitness_equipment_state", :type => 6, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 21, 4, "event_group", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 7, "score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 8, "opponent_score", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 9, "front_gear_num", :type => 10, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 10, "front_gear", :type => 10, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 11, "rear_gear_num", :type => 10, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 12, "rear_gear", :type => 10, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 23, "device_info"
 Fit::File::Definitions.add_field 23, 253, "timestamp", :type => 6, :scale => 1, :offset => 0, :units => "s"
@@ -316,6 +490,12 @@ Fit::File::Definitions.add_field 23, 6, "hardware_version", :type => 2, :scale =
 Fit::File::Definitions.add_field 23, 7, "cum_operating_time", :type => 6, :scale => 1, :offset => 0, :units => "s"
 Fit::File::Definitions.add_field 23, 10, "battery_voltage", :type => 4, :scale => 256, :offset => 0, :units => "V"
 Fit::File::Definitions.add_field 23, 11, "battery_status", :type => 2, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 18, "sensor_position", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 19, "descriptor", :type => 7, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 20, "ant_transmission_type", :type => 10, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 21, "ant_device_number", :type => 11, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 22, "ant_network", :type => 0, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 23, 25, "source_type", :type => 0, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 31, "course"
 Fit::File::Definitions.add_field 31, 4, "sport", :type => 0, :scale => 1, :offset => 0
