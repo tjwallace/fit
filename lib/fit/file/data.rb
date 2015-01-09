@@ -21,21 +21,42 @@ module Fit
 
           definition.fields.each do |field|
             code = ""
+            scale_type = case field.scale
+                         when nil
+                           :noscale
+                         when 1
+                           :noscale
+                         else
+                           :apply
+                         end
+
             # in case the field size is a multiple of the field length, we must build an array
              if (field.type != "string" and field.size > field.length)
+               # apply the scale on array only if it has to be applied
+               scale_type = :array if scale_type == :apply
                code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}\n"
              else
                # string are not null terminated when they have exactly the lenght of the field
                code << "#{field.type} :#{field.raw_name}"
-               code << ", :read_length => #{field.size}, :trim_padding => true" if field.type == "string"
+               if field.type == "string"
+                 scale_type = :string
+                 code << ", :read_length => #{field.size}, :trim_padding => true"
+               end
                code << "\n"
              end
 
-             code << <<-RUBY
-               def #{field.name}
-                 #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if (field.scale && field.scale != 1)}
-                end
-             RUBY
+             code << "def #{field.name}\n"
+
+             case scale_type
+             when :apply
+               code << "#{field.raw_name}.snapshot / #{field.scale.inspect}.0\n"
+             when :array
+               code << "#{field.raw_name}.snapshot.map { |elt| elt / #{field.scale.inspect}.0 }\n"
+             else
+               code << "#{field.raw_name}.snapshot\n"
+             end
+
+             code << "end\n"
 
              class_eval code , __FILE__, __LINE__ + 1
           end
