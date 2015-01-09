@@ -21,7 +21,7 @@ module Fit
 
           definition.fields.each do |field|
             class_eval <<-RUBY, __FILE__, __LINE__ + 1
-              # in case the field size is a multiple of the field lenght, we must build an array
+              # in case the field size is a multiple of the field length, we must build an array
               #{
               if (field.type != "string" and field.size > field.length)
                 "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}"
