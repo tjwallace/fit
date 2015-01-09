@@ -20,21 +20,24 @@ module Fit
           RUBY
 
           definition.fields.each do |field|
-            class_eval <<-RUBY, __FILE__, __LINE__ + 1
-              # in case the field size is a multiple of the field length, we must build an array
-              #{
-              if (field.type != "string" and field.size > field.length)
-                "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}"
-              else
-                # string are not null terminated when they have the field length
-                "#{field.type} :#{field.raw_name} #{ ", :read_length => #{field.size}, :trim_padding => true" if field.type == "string" }"
-              end
-              }
+            code = ""
+            # in case the field size is a multiple of the field length, we must build an array
+             if (field.type != "string" and field.size > field.length)
+               code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}\n"
+             else
+               # string are not null terminated when they have exactly the lenght of the field
+               code << "#{field.type} :#{field.raw_name}"
+               code << ", :read_length => #{field.size}, :trim_padding => true" if field.type == "string"
+               code << "\n"
+             end
 
-              def #{field.name}
-                #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if (field.scale && field.scale != 1)}
-              end
-            RUBY
+             code << <<-RUBY
+               def #{field.name}
+                 #{field.raw_name}.snapshot #{ "/ #{field.scale.inspect}.0" if (field.scale && field.scale != 1)}
+                end
+             RUBY
+
+             class_eval code , __FILE__, __LINE__ + 1
           end
         end
       end
