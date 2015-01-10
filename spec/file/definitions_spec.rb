@@ -1,22 +1,56 @@
 require 'spec_helper'
 
+# we use undefined numbers for field otherwise we interfere
+# with already defined fields in definitions.rb and test are
+# not really independant of the code
 describe Fit::File::Definitions do
   describe ".add_field" do
-    context "without additional options" do
-      it "adds field data" do
-        described_class.add_field(20,5, 'distance')
+    before :all do
+      @fields = described_class.class_variable_get :@@fields
+      @dyn_fields = described_class.class_variable_get :@@dyn_fields
+    end
 
-        described_class.get_field(20,5).should be_a(Hash)
-        described_class.get_field(20,5).should eql({ :name => 'distance'})
+    after :all do
+      Fit::File::Definitions.class_variable_set(:@@fields, @fields)
+      Fit::File::Definitions.class_variable_set(:@@dyn_fields, @dyn_fields)
+    end
+
+    context "without additional options" do
+      before :each do
+        Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h,k| h[k]={} })
+        Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h,k| h[k]={} })
+        described_class.add_field(999, 999, 'rspec_test')
+        described_class.add_field(999, 999, 'rspec_test_dyn')
+      end
+
+      it "adds field data" do
+        described_class.get_field(999,999).should be_a(Hash)
+        described_class.get_field(999,999).should eql({ :name => 'rspec_test'})
+      end
+
+      it 'adds dynamic field data' do
+        described_class.get_dynamic_fields(999, 999).should be_a(Hash)
+        described_class.get_dynamic_fields(999, 999).should eql({ :rspec_test_dyn => {} })
       end
     end
 
     context "with additional options" do
-      it "adds field data" do
-        described_class.add_field(20,5, 'distance', :scale => 100, :units => 'm')
+      before :each do
+        Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h,k| h[k]={} })
+        Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h,k| h[k]={} })
 
-        described_class.get_field(20,5).should be_a(Hash)
-        described_class.get_field(20,5).should eql({ :name => 'distance', :scale => 100, :units => 'm'})
+        described_class.add_field(999, 999, 'rspec_test', :scale => 100, :units => 'm')
+        described_class.add_field(999, 999, 'rspec_test_dyn', :type => 4, :scale => 10, :offset => 10)
+      end
+
+      it "adds field data" do
+        described_class.get_field(999, 999).should be_a(Hash)
+        described_class.get_field(999, 999).should eql({ :name => 'rspec_test', :scale => 100, :units => 'm'})
+      end
+      
+      it 'adds dynamic field data' do
+        described_class.get_dynamic_fields(999, 999).should be_a(Hash)
+        described_class.get_dynamic_fields(999, 999).should eql({ :rspec_test_dyn => {:type => 4, :scale => 10, :offset => 10} })
       end
     end
   end
@@ -24,6 +58,13 @@ describe Fit::File::Definitions do
   describe ".get_field" do
     it "returns nil if no field exists" do
       described_class.get_field(100,100).should be_nil
+    end
+  end
+
+  describe '.get_dynamic_field' do
+    it 'returns nil if no dynamic field exists' do
+      described_class.add_field(100, 100, 'rspec')
+      described_class.get_dynamic_fields(100, 100).should be_nil
     end
   end
 

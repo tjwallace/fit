@@ -14,11 +14,23 @@ describe Fit::File::Data do
     end
 
     context 'definition with multiple time the same field' do
-      before :each do
+      before :all do
+        @fields = Fit::File::Definitions.class_variable_get :@@fields
+        @dyn_fields = Fit::File::Definitions.class_variable_get :@@dyn_fields
         # force a fake definition for scaling of arrays
         Fit::File::Definitions.add_field 2, 2, "field_array", :type => 6, :scale => 10, :offset => 0
-        definition = described_class.generate(Fit::File::Definition.read example_file('record/message/definition_3.fit'))
-        @result = definition.read( example_file('record/message/data_3.fit') )
+      end
+
+      after :all do
+        Fit::File::Definitions.class_variable_set :@@fields, @fields
+        Fit::File::Definitions.class_variable_set :@@dyn_fields, @dyn_fields
+      end
+
+      before :each do
+        def_file = example_file('record/message/definition_field_array.fit')
+        data_file = example_file('record/message/data_field_array.fit')
+        definition = described_class.generate(Fit::File::Definition.read def_file)
+        @result = definition.read( data_file )
       end
 
       it "reads the entire record" do
@@ -42,6 +54,20 @@ describe Fit::File::Data do
       it "does apply scale on each element of an array" do
         @result.raw_field_array.should == [ 123456789, 987654321 ]
         @result.field_array.to_s.should be_eql '[12345678.9, 98765432.1]'
+      end
+    end
+
+    context 'definition with dynamic fields' do
+      before :each do
+        def_file = example_file('record/message/definition_dynamic_fields.fit')
+        data_file = example_file('record/message/data_dynamic_fields.fit')
+        definition = described_class.generate(Fit::File::Definition.read def_file)
+        @result = definition.read( data_file )
+      end
+
+      it 'read dynamic fields' do
+        @result.raw_product.should == 1499
+        @result.raw_garmin_product.should == 1499
       end
     end
   end

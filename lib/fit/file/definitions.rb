@@ -3,15 +3,25 @@ module Fit
     module Definitions
 
       @@fields = Hash.new{ |h,k| h[k]= {} }
+      @@dyn_fields = Hash.new{ |h,k| h[k]= {} }
       @@names  = Hash.new
 
       class << self
         def add_field(global_msg_num, field_def_num, name, options = {})
-          @@fields[global_msg_num][field_def_num] = options.merge(:name => name)
+          if @@fields[global_msg_num].has_key? field_def_num
+            @@dyn_fields[global_msg_num][field_def_num] ||= {}
+            @@dyn_fields[global_msg_num][field_def_num][name.to_sym] = options
+          else
+            @@fields[global_msg_num][field_def_num] = options.merge(:name => name)
+          end
         end
 
         def get_field(global_msg_num, field_def_num)
           @@fields[global_msg_num][field_def_num]
+        end
+
+        def get_dynamic_fields(global_msg_num, field_def_num)
+          @@dyn_fields[global_msg_num][field_def_num] 
         end
 
         def add_name(global_msg_num, name)

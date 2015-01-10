@@ -58,6 +58,20 @@ module Fit
 
              code << "end\n"
 
+             if field.dyn_data
+               field.dyn_data.each do |key, val|
+                 code << <<-RUBY
+                   def #{key.to_s}
+                     #{field.name}
+                   end
+ 
+                   def raw_#{key.to_s}
+                     #{field.raw_name}
+                   end
+                 RUBY
+               end
+             end
+
              class_eval code , __FILE__, __LINE__ + 1
           end
         end
