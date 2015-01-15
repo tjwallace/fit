@@ -34,6 +34,10 @@ module Fit
           data[:scale]
         end
 
+        def real_type
+          data[:type]
+        end
+
         def type
           case base_type_number.snapshot
           when 0 # enum

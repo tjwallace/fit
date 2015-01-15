@@ -11,6 +11,7 @@ module Fit
           if @@fields[global_msg_num].has_key? field_def_num
             @@dyn_fields[global_msg_num][field_def_num] ||= {}
             @@dyn_fields[global_msg_num][field_def_num][name.to_sym] = options
+            raise "bad definition of dynamic field  (#{name}) without :ref_field_name or :ref_field_values" unless options.has_key?(:ref_field_name) && options.has_key?(:ref_field_values)
           else
             @@fields[global_msg_num][field_def_num] = options.merge(:name => name)
           end
@@ -39,13 +40,13 @@ end
 
 # DATA
 Fit::File::Definitions.add_name 0, "file_id"
-Fit::File::Definitions.add_field 0, 0, "type", :type => 0, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 1, "manufacturer", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 2, "product", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 2, "garmin_product", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 3, "serial_number", :type => 12, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 4, "time_created", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 0, 5, "number", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 0, "type", :type => :file, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 1, "manufacturer", :type => :manufacturer, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 2, "product", :type => :uint16, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 2, "garmin_product", :type => :garmin_product, :scale => 1, :offset => 0, :ref_field_name => 'manufacturer', :ref_field_values => [1, 13, 15]
+Fit::File::Definitions.add_field 0, 3, "serial_number", :type => :uint32z, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 4, "time_created", :type => :date_time, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 0, 5, "number", :type => :uint16, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 49, "file_creator"
 Fit::File::Definitions.add_field 49, 0, "software_version", :type => 4, :scale => 1, :offset => 0
@@ -76,9 +77,9 @@ Fit::File::Definitions.add_field 38, 0, "file", :type => 0, :scale => 1, :offset
 Fit::File::Definitions.add_field 38, 1, "mesg_num", :type => 4, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 38, 2, "count_type", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 38, 3, "count", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 38, 3, "num_per_file", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 38, 3, "max_per_file", :type => 4, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 38, 3, "max_per_file_type", :type => 4, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 38, 3, "num_per_file", :type => 4, :scale => 1, :offset => 0, :ref_field_name => 'count_type', :ref_field_values => [0]
+Fit::File::Definitions.add_field 38, 3, "max_per_file", :type => 4, :scale => 1, :offset => 0, :ref_field_name => 'count_type', :ref_field_values => [1]
+Fit::File::Definitions.add_field 38, 3, "max_per_file_type", :type => 4, :scale => 1, :offset => 0, :ref_field_name => 'count_type', :ref_field_values => [2]
 
 Fit::File::Definitions.add_name 39, "field_capabilities"
 Fit::File::Definitions.add_field 39, 254, "message_index", :type => 4, :scale => 1, :offset => 0
@@ -220,7 +221,7 @@ Fit::File::Definitions.add_field 18, 7, "total_elapsed_time", :type => 6, :scale
 Fit::File::Definitions.add_field 18, 8, "total_timer_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
 Fit::File::Definitions.add_field 18, 9, "total_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
 Fit::File::Definitions.add_field 18, 10, "total_cycles", :type => 6, :scale => 1, :offset => 0, :units => "cycles"
-Fit::File::Definitions.add_field 18, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides"
+Fit::File::Definitions.add_field 18, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 18, 11, "total_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::File::Definitions.add_field 18, 13, "total_fat_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::File::Definitions.add_field 18, 14, "avg_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
@@ -228,9 +229,9 @@ Fit::File::Definitions.add_field 18, 15, "max_speed", :type => 4, :scale => 1000
 Fit::File::Definitions.add_field 18, 16, "avg_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::File::Definitions.add_field 18, 17, "max_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::File::Definitions.add_field 18, 18, "avg_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 18, 18, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
+Fit::File::Definitions.add_field 18, 18, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 18, 19, "max_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 18, 19, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
+Fit::File::Definitions.add_field 18, 19, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 18, 20, "avg_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::File::Definitions.add_field 18, 21, "max_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::File::Definitions.add_field 18, 22, "total_ascent", :type => 4, :scale => 1, :offset => 0, :units => "m"
@@ -317,7 +318,7 @@ Fit::File::Definitions.add_field 19, 7, "total_elapsed_time", :type => 6, :scale
 Fit::File::Definitions.add_field 19, 8, "total_timer_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
 Fit::File::Definitions.add_field 19, 9, "total_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
 Fit::File::Definitions.add_field 19, 10, "total_cycles", :type => 6, :scale => 1, :offset => 0, :units => "cycles"
-Fit::File::Definitions.add_field 19, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides"
+Fit::File::Definitions.add_field 19, 10, "total_strides", :type => 6, :scale => 1, :offset => 0, :units => "strides", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 19, 11, "total_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::File::Definitions.add_field 19, 12, "total_fat_calories", :type => 4, :scale => 1, :offset => 0, :units => "kcal"
 Fit::File::Definitions.add_field 19, 13, "avg_speed", :type => 4, :scale => 1000, :offset => 0, :units => "m/s"
@@ -325,9 +326,9 @@ Fit::File::Definitions.add_field 19, 14, "max_speed", :type => 4, :scale => 1000
 Fit::File::Definitions.add_field 19, 15, "avg_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::File::Definitions.add_field 19, 16, "max_heart_rate", :type => 2, :scale => 1, :offset => 0, :units => "bpm"
 Fit::File::Definitions.add_field 19, 17, "avg_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 19, 17, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
+Fit::File::Definitions.add_field 19, 17, "avg_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 19, 18, "max_cadence", :type => 2, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 19, 18, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min"
+Fit::File::Definitions.add_field 19, 18, "max_running_cadence", :type => 2, :scale => 1, :offset => 0, :units => "strides/min", :ref_field_name => 'sport', :ref_field_values => [1]
 Fit::File::Definitions.add_field 19, 19, "avg_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::File::Definitions.add_field 19, 20, "max_power", :type => 4, :scale => 1, :offset => 0, :units => "watts"
 Fit::File::Definitions.add_field 19, 21, "total_ascent", :type => 4, :scale => 1, :offset => 0, :units => "m"
@@ -464,22 +465,24 @@ Fit::File::Definitions.add_field 21, 0, "event", :type => 0, :scale => 1, :offse
 Fit::File::Definitions.add_field 21, 1, "event_type", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 21, 2, "data16", :type => 4, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 21, 3, "data", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 21, 3, "timer_trigger", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 21, 3, "course_point_index", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 21, 3, "battery_level", :type => 6, :scale => 1000, :offset => 0, :units => "V"
-Fit::File::Definitions.add_field 21, 3, "virtual_partner_speed", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
-Fit::File::Definitions.add_field 21, 3, "hr_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm"
-Fit::File::Definitions.add_field 21, 3, "hr_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm"
-Fit::File::Definitions.add_field 21, 3, "speed_high_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
-Fit::File::Definitions.add_field 21, 3, "speed_low_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
-Fit::File::Definitions.add_field 21, 3, "cad_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 21, 3, "cad_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 21, 3, "power_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "watts"
-Fit::File::Definitions.add_field 21, 3, "power_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "watts"
-Fit::File::Definitions.add_field 21, 3, "time_duration_alert", :type => 6, :scale => 1000, :offset => 0, :units => "s"
-Fit::File::Definitions.add_field 21, 3, "distance_duration_alert", :type => 6, :scale => 100, :offset => 0, :units => "m"
-Fit::File::Definitions.add_field 21, 3, "calorie_duration_alert", :type => 6, :scale => 1, :offset => 0, :units => "calories"
-Fit::File::Definitions.add_field 21, 3, "fitness_equipment_state", :type => 6, :scale => 1, :offset => 0
+Fit::File::Definitions.add_field 21, 3, "timer_trigger", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'event', :ref_field_values => [0]
+Fit::File::Definitions.add_field 21, 3, "course_point_index", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'event', :ref_field_values => [10]
+Fit::File::Definitions.add_field 21, 3, "battery_level", :type => 6, :scale => 1000, :offset => 0, :units => "V", :ref_field_name => 'event', :ref_field_values => [11]
+Fit::File::Definitions.add_field 21, 3, "virtual_partner_speed", :type => 6, :scale => 1000, :offset => 0, :units => "m/s", :ref_field_name => 'event', :ref_field_values => [12]
+Fit::File::Definitions.add_field 21, 3, "hr_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm", :ref_field_name => 'event', :ref_field_values => [13]
+Fit::File::Definitions.add_field 21, 3, "hr_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "bpm", :ref_field_name => 'event', :ref_field_values => [14]
+Fit::File::Definitions.add_field 21, 3, "speed_high_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s", :ref_field_name => 'event', :ref_field_values => [15]
+Fit::File::Definitions.add_field 21, 3, "speed_low_alert", :type => 6, :scale => 1000, :offset => 0, :units => "m/s", :ref_field_name => 'event', :ref_field_values => [16]
+Fit::File::Definitions.add_field 21, 3, "cad_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm", :ref_field_name => 'event', :ref_field_values => [17]
+Fit::File::Definitions.add_field 21, 3, "cad_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "rpm", :ref_field_name => 'event', :ref_field_values => [18]
+Fit::File::Definitions.add_field 21, 3, "power_high_alert", :type => 6, :scale => 1, :offset => 0, :units => "watts", :ref_field_name => 'event', :ref_field_values => [19]
+Fit::File::Definitions.add_field 21, 3, "power_low_alert", :type => 6, :scale => 1, :offset => 0, :units => "watts", :ref_field_name => 'event', :ref_field_values => [20]
+Fit::File::Definitions.add_field 21, 3, "time_duration_alert", :type => 6, :scale => 1000, :offset => 0, :units => "s", :ref_field_name => 'event', :ref_field_values => [23]
+Fit::File::Definitions.add_field 21, 3, "distance_duration_alert", :type => 6, :scale => 100, :offset => 0, :units => "m", :ref_field_name => 'event', :ref_field_values => [24]
+Fit::File::Definitions.add_field 21, 3, "calorie_duration_alert", :type => 6, :scale => 1, :offset => 0, :units => "calories", :ref_field_name => 'event', :ref_field_values => [25]
+Fit::File::Definitions.add_field 21, 3, "fitness_equipment_state", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'event', :ref_field_values => [27]
+Fit::File::Definitions.add_field 21, 3, "sport_point", :type => :uint32, :scale => 1, :offset => 0, :ref_field_name => 'event', :ref_field_values => [33]
+Fit::File::Definitions.add_field 21, 3, "gear_change_data", :type => :uint32, :scale => 1, :offset => 0, :ref_field_name => 'event', :ref_field_values => [42, 43]
 Fit::File::Definitions.add_field 21, 4, "event_group", :type => 2, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 21, 7, "score", :type => 4, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 21, 8, "opponent_score", :type => 4, :scale => 1, :offset => 0
@@ -532,32 +535,32 @@ Fit::File::Definitions.add_field 27, 254, "message_index", :type => 4, :scale =>
 Fit::File::Definitions.add_field 27, 0, "wkt_step_name", :type => 7, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 27, 1, "duration_type", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 27, 2, "duration_value", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 2, "duration_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
-Fit::File::Definitions.add_field 27, 2, "duration_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
-Fit::File::Definitions.add_field 27, 2, "duration_hr", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
-Fit::File::Definitions.add_field 27, 2, "duration_calories", :type => 6, :scale => 1, :offset => 0, :units => "calories"
-Fit::File::Definitions.add_field 27, 2, "duration_step", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 2, "duration_power", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
+Fit::File::Definitions.add_field 27, 2, "duration_time", :type => :uint32, :scale => 1000, :offset => 0, :units => "s", :ref_field_name => 'duration_type', :ref_field_values => [0, 28]
+Fit::File::Definitions.add_field 27, 2, "duration_distance", :type => :uint32, :scale => 100, :offset => 0, :units => "m", :ref_field_name => 'duration_type', :ref_field_values => [1]
+Fit::File::Definitions.add_field 27, 2, "duration_hr", :type => :workout_hr, :scale => 1, :offset => 0, :units => "% or bpm", :ref_field_name => 'duration_type', :ref_field_values => [2, 3]
+Fit::File::Definitions.add_field 27, 2, "duration_calories", :type => :uint32, :scale => 1, :offset => 0, :units => "calories", :ref_field_name => 'duration_type', :ref_field_values => [4]
+Fit::File::Definitions.add_field 27, 2, "duration_step", :type => :uint32, :scale => 1, :offset => 0, :ref_field_name => 'duration_type', :ref_field_values => [6, 7, 8, 9, 10, 11, 12, 13]
+Fit::File::Definitions.add_field 27, 2, "duration_power", :type => :workout_power, :scale => 1, :offset => 0, :units => "% or watts", :ref_field_name => 'duration_type', :ref_field_values => [14, 15]
 Fit::File::Definitions.add_field 27, 3, "target_type", :type => 0, :scale => 1, :offset => 0
 Fit::File::Definitions.add_field 27, 4, "target_value", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 4, "target_hr_zone", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 4, "target_power_zone", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 4, "repeat_steps", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 4, "repeat_time", :type => 6, :scale => 1000, :offset => 0, :units => "s"
-Fit::File::Definitions.add_field 27, 4, "repeat_distance", :type => 6, :scale => 100, :offset => 0, :units => "m"
-Fit::File::Definitions.add_field 27, 4, "repeat_calories", :type => 6, :scale => 1, :offset => 0, :units => "calories"
-Fit::File::Definitions.add_field 27, 4, "repeat_hr", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
-Fit::File::Definitions.add_field 27, 4, "repeat_power", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
+Fit::File::Definitions.add_field 27, 4, "target_hr_zone", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'target_type', :ref_field_values => [1]
+Fit::File::Definitions.add_field 27, 4, "target_power_zone", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'target_type', :ref_field_values => [4]
+Fit::File::Definitions.add_field 27, 4, "repeat_steps", :type => 6, :scale => 1, :offset => 0, :ref_field_name => 'duration_type', :ref_field_values => [6]
+Fit::File::Definitions.add_field 27, 4, "repeat_time", :type => 6, :scale => 1000, :offset => 0, :units => "s", :ref_field_name => 'duration_type', :ref_field_values => [7]
+Fit::File::Definitions.add_field 27, 4, "repeat_distance", :type => 6, :scale => 100, :offset => 0, :units => "m", :ref_field_name => 'duration_type', :ref_field_values => [8]
+Fit::File::Definitions.add_field 27, 4, "repeat_calories", :type => 6, :scale => 1, :offset => 0, :units => "calories", :ref_field_name => 'duration_type', :ref_field_values => [9]
+Fit::File::Definitions.add_field 27, 4, "repeat_hr", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm", :ref_field_name => 'duration_type', :ref_field_values => [10, 11]
+Fit::File::Definitions.add_field 27, 4, "repeat_power", :type => 6, :scale => 1, :offset => 0, :units => "% or watts", :ref_field_name => 'duration_type', :ref_field_values => [12, 13]
 Fit::File::Definitions.add_field 27, 5, "custom_target_value_low", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 5, "custom_target_speed_low", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
-Fit::File::Definitions.add_field 27, 5, "custom_target_heart_rate_low", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
-Fit::File::Definitions.add_field 27, 5, "custom_target_cadence_low", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 27, 5, "custom_target_power_low", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
+Fit::File::Definitions.add_field 27, 5, "custom_target_speed_low", :type => 6, :scale => 1000, :offset => 0, :units => "m/s", :ref_field_name => 'target_type', :ref_field_values => [0]
+Fit::File::Definitions.add_field 27, 5, "custom_target_heart_rate_low", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm", :ref_field_name => 'target_type', :ref_field_values => [1]
+Fit::File::Definitions.add_field 27, 5, "custom_target_cadence_low", :type => 6, :scale => 1, :offset => 0, :units => "rpm", :ref_field_name => 'target_type', :ref_field_values => [3]
+Fit::File::Definitions.add_field 27, 5, "custom_target_power_low", :type => 6, :scale => 1, :offset => 0, :units => "% or watts", :ref_field_name => 'target_type', :ref_field_values => [4]
 Fit::File::Definitions.add_field 27, 6, "custom_target_value_high", :type => 6, :scale => 1, :offset => 0
-Fit::File::Definitions.add_field 27, 6, "custom_target_speed_high", :type => 6, :scale => 1000, :offset => 0, :units => "m/s"
-Fit::File::Definitions.add_field 27, 6, "custom_target_heart_rate_high", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm"
-Fit::File::Definitions.add_field 27, 6, "custom_target_cadence_high", :type => 6, :scale => 1, :offset => 0, :units => "rpm"
-Fit::File::Definitions.add_field 27, 6, "custom_target_power_high", :type => 6, :scale => 1, :offset => 0, :units => "% or watts"
+Fit::File::Definitions.add_field 27, 6, "custom_target_speed_high", :type => 6, :scale => 1000, :offset => 0, :units => "m/s", :ref_field_name => 'target_type', :ref_field_values => [0]
+Fit::File::Definitions.add_field 27, 6, "custom_target_heart_rate_high", :type => 6, :scale => 1, :offset => 0, :units => "% or bpm", :ref_field_name => 'target_type', :ref_field_values => [1]
+Fit::File::Definitions.add_field 27, 6, "custom_target_cadence_high", :type => 6, :scale => 1, :offset => 0, :units => "rpm", :ref_field_name => 'target_type', :ref_field_values => [3]
+Fit::File::Definitions.add_field 27, 6, "custom_target_power_high", :type => 6, :scale => 1, :offset => 0, :units => "% or watts", :ref_field_name => 'target_type', :ref_field_values => [4]
 Fit::File::Definitions.add_field 27, 7, "intensity", :type => 0, :scale => 1, :offset => 0
 
 Fit::File::Definitions.add_name 33, "totals"

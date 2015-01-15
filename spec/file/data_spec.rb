@@ -65,9 +65,23 @@ describe Fit::File::Data do
         @result = definition.read( data_file )
       end
 
-      it 'read dynamic fields' do
+      it 'uses dynamic field value' do
         @result.raw_product.should == 1499
-        @result.raw_garmin_product.should == 1499
+        @result.product.should == 'swim'
+      end
+    end
+
+    context 'definition with non basic types' do
+      before :each do
+        def_file = example_file('record/message/definition_dynamic_fields.fit')
+        data_file = example_file('record/message/data_dynamic_fields.fit')
+        definition = described_class.generate(Fit::File::Definition.read def_file)
+        @result = definition.read( data_file )
+      end
+
+      it 'returns the real value' do
+        @result.raw_type.should == 1
+        @result.type.should == 'device'
       end
     end
   end
