@@ -29,19 +29,6 @@ describe Fit::File::Type do
     end
   end
 
-#  describe '#bindata_type' do
-#
-#    let(:type) { described_class.get_type(:int_type) }
-#
-#    it 'returns a string' do
-#      type.bindata_type.should be_a String
-#    end
-#
-#    it 'returns the bindata type' do
-#      type.bindata_type.should == 'int8'
-#    end
-#  end
-
   describe '#value' do
     context 'when has values' do
 

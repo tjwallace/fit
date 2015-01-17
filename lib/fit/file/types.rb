@@ -1,33 +1,20 @@
 module Fit
   class File
     module Types
-#      @@base_types = { :enum    => {:bindata_type => 'uint8',  :length => 1},
-#                       :sint8   => {:bindata_type => 'int8',   :length => 1},
-#                       :uint8   => {:bindata_type => 'uint8',  :length => 1},
-#                       :sint16  => {:bindata_type => 'int16',  :length => 2},
-#                       :uint16  => {:bindata_type => 'uint16', :length => 2},
-#                       :sint32  => {:bindata_type => 'int32',  :length => 4},
-#                       :unit32  => {:bindata_type => 'uint32', :length => 4},
-#                       :string  => {:bindata_type => 'string', :length => 1},
-#                       :float32 => {:bindata_type => 'float',  :lenght => 4},
-#                       :float64 => {:bindata_type => 'double', :lenght => 8},
-#                       :uint8z  => {:bindata_type => 'uint8',  :length => 1},
-#                       :uint16z => {:bindata_type => 'uint16', :length => 2},
-#                       :uint32z => {:bindata_type => 'uint32', :length => 4},
-#                       :byte    => {:bindata_type => 'uint8',  :length => 1} }
 
-      @@types = {} #@@base_types.clone
+      @@types = {}
 
       class << self
         def add_type(name, type, option = {})
-          @@types[name] = option #.merge( @@base_types[type] )
+          @@types[name] = option
         end
 
-        def get_type(name)
+        def get_type_definition(name)
           return @@types[name] if @@types.has_key? name
           nil
         end
       end
+
     end
   end
 end

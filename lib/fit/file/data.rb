@@ -22,17 +22,15 @@ module Fit
               # return the value based on real type
               def get_real_value( real_type, raw_value)
                 type = Type.get_type(real_type.to_sym)
-                if type
-                  # TODO: manage case where an array is returned
-                  type.value raw_value
-                else
-                  raw_value
-                end
+                # TODO: manage case where an array is returned
+                type ? type.value(raw_value) : raw_value
               end
 
               def get_dyn_value dyn_data, raw_value
                 dyn_data.each do |key, dyn|
-                  if dyn[:ref_field_values].include? self.send("raw_\#{dyn[:ref_field_name]}")
+                  # make sure method exist before calling send (all fields are not always defined)
+                  if( self.methods.include?("raw_\#{dyn[:ref_field_name]}".to_sym) &&
+                      dyn[:ref_field_values].include?(self.send("raw_\#{dyn[:ref_field_name]}")))
                     return get_real_value(dyn[:type], raw_value)
                   end
                 end
@@ -94,6 +92,7 @@ module Fit
           end
         end
       end
+
     end
   end
 end
