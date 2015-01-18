@@ -15,8 +15,12 @@ module Fit
       end
 
       def value(val)
-        res = @type[:values]
-        res ? res[val] : nil
+        if @type.has_key? :method
+          Types.send(@type[:method], val, @type[:values], @type[:parameters])
+        else
+          res = @type[:values]
+          res ? res[val] : nil
+        end
       end
     end
   end

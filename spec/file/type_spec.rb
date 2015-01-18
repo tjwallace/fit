@@ -30,7 +30,7 @@ describe Fit::File::Type do
   end
 
   describe '#value' do
-    context 'when has values' do
+    context 'when type has values' do
 
       let(:type) { described_class.get_type(:int_type_with_val) }
 
@@ -47,7 +47,25 @@ describe Fit::File::Type do
       end
     end
 
-    context 'when has no value' do
+    context 'when type has date_time value' do
+      let(:type) { described_class.get_type(:date_time) }
+      it 'returns the date' do
+        type.value(790509304).should == '2015-01-18 09:55:04 UTC'
+      end
+    end
+
+    context 'when type has message_index value' do
+      let(:type) { described_class.get_type(:message_index) }
+      
+      it 'returns the message_index' do
+        type.value(10).should == 10
+        type.value(32778).should == 10
+        type.value(28682).should == 10
+      end 
+
+    end
+
+    context 'when type has no value' do
       it 'returns nil' do
         type = described_class.get_type(:int_type)
         type.value(1).should be_nil

@@ -13,6 +13,21 @@ module Fit
           return @@types[name] if @@types.has_key? name
           nil
         end
+
+        def date_time_value(time, values, parameters)
+          val = values.invert
+          if time < val['min']
+            time.to_s
+          else
+            res= parameters[:utc] ? Time.utc(1989,12,31) + time : Time.local(1989,12,31) + time
+            res.to_s
+          end
+        end
+
+        def message_index_value(msg_index, values, parameters = nil)
+          val = values.invert
+          msg_index & val['mask']
+        end
       end
 
     end
@@ -93,13 +108,13 @@ Fit::File::Types.add_type :mesg_count, :enum, :values => {
     1 => 'max_per_file',
     2 => 'max_per_file_type' }
 Fit::File::Types.add_type :date_time, :uint32, :values => {
-    268435456 => 'min' }
+    268435456 => 'min' }, :method => :date_time_value, :parameters => {:utc => true}
 Fit::File::Types.add_type :local_date_time, :uint32, :values => {
-    268435456 => 'min' }
+    268435456 => 'min' }, :method => :date_time_value, :parameters => {:utc => false}
 Fit::File::Types.add_type :message_index, :uint16, :values => {
-    327680 => 'selected',
+    32768 => 'selected',
     26872 => 'reserved',
-    4095 => 'mask' }
+    4095 => 'mask' }, :method => :message_index_value
 Fit::File::Types.add_type :device_index, :uint8, :values => {
     0 => 'creator' }
 Fit::File::Types.add_type :gender, :enum, :values => {

@@ -29,7 +29,7 @@ module Fit
               def get_dyn_value dyn_data, raw_value
                 dyn_data.each do |key, dyn|
                   # make sure method exist before calling send (all fields are not always defined)
-                  if( self.methods.include?("raw_\#{dyn[:ref_field_name]}".to_sym) &&
+                  if( self.respond_to?("raw_\#{dyn[:ref_field_name]}") &&
                       dyn[:ref_field_values].include?(self.send("raw_\#{dyn[:ref_field_name]}")))
                     return get_real_value(dyn[:type], raw_value)
                   end
@@ -82,7 +82,7 @@ module Fit
               code << "#{field.raw_name}.snapshot.map { |elt| elt / #{field.scale.inspect}.0 }\n"
             else
               code << <<-RUBY
-                get_real_value '#{field.real_type}'.to_sym, #{field.raw_name}.snapshot
+                get_real_value '#{field.real_type}', #{field.raw_name}.snapshot
               RUBY
             end
 
