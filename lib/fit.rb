@@ -1,4 +1,5 @@
 require 'bindata'
+require 'active_support'
 require 'active_support/core_ext/class'
 
 require 'fit/file'

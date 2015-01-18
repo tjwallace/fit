@@ -10,8 +10,8 @@ describe Fit::File::RecordHeader do
     its(:message_type) { should == 1 }
     its(:local_message_type) { should == 0 }
 
-    it { should be_normal }
-    it { should_not be_a_compressed_timestamp }
+    it { is_expected.to be_normal }
+    it { is_expected.not_to be_a_compressed_timestamp }
   end
 
   context "given a sample compressed timestamp header" do
