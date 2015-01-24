@@ -84,5 +84,28 @@ describe Fit::File::Data do
         @result.type.should == 'device'
       end
     end
+
+    context 'definition with bit field types' do
+      before :each do
+        def_file = example_file('record/message/definition_file_capabilities.fit')
+        @definition = described_class.generate(Fit::File::Definition.read def_file)
+      end
+
+      context 'when only 1 bit set' do
+        it 'returns the single value' do
+          res = @definition.read( example_file('record/message/data_file_capabilities_activities.fit') )
+          res.raw_flags.should == 2
+          res.flags.should == 'read'
+        end
+      end
+
+      context 'when several bits set' do
+        it 'returns the compound value' do
+          res = @definition.read( example_file('record/message/data_file_capabilities_settings.fit') )
+          res.raw_flags.should == 6
+          res.flags.should == 'read/write'
+        end
+      end
+    end
   end
 end

@@ -65,6 +65,14 @@ describe Fit::File::Type do
 
     end
 
+    context 'when type has file_flags value' do
+      let(:type) { described_class.get_type(:file_flags) }
+      it 'returns the file_flags' do
+        type.value(10).should == 'read/erase'
+        type.value(0x0A).should == 'read/erase'
+      end
+    end
+
     context 'when type has no value' do
       it 'returns nil' do
         type = described_class.get_type(:int_type)

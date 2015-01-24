@@ -28,6 +28,17 @@ module Fit
           val = values.invert
           msg_index & val['mask']
         end
+
+        def bitfield_value(bitfield, values, parameters = nil)
+          res = ''
+          values.each do |key, val|
+            if key & bitfield != 0
+              res << '/' unless res.empty?
+              res << val
+            end
+          end
+          res
+        end
       end
 
     end
@@ -100,9 +111,9 @@ Fit::File::Types.add_type :checksum, :uint8, :values => {
     0 => 'clear',
     1 => 'ok' }
 Fit::File::Types.add_type :file_flags, :uint8z, :values => {
-    2 => 'read',
-    4 => 'write',
-    8 => 'erase' }
+    0x02 => 'read',
+    0x04 => 'write',
+    0x08 => 'erase' }, :method => :bitfield_value
 Fit::File::Types.add_type :mesg_count, :enum, :values => {
     0 => 'num_per_file',
     1 => 'max_per_file',
@@ -748,20 +759,20 @@ Fit::File::Types.add_type :ant_network, :enum, :values => {
     2 => 'antfs',
     3 => 'private' }
 Fit::File::Types.add_type :workout_capabilities, :uint32z, :values => {
-    1 => 'interval',
-    2 => 'custom',
-    4 => 'fitness_equipment',
-    8 => 'firstbeat',
-    16 => 'new_leaf',
-    32 => 'tcx',
-    128 => 'speed',
-    256 => 'heart_rate',
-    512 => 'distance',
-    1024 => 'cadence',
-    2048 => 'power',
-    4096 => 'grade',
-    8192 => 'resistance',
-    16384 => 'protected' }
+    0x00000001 => 'interval',
+    0x00000002 => 'custom',
+    0x00000004 => 'fitness_equipment',
+    0x00000008 => 'firstbeat',
+    0x00000010 => 'new_leaf',
+    0x00000020 => 'tcx',
+    0x00000080 => 'speed',
+    0x00000100 => 'heart_rate',
+    0x00000200 => 'distance',
+    0x00000400 => 'cadence',
+    0x00000800 => 'power',
+    0x00001000 => 'grade',
+    0x00002000 => 'resistance',
+    0x00004000 => 'protected' }, :method => :bitfield_value
 Fit::File::Types.add_type :battery_status, :uint8, :values => {
     1 => 'new',
     2 => 'good',
@@ -772,16 +783,16 @@ Fit::File::Types.add_type :hr_type, :enum, :values => {
     0 => 'normal',
     1 => 'irregular' }
 Fit::File::Types.add_type :course_capabilities, :uint32z, :values => {
-    1 => 'processed',
-    2 => 'valid',
-    4 => 'time',
-    8 => 'distance',
-    16 => 'position',
-    32 => 'heart_rate',
-    64 => 'power',
-    128 => 'cadence',
-    256 => 'training',
-    512 => 'navigation' }
+    0x00000001 => 'processed',
+    0x00000002 => 'valid',
+    0x00000004 => 'time',
+    0x00000008 => 'distance',
+    0x00000010 => 'position',
+    0x00000020 => 'heart_rate',
+    0x00000040 => 'power',
+    0x00000080 => 'cadence',
+    0x00000100 => 'training',
+    0x00000200 => 'navigation' }, :method => :bitfield_value
 Fit::File::Types.add_type :weight, :uint16, :values => {
     65534 => 'calculating' }
 Fit::File::Types.add_type :workout_hr, :uint32, :values => {
