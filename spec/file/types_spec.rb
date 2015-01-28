@@ -18,7 +18,7 @@ describe Fit::File::Types do
       it 'add enum data' do
         val = {:values => { 1 => 'val1', 2=> 'val2', 3 => 'val3'}}
         described_class.add_type(:test_enum, :enum, val)
-        described_class.get_type_definition(:test_enum).should eql val
+        described_class.get_type_definition(:test_enum).should eql val.merge({:basic_type => :enum})
       end
     end
   end

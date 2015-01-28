@@ -15,13 +15,26 @@ module Fit
       end
 
       def value(val)
+        return nil unless is_valid(val)
         if @type.has_key? :method
           Types.send(@type[:method], val, @type[:values], @type[:parameters])
         else
-          res = @type[:values]
-          res ? res[val] : nil
+          values = @type[:values]
+          value = values[val] if values
+          value ||= val
         end
       end
+
+      private
+        def is_valid(val)
+          if @type.has_key? :invalid
+            invalid_value = @type[:invalid]
+          else
+            invalid_value = Types.get_type_definition(@type[:basic_type])[:invalid]
+          end
+          return false if val == invalid_value
+          true
+        end
     end
   end
 end

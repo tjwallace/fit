@@ -6,7 +6,7 @@ module Fit
 
       class << self
         def add_type(name, type, option = {})
-          @@types[name] = option
+          @@types[name] = option.merge({:basic_type => type})
         end
 
         def get_type_definition(name)
@@ -45,7 +45,23 @@ module Fit
   end
 end
 
+# basic types
+Fit::File::Types.add_type :enum, nil, :invalid => 0xFF
+Fit::File::Types.add_type :sint8, nil, :invalid => 0x7F
+Fit::File::Types.add_type :uint8, nil, :invalid => 0xFF
+Fit::File::Types.add_type :sint16, nil, :invalid => 0x7FFF
+Fit::File::Types.add_type :uint16, nil, :invalid => 0xFFFF
+Fit::File::Types.add_type :sint32, nil, :invalid => 0x7FFFFFFF
+Fit::File::Types.add_type :uint32, nil, :invalid => 0xFFFFFFFF
+Fit::File::Types.add_type :string, nil, :invalid => 0x00
+Fit::File::Types.add_type :float32, nil, :invalid => 0xFFFFFFFF
+Fit::File::Types.add_type :float64, nil, :invalid => 0xFFFFFFFFFFFFFFFF
+Fit::File::Types.add_type :uint8z, nil, :invalid => 0x00
+Fit::File::Types.add_type :uint16z, nil, :invalid => 0x0000
+Fit::File::Types.add_type :uint32z, nil, :invalid => 0x00000000
+Fit::File::Types.add_type :byte, nil, :invalid => 0xFF
 
+# derived types
 Fit::File::Types.add_type :file, :enum, :values => {
     1 => 'device',
     2 => 'settings',
