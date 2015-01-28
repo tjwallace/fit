@@ -21,45 +21,76 @@ module Fit
 
           definition.fields.each do |field|
             code = ""
-            scale_type = case field.scale
-                         when nil
-                           :noscale
-                         when 1
-                           :noscale
-                         else
-                           :apply
-                         end
 
             # in case the field size is a multiple of the field length, we must build an array
-             if (field.type != "string" and field.size > field.length)
-               # apply the scale on array only if it has to be applied
-               scale_type = :array if scale_type == :apply
-               code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}\n"
-             else
-               # string are not null terminated when they have exactly the lenght of the field
-               code << "#{field.type} :#{field.raw_name}"
-               if field.type == "string"
-                 scale_type = :string
-                 code << ", :read_length => #{field.size}, :trim_padding => true"
-               end
-               code << "\n"
-             end
+            if (field.type != "string" and field.size > field.length)
+              code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}\n"
+            else
+              # string are not null terminated when they have exactly the lenght of the field
+              code << "#{field.type} :#{field.raw_name}"
+              if field.type == "string"
+                code << ", :read_length => #{field.size}, :trim_padding => true"
+              end
+              code << "\n"
+            end
 
-             code << "def #{field.name}\n"
+            code << "def #{field.name}\n"
 
-             case scale_type
-             when :apply
-               code << "#{field.raw_name}.snapshot / #{field.scale.inspect}.0\n"
-             when :array
-               code << "#{field.raw_name}.snapshot.map { |elt| elt / #{field.scale.inspect}.0 }\n"
-             else
-               code << "#{field.raw_name}.snapshot\n"
-             end
+            if field.scale && field.scale != 1
+              code << "scale = #{field.scale.inspect}.0\n"
+            else
+              code << "scale = nil\n"
+            end
 
-             code << "end\n"
+            if field.dyn_data
+              code << "dyn = #{field.dyn_data}\n"
+            else
+              code << "dyn = nil\n"
+            end
+            code << <<-RUBY
+                get_value #{field.raw_name}.snapshot, '#{field.real_type}', scale, dyn
+              end
+            RUBY
 
-             class_eval code , __FILE__, __LINE__ + 1
+            class_eval code , __FILE__, __LINE__ + 1
           end
+      
+          private
+			      # return the dynamic value if relevant
+            # otherwise, it returns value (scaled if necessary)
+            def get_value raw_value, raw_type, raw_scale, dyn_data
+              val = get_dyn_value(dyn_data, raw_value)
+              return val if val
+              if raw_scale
+                if raw_value.is_a? Enumerable
+                  raw_value.map { |elt| elt / raw_scale }
+                else
+                  raw_value / raw_scale
+                end
+              else
+                get_real_value raw_type, raw_value
+              end
+            end
+
+            # return the value based on real type
+            def get_real_value( real_type, raw_value)
+              type = Type.get_type(real_type.to_sym)
+              # TODO: manage case where an array is returned
+              type ? type.value(raw_value) : raw_value
+            end
+
+            def get_dyn_value dyn_data, raw_value
+              return nil if dyn_data.nil?
+              dyn_data.each do |key, dyn|
+                # make sure method exist before calling send (all fields are not always defined)
+                if( self.respond_to?("raw_#{dyn[:ref_field_name]}") &&
+                    dyn[:ref_field_values].include?(self.send("raw_#{dyn[:ref_field_name]}")))
+                  return get_real_value(dyn[:type], raw_value)
+                end
+              end
+              nil
+            end
+
         end
       end
 

@@ -17,6 +17,11 @@ module Fit
                       { :name => "field_#{field_definition_number.snapshot}", :scale => nil }
         end
 
+        def dyn_data
+          @dyn_data ||= Definitions.get_dynamic_fields(parent.parent.global_message_number.snapshot,
+                                                       field_definition_number.snapshot)
+        end
+
         def name
           data[:name]
         end
@@ -27,6 +32,10 @@ module Fit
 
         def scale
           data[:scale]
+        end
+
+        def real_type
+          data[:type]
         end
 
         def type
