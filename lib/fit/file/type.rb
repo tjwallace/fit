@@ -21,7 +21,8 @@ module Fit
         else
           values = @type[:values]
           value = values[val] if values
-          value ||= val
+          return value unless value.nil?
+          val
         end
       end
 

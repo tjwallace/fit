@@ -83,8 +83,8 @@ describe Fit::File::Type do
     context 'when type has bool value' do
       let(:type) { described_class.get_type(:bool) }
       it 'returns the boolean value' do
-        type.value(0).should == 'false'
-        type.value(1).should == 'true'
+        type.value(0).should == false
+        type.value(1).should == true
         type.value(255).should be_nil
       end
     end

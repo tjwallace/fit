@@ -60,7 +60,7 @@ module Fit
             # otherwise, it returns value (scaled if necessary)
             def get_value raw_value, raw_type, raw_scale, dyn_data
               val = get_dyn_value(dyn_data, raw_value)
-              return val if val
+              return val unless val.nil?
               if raw_scale
                 if raw_value.is_a? Enumerable
                   raw_value.map { |elt| elt / raw_scale }
