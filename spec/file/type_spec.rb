@@ -34,15 +34,22 @@ describe Fit::File::Type do
 
       let(:type) { described_class.get_type(:int_type_with_val) }
 
-      context 'valid requested value' do
+      context 'known value requested' do
         it 'returns the value' do
           type.value(2).should eql 'two'
         end
       end
       
-      context 'invalid requested value' do
+      context 'unknown value requested' do
+        it 'returns the input value' do
+          type.value(999).should eql 999
+        end
+      end
+
+      context 'when invalid value is requested' do
         it 'returns nil' do
-          type.value(999).should be_nil
+          type.value(255).should be_nil
+          type.value(0xFF).should be_nil
         end
       end
     end
@@ -65,10 +72,18 @@ describe Fit::File::Type do
 
     end
 
+    context 'when type has file_flags value' do
+      let(:type) { described_class.get_type(:file_flags) }
+      it 'returns the file_flags' do
+        type.value(10).should == 'read/erase'
+        type.value(0x0A).should == 'read/erase'
+      end
+    end
+
     context 'when type has no value' do
       it 'returns nil' do
         type = described_class.get_type(:int_type)
-        type.value(1).should be_nil
+        type.value(1).should eql 1
       end
     end
   end

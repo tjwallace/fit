@@ -18,7 +18,7 @@ describe Fit::File::Types do
       it 'add enum data' do
         val = {:values => { 1 => 'val1', 2=> 'val2', 3 => 'val3'}}
         described_class.add_type(:test_enum, :enum, val)
-        described_class.get_type_definition(:test_enum).should eql val
+        described_class.get_type_definition(:test_enum).should eql val.merge({:basic_type => :enum})
       end
     end
   end
@@ -75,6 +75,25 @@ describe Fit::File::Types do
       end
     end
 
+  end
+
+  describe '.bitfield_value' do
+    let(:values) { {0x02 => 'read', 0x04 => 'write', 0x08 => 'erase'} }
+
+    context 'when value is a single bit' do
+      it 'returns the single value' do
+        described_class.bitfield_value(2, values).should == 'read'
+        described_class.bitfield_value(4, values).should == 'write'
+        described_class.bitfield_value(8, values).should == 'erase'
+      end
+    end
+
+    context 'when value is several bits' do
+      it 'returns the values separated by a slash' do
+        described_class.bitfield_value(6, values).should == 'read/write'
+        described_class.bitfield_value(12, values).should == 'write/erase'
+      end
+    end
   end
 
 end

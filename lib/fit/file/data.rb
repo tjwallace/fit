@@ -5,11 +5,11 @@ module Fit
       class_attribute :global_message_number, :instance_writer => false
 
       def self.generate(definition)
-        type = Definitions.get_name(definition.global_message_number.snapshot) ||
-          "data_record_#{definition.global_message_number.snapshot}"
+        msg_num = definition.global_message_number.snapshot
+        type = Definitions.get_name(msg_num) || "data_record_#{msg_num}"
 
         Class.new(self) do
-          self.global_message_number = definition.global_message_number.snapshot
+          self.global_message_number = msg_num
 
           endian definition.endianness
 
