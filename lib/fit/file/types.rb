@@ -945,3 +945,10 @@ Fit::File::Types.add_type :source_type, :enum, :values => {
     3 => 'bluetooth_low_energy',
     4 => 'wifi',
     5 => 'local' }
+
+# the type below is assigned to some fileds, but
+# it is not defined in terms of values and basic type in FIT SDK as
+# of 2015-01-29
+Fit::File::Types.add_type :bool, :uint8, :values => {
+    0 => false,
+    1 => true }
