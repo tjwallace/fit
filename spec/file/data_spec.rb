@@ -35,25 +35,25 @@ describe Fit::File::Data do
 
       it "reads the entire record" do
         # read first the record definition
-        @result.raw_field_array.should == [ 123456789, 987654321 ]
-        @result.raw_field_4.should == [ 1, 3 ]
-        @result.raw_field_8.should == 1539
-        @result.raw_active_time_zone.should == 0
+        expect(@result.raw_field_array).to be == [ 123456789, 987654321 ]
+        expect(@result.raw_field_4).to be == [ 1, 3 ]
+        expect(@result.raw_field_8).to be == 1539
+        expect(@result.raw_active_time_zone).to be == 0
       end
     
       it "does not apply the scale equal to 1 for integer" do
-        @result.raw_active_time_zone.should == 0
-        @result.active_time_zone.to_s.should be_eql '0'
+        expect(@result.raw_active_time_zone).to be == 0
+        expect(@result.active_time_zone.to_s).to be_eql '0'
       end
       
       it "does not apply the scale equal to 1 for arrays" do
-        @result.raw_field_4.should == [ 1, 3 ]
-        @result.field_4.to_s.should be_eql '[1, 3]'
+        expect(@result.raw_field_4).to be == [ 1, 3 ]
+        expect(@result.field_4.to_s).to be_eql '[1, 3]'
       end
 
       it "does apply scale on each element of an array" do
-        @result.raw_field_array.should == [ 123456789, 987654321 ]
-        @result.field_array.to_s.should be_eql '[12345678.9, 98765432.1]'
+        expect(@result.raw_field_array).to be == [ 123456789, 987654321 ]
+        expect(@result.field_array.to_s).to be_eql '[12345678.9, 98765432.1]'
       end
     end
 
@@ -66,8 +66,8 @@ describe Fit::File::Data do
       end
 
       it 'uses dynamic field value' do
-        @result.raw_product.should == 1499
-        @result.product.should == 'swim'
+        expect(@result.raw_product).to be == 1499
+        expect(@result.product).to be == 'swim'
       end
     end
 
@@ -80,8 +80,8 @@ describe Fit::File::Data do
       end
 
       it 'returns the real value' do
-        @result.raw_type.should == 1
-        @result.type.should == 'device'
+        expect(@result.raw_type).to be == 1
+        expect(@result.type).to be == 'device'
       end
     end
 
@@ -94,16 +94,16 @@ describe Fit::File::Data do
       context 'when only 1 bit set' do
         it 'returns the single value' do
           res = @definition.read( example_file('record/message/data_file_capabilities_activities.fit') )
-          res.raw_flags.should == 2
-          res.flags.should == 'read'
+          expect(res.raw_flags).to eq(2)
+          expect(res.flags).to eq('read')
         end
       end
 
       context 'when several bits set' do
         it 'returns the compound value' do
           res = @definition.read( example_file('record/message/data_file_capabilities_settings.fit') )
-          res.raw_flags.should == 6
-          res.flags.should == 'read/write'
+          expect(res.raw_flags).to eq(6)
+          expect(res.flags).to eq('read/write')
         end
       end
     end

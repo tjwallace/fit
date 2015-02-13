@@ -12,8 +12,8 @@ describe Fit::File::Record do
     context "given a sample definition record" do
       let(:file) { example_file('record/definition_record') }
 
-      its(:header) { should be_a(Fit::File::RecordHeader) }
-      its(:content) { should be_a(Fit::File::Definition) }
+      it { expect(subject.header).to be_a Fit::File::RecordHeader }
+      it { expect(subject.content).to be_a Fit::File::Definition }
 
     end
 
@@ -28,8 +28,8 @@ describe Fit::File::Record do
         let(:file) { example_file('record/data_record_2.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }
-        it { subject.content.raw_version.should == 250 }
-        it { subject.content.raw_part_number.should == '123-A1234-00' }
+        it { expect(subject.content.raw_version).to be == 250 }
+        it { expect(subject.content.raw_part_number).to be == '123-A1234-00' }
       end
 
     context 'string length is smaller than field size' do
@@ -37,10 +37,10 @@ describe Fit::File::Record do
         let(:file) { example_file('record/data_record_2bis.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }
-        it { subject.content.raw_version.should == 251 }
-        it { subject.content.version.should == 2.51 }
-        it { subject.content.raw_part_number.should == '123-A1234' }
-        it { subject.content.part_number.should == '123-A1234' }
+        it { expect(subject.content.raw_version).to be == 251 }
+        it { expect(subject.content.version).to be == 2.51 }
+        it { expect(subject.content.raw_part_number).to be == '123-A1234' }
+        it { expect(subject.content.part_number).to be == '123-A1234' }
       end
     end
   end
@@ -48,9 +48,9 @@ describe Fit::File::Record do
   describe ".clear_definitions" do
     it "should clear the definitions class variable" do
       described_class.read example_file('record/definition_record')
-      described_class.definitions.should_not be_empty
+      expect(described_class.definitions).to_not be_empty
       described_class.clear_definitions!
-      described_class.definitions.should be_empty
+      expect(described_class.definitions).to be_empty
     end
   end
 end

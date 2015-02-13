@@ -23,8 +23,8 @@ describe Fit::File::Definitions do
       end
 
       it "adds field data" do
-        described_class.get_field(999,999).should be_a(Hash)
-        described_class.get_field(999,999).should eql({ :name => 'rspec_test'})
+        expect(described_class.get_field(999,999)).to be_a(Hash)
+        expect(described_class.get_field(999,999)).to eql({ :name => 'rspec_test'})
       end
 
       it 'raised an error for dynamic field data' do
@@ -42,40 +42,40 @@ describe Fit::File::Definitions do
       end
 
       it "adds field data" do
-        described_class.get_field(999, 999).should be_a(Hash)
-        described_class.get_field(999, 999).should eql({ :name => 'rspec_test', :scale => 100, :units => 'm'})
+        expect(described_class.get_field(999, 999)).to be_a(Hash)
+        expect(described_class.get_field(999, 999)).to eql({ :name => 'rspec_test', :scale => 100, :units => 'm'})
       end
       
       it 'adds dynamic field data' do
-        described_class.get_dynamic_fields(999, 999).should be_a(Hash)
-        described_class.get_dynamic_fields(999, 999).should eql({ :rspec_test_dyn => {:type => 4, :scale => 10, :offset => 10, :ref_field_name => nil, :ref_field_values => nil} })
+        expect(described_class.get_dynamic_fields(999, 999)).to be_a(Hash)
+        expect(described_class.get_dynamic_fields(999, 999)).to eql({ :rspec_test_dyn => {:type => 4, :scale => 10, :offset => 10, :ref_field_name => nil, :ref_field_values => nil} })
       end
     end
   end
 
   describe ".get_field" do
     it "returns nil if no field exists" do
-      described_class.get_field(100,100).should be_nil
+      expect(described_class.get_field(100,100)).to be_nil
     end
   end
 
   describe '.get_dynamic_field' do
     it 'returns nil if no dynamic field exists' do
       described_class.add_field(100, 100, 'rspec')
-      described_class.get_dynamic_fields(100, 100).should be_nil
+      expect(described_class.get_dynamic_fields(100, 100)).to be_nil
     end
   end
 
   describe ".add_name" do
     it "adds a name" do
       described_class.add_name(20, 'record')
-      described_class.get_name(20).should eql('record')
+      expect(described_class.get_name(20)).to eql('record')
     end
   end
 
   describe ".get_name" do
     it "returns nil if no name exists" do
-      described_class.get_name(100).should be_nil
+      expect(described_class.get_name(100)).to be_nil
     end
   end
 end
