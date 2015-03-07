@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fit/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "fit"
+  spec.name          = "fit-parser"
   spec.version       = Fit::VERSION
   spec.authors       = ["Jeff Wallace"]
   spec.email         = ["jeff@tjwallace.ca"]
