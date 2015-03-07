@@ -2,6 +2,8 @@
 
 A ruby gem for parsing [fit files](http://www.thisisant.com/pages/products/fit-sdk). It makes heavy use of the [bindata gem](http://bindata.rubyforge.org/).
 
+It is published on RubyGems.org as [fit-parser](https://rubygems.org/gems/fit-parser).
+
 ## Example usage
 
 ```ruby
