@@ -26,4 +26,4 @@ records = fit_file.records.select{ |r| r.content.record_type != :definition }.ma
 
 ## Copyright
 
-Copyright (c) 2011 Jeff Wallace. See LICENSE.txt for further details.
+Copyright (c) 2015 Jeff Wallace. See LICENSE.txt for further details.
