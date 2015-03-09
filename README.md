@@ -1,4 +1,4 @@
-# fit
+# fit [![Build Status](https://travis-ci.org/tjwallace/fit.svg?branch=master)](https://travis-ci.org/tjwallace/fit)
 
 A ruby gem for parsing [fit files](http://www.thisisant.com/pages/products/fit-sdk). It makes heavy use of the [bindata gem](http://bindata.rubyforge.org/).
 
@@ -13,6 +13,14 @@ fit_file = Fit.load_file(ARGV[0])
 
 records = fit_file.records.select{ |r| r.content.record_type != :definition }.map{ |r| r.content }
 ```
+
+## Supported files
+
+This library has been tested with files coming from the following devices:
+  - Garmin Swim
+
+
+Please let me know if you have any success with files coming from devices that are not listed here.
 
 ## Contributing to fit
  
