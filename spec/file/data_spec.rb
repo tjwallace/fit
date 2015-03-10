@@ -107,5 +107,58 @@ describe Fit::File::Data do
         end
       end
     end
+    
+    context 'definition with undocumented fields of garmin swim' do
+
+      context 'in lap message' do
+        before :each do
+          def_file = example_file('record/message/definition_lap.fit')
+          definition = described_class.generate(Fit::File::Definition.read def_file)
+          @res = definition.read( example_file('record/message/data_lap.fit') )
+        end
+        it 'returns the total_swim_time' do
+          expect(@res.raw_swim_time).to eq(234321)
+          expect(@res.swim_time).to eq(234.321)
+        end
+
+        it 'returns the average_stroke' do
+          expect(@res.raw_average_stroke).to eq(143)
+          expect(@res.average_stroke).to eq(14.3)
+        end
+        
+        it 'returns the swolf' do
+          expect(@res.raw_swolf).to eq(49)
+          expect(@res.swolf).to eq(49)
+        end
+      end
+
+      context 'in session message' do
+        before :each do
+          def_file = example_file('record/message/definition_session.fit')
+          definition = described_class.generate(Fit::File::Definition.read def_file)
+          @res = definition.read( example_file('record/message/data_session.fit') )
+        end
+
+        it 'returns the length_count' do
+          expect(@res.raw_length_count).to eq(28)
+          expect(@res.length_count).to eq(28)
+        end
+
+        it 'returns the total_swim_time' do
+          expect(@res.raw_total_swim_time).to eq(1346975)
+          expect(@res.total_swim_time).to eq(1346.975)
+        end
+
+        it 'returns the average_stroke' do
+          expect(@res.raw_average_stroke).to eq(134)
+          expect(@res.average_stroke).to eq(13.4)
+        end
+        
+        it 'returns the swolf' do
+          expect(@res.raw_swolf).to eq(44)
+          expect(@res.swolf).to eq(44)
+        end
+      end
+    end
   end
 end
