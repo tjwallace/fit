@@ -703,3 +703,19 @@ Fit::File::Definitions.add_field 145, 250, 'part_index', :type => :uint32
 Fit::File::Definitions.add_field 145, 0, 'memo', :type => :byte
 Fit::File::Definitions.add_field 145, 1, 'message_number', :type => :uint16
 Fit::File::Definitions.add_field 145, 2, 'message_index', :type => :message_index
+
+# =============================================================================
+# Warning, the definition below are not part of the official fit format
+# definition. They have been obtained by deduction from Garmin Swim files
+# =============================================================================
+# session additions
+Fit::File::Definitions.add_field 18, 33, 'length_count', :type => :uint16
+Fit::File::Definitions.add_field 18, 78, 'total_swim_time', :type => :uint32, :scale => 1000
+Fit::File::Definitions.add_field 18, 79, 'average_stroke', :type => :uint16, :scale => 10
+Fit::File::Definitions.add_field 18, 80, 'swolf', :type => :uint16
+
+# lap additions
+Fit::File::Definitions.add_field 19, 70, 'swim_time', :type => :uint32, :scale => 1000
+Fit::File::Definitions.add_field 19, 72, 'average_stroke', :type => :uint16, :scale => 10
+Fit::File::Definitions.add_field 19, 73, 'swolf', :type => :uint16
+
