@@ -682,7 +682,7 @@ Fit::File::Definitions.add_field 55, 5, 'activity_type', :type => :activity_type
 Fit::File::Definitions.add_field 55, 6, 'activity_subtype', :type => :activity_subtype
 Fit::File::Definitions.add_field 55, 7, 'activity_level', :type => :activity_level
 Fit::File::Definitions.add_field 55, 8, 'distance_16', :type => :uint16, :unit => '100 * m'
-Fit::File::Definitions.add_field 55, 9, 'cycles_16', :type => :uint16, :unit => '2 * cycles ', :unit => '(steps)'
+Fit::File::Definitions.add_field 55, 9, 'cycles_16', :type => :uint16, :unit => '2 * cycles (steps)'
 Fit::File::Definitions.add_field 55, 10, 'active_time_16', :type => :uint16, :unit => 's'
 Fit::File::Definitions.add_field 55, 11, 'local_timestamp', :type => :local_date_time
 Fit::File::Definitions.add_field 55, 12, 'temperature', :type => :sint16, :scale => 100, :unit => 'C'
