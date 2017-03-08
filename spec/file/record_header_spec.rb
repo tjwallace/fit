@@ -32,6 +32,6 @@ describe Fit::File::RecordHeader do
 
     it { is_expected.to be_normal }
     it { is_expected.not_to be_a_compressed_timestamp }
-    it { is_expected.not_to be_developer_data }
+    it { is_expected.to be_developer_data }
   end
 end
