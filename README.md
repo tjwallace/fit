@@ -18,6 +18,7 @@ records = fit_file.records.select{ |r| r.content.record_type != :definition }.ma
 
 This library has been tested with files coming from the following devices:
   - Garmin Swim
+  - Garmin Forerunner 35
 
 
 Please let me know if you have any success with files coming from devices that are not listed here.
