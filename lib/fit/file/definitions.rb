@@ -55,50 +55,11 @@ Fit::File::Definitions.add_field 0, 3, 'serial_number', :type => :uint32z
 Fit::File::Definitions.add_field 0, 4, 'time_created', :type => :date_time
 Fit::File::Definitions.add_field 0, 5, 'number', :type => :uint16
 
-Fit::File::Definitions.add_name 49, 'file_creator'
-Fit::File::Definitions.add_field 49, 0, 'software_version', :type => :uint16
-Fit::File::Definitions.add_field 49, 1, 'hardware_version', :type => :uint8
-
-Fit::File::Definitions.add_name 35, 'software'
-Fit::File::Definitions.add_field 35, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 35, 3, 'version', :type => :uint16, :scale => 100
-Fit::File::Definitions.add_field 35, 5, 'part_number', :type => :string
-
-Fit::File::Definitions.add_name 106, 'slave_device'
-Fit::File::Definitions.add_field 106, 0, 'manufacturer', :type => :manufacturer
-Fit::File::Definitions.add_field 106, 1, 'product', :type => :uint16
-Fit::File::Definitions.add_field 106, 1, 'garmin_product', :type => :garmin_product, :ref_field_name => 'manufacturer', :ref_field_values => [:garmin, :dynastream, :dynastream_oem]
-
 Fit::File::Definitions.add_name 1, 'capabilities'
 Fit::File::Definitions.add_field 1, 0, 'languages', :type => :uint8z
 Fit::File::Definitions.add_field 1, 1, 'sports', :type => :sport_bits_0
 Fit::File::Definitions.add_field 1, 21, 'workouts_supported', :type => :workout_capabilities
 Fit::File::Definitions.add_field 1, 23, 'connectivity_supported', :type => :connectivity_capabilities
-
-Fit::File::Definitions.add_name 37, 'file_capabilities'
-Fit::File::Definitions.add_field 37, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 37, 0, 'type', :type => :file
-Fit::File::Definitions.add_field 37, 1, 'flags', :type => :file_flags
-Fit::File::Definitions.add_field 37, 2, 'directory', :type => :string
-Fit::File::Definitions.add_field 37, 3, 'max_count', :type => :uint16
-Fit::File::Definitions.add_field 37, 4, 'max_size', :type => :uint32, :unit => 'bytes'
-
-Fit::File::Definitions.add_name 38, 'mesg_capabilities'
-Fit::File::Definitions.add_field 38, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 38, 0, 'file', :type => :file
-Fit::File::Definitions.add_field 38, 1, 'mesg_num', :type => :mesg_num
-Fit::File::Definitions.add_field 38, 2, 'count_type', :type => :mesg_count
-Fit::File::Definitions.add_field 38, 3, 'count', :type => :uint16
-Fit::File::Definitions.add_field 38, 3, 'num_per_file', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:num_per_file]
-Fit::File::Definitions.add_field 38, 3, 'max_per_file', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:max_per_file]
-Fit::File::Definitions.add_field 38, 3, 'max_per_file_type', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:max_per_file_type]
-
-Fit::File::Definitions.add_name 39, 'field_capabilities'
-Fit::File::Definitions.add_field 39, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 39, 0, 'file', :type => :file
-Fit::File::Definitions.add_field 39, 1, 'mesg_num', :type => :mesg_num
-Fit::File::Definitions.add_field 39, 2, 'field_num', :type => :uint8
-Fit::File::Definitions.add_field 39, 3, 'count', :type => :uint16
 
 Fit::File::Definitions.add_name 2, 'device_settings'
 Fit::File::Definitions.add_field 2, 0, 'active_time_zone', :type => :uint8, :scale => 1
@@ -187,25 +148,10 @@ Fit::File::Definitions.add_field 7, 3, 'functional_threshold_power', :type => :u
 Fit::File::Definitions.add_field 7, 5, 'hr_calc_type', :type => :hr_zone_calc, :scale => 1
 Fit::File::Definitions.add_field 7, 7, 'pwr_calc_type', :type => :pwr_zone_calc, :scale => 1
 
-Fit::File::Definitions.add_name 12, 'sport'
-Fit::File::Definitions.add_field 12, 0, 'sport', :type => :sport, :scale => 1
-Fit::File::Definitions.add_field 12, 1, 'sub_sport', :type => :sub_sport, :scale => 1
-Fit::File::Definitions.add_field 12, 3, 'name', :type => :string
-
 Fit::File::Definitions.add_name 8, 'hr_zone'
 Fit::File::Definitions.add_field 8, 254, 'message_index', :type => :message_index, :scale => 1
 Fit::File::Definitions.add_field 8, 1, 'high_bpm', :type => :uint8, :scale => 1, :unit => 'bpm'
 Fit::File::Definitions.add_field 8, 2, 'name', :type => :string, :scale => 1
-
-Fit::File::Definitions.add_name 53, 'speed_zone'
-Fit::File::Definitions.add_field 53, 254, 'message_index', :type => :message_index, :scale => 1
-Fit::File::Definitions.add_field 53, 0, 'high_value', :type => :uint16, :scale => 1000, :unit => 'm/s'
-Fit::File::Definitions.add_field 53, 1, 'name', :type => :string, :scale => 1
-
-Fit::File::Definitions.add_name 131, 'cadence_zone'
-Fit::File::Definitions.add_field 131, 254, 'message_index', :type => :message_index, :scale => 1
-Fit::File::Definitions.add_field 131, 0, 'high_value', :type => :uint8, :scale => 1, :unit => 'rpm'
-Fit::File::Definitions.add_field 131, 1, 'name', :type => :string, :scale => 1
 
 Fit::File::Definitions.add_name 9, 'power_zone'
 Fit::File::Definitions.add_field 9, 254, 'message_index', :type => :message_index, :scale => 1
@@ -217,6 +163,11 @@ Fit::File::Definitions.add_field 10, 254, 'message_index', :type => :message_ind
 Fit::File::Definitions.add_field 10, 1, 'high_bpm', :type => :uint8, :scale => 1
 Fit::File::Definitions.add_field 10, 2, 'calories', :type => :uint16, :scale => 10, :unit => 'kcal / min'
 Fit::File::Definitions.add_field 10, 3, 'fat_calories', :type => :uint8, :scale => 10, :unit => 'kcal / min'
+
+Fit::File::Definitions.add_name 12, 'sport'
+Fit::File::Definitions.add_field 12, 0, 'sport', :type => :sport, :scale => 1
+Fit::File::Definitions.add_field 12, 1, 'sub_sport', :type => :sub_sport, :scale => 1
+Fit::File::Definitions.add_field 12, 3, 'name', :type => :string
 
 Fit::File::Definitions.add_name 15, 'goal'
 Fit::File::Definitions.add_field 15, 254, 'message_index', :type => :message_index, :scale => 1
@@ -231,16 +182,6 @@ Fit::File::Definitions.add_field 15, 7, 'target_value', :type => :uint32, :scale
 Fit::File::Definitions.add_field 15, 8, 'recurrence', :type => :goal_recurrence, :scale => 1
 Fit::File::Definitions.add_field 15, 9, 'recurrence_value', :type => :uint16, :scale => 1
 Fit::File::Definitions.add_field 15, 10, 'enabled', :type => :bool, :scale => 1
-
-Fit::File::Definitions.add_name 34, 'activity'
-Fit::File::Definitions.add_field 34, 253, 'timestamp', :type => :date_time
-Fit::File::Definitions.add_field 34, 0, 'total_timer_time', :type => :uint32, :scale => 1000, :unit => 's'
-Fit::File::Definitions.add_field 34, 1, 'num_sessions', :type => :uint16, :scale => 1
-Fit::File::Definitions.add_field 34, 2, 'type', :type => :activity
-Fit::File::Definitions.add_field 34, 3, 'event', :type => :event
-Fit::File::Definitions.add_field 34, 4, 'event_type', :type => :event_type
-Fit::File::Definitions.add_field 34, 5, 'local_timestamp', :type => :local_date_time
-Fit::File::Definitions.add_field 34, 6, 'event_group', :type => :uint8
 
 Fit::File::Definitions.add_name 18, 'session'
 Fit::File::Definitions.add_field 18, 254, 'message_index', :type => :message_index, :scale => 1
@@ -426,26 +367,6 @@ Fit::File::Definitions.add_field 19, 93, 'avg_left_pedal_smoothness', :type => :
 Fit::File::Definitions.add_field 19, 94, 'avg_right_pedal_smoothness', :type => :uint8, :scale => 2, :unit => 'percent'
 Fit::File::Definitions.add_field 19, 95, 'avg_combined_pedal_smoothness', :type => :uint8, :scale => 2, :unit => 'percent'
 
-Fit::File::Definitions.add_name 101, 'length'
-Fit::File::Definitions.add_field 101, 254, 'message_index', :type => :message_index, :scale => 1
-Fit::File::Definitions.add_field 101, 253, 'timestamp', :type => :date_time, :scale => 1
-Fit::File::Definitions.add_field 101, 0, 'event', :type => :event
-Fit::File::Definitions.add_field 101, 1, 'event_type', :type => :event_type
-Fit::File::Definitions.add_field 101, 2, 'start_time', :type => :date_time, :scale => 1
-Fit::File::Definitions.add_field 101, 3, 'total_elapsed_time', :type => :uint32, :scale => 1000, :unit => 's'
-Fit::File::Definitions.add_field 101, 4, 'total_timer_time', :type => :uint32, :scale => 1000, :unit => 's'
-Fit::File::Definitions.add_field 101, 5, 'total_strokes', :type => :uint16, :scale => 1, :unit => 'strokes'
-Fit::File::Definitions.add_field 101, 6, 'avg_speed', :type => :uint16, :scale => 1000, :unit => 'm/s'
-Fit::File::Definitions.add_field 101, 7, 'swim_stroke', :type => :swim_stroke, :unit => 'swim_stroke'
-Fit::File::Definitions.add_field 101, 9, 'avg_swimming_cadence', :type => :uint8, :unit => 'strokes/min'
-Fit::File::Definitions.add_field 101, 10, 'event_group', :type => :uint8
-Fit::File::Definitions.add_field 101, 11, 'total_calories', :type => :uint16, :unit => 'kcal'
-Fit::File::Definitions.add_field 101, 12, 'length_type', :type => :length_type
-Fit::File::Definitions.add_field 101, 18, 'player_score', :type => :uint16
-Fit::File::Definitions.add_field 101, 19, 'opponent_score', :type => :uint16
-Fit::File::Definitions.add_field 101, 20, 'stroke_count', :type => :uint16, :unit => 'counts'
-Fit::File::Definitions.add_field 101, 21, 'zone_count', :type => :uint16, :unit => 'counts'
-
 Fit::File::Definitions.add_name 20, 'record'
 Fit::File::Definitions.add_field 20, 253, 'timestamp', :type => :date_time, :scale => 1, :unit => 's'
 Fit::File::Definitions.add_field 20, 0, 'position_lat', :type => :sint32, :scale => 1, :unit => 'semicircles'
@@ -547,32 +468,6 @@ Fit::File::Definitions.add_field 23, 21, 'ant_device_number', :type => :uint16z
 Fit::File::Definitions.add_field 23, 22, 'ant_network', :type => :ant_network
 Fit::File::Definitions.add_field 23, 25, 'source_type', :type => :source_type
 
-Fit::File::Definitions.add_name 72, 'training_file'
-Fit::File::Definitions.add_field 72, 253, 'timestamp', :type => :date_time
-Fit::File::Definitions.add_field 72, 0, 'type', :type => :file
-Fit::File::Definitions.add_field 72, 1, 'manufacturer', :type => :manufacturer
-Fit::File::Definitions.add_field 72, 2, 'product', :type => :uint16
-Fit::File::Definitions.add_field 72, 2, 'garmin_product', :type => :garmin_product, :ref_field_name => 'manufacturer', :ref_field_values => [:garmin, :dynastream, :dynastream_oem]
-Fit::File::Definitions.add_field 72, 3, 'serial_number', :type => :uint32z
-Fit::File::Definitions.add_field 72, 4, 'time_created', :type => :date_time
-
-Fit::File::Definitions.add_name 78, 'hrv'
-Fit::File::Definitions.add_field 78, 0, 'time', :type => :uint16, :scale => 1000, :unit => 's'
-
-Fit::File::Definitions.add_name 31, 'course'
-Fit::File::Definitions.add_field 31, 4, 'sport', :type => :sport
-Fit::File::Definitions.add_field 31, 5, 'name', :type => :string
-Fit::File::Definitions.add_field 31, 6, 'capabilities', :type => :course_capabilities
-
-Fit::File::Definitions.add_name 32, 'course_point'
-Fit::File::Definitions.add_field 32, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 32, 1, 'timestamp', :type => :date_time, :scale => 1
-Fit::File::Definitions.add_field 32, 2, 'position_lat', :type => :sint32, :scale => 1, :unit => 'semicircles'
-Fit::File::Definitions.add_field 32, 3, 'position_long', :type => :sint32, :scale => 1, :unit => 'semicircles'
-Fit::File::Definitions.add_field 32, 4, 'distance', :type => :uint32, :scale => 100, :unit => 'm'
-Fit::File::Definitions.add_field 32, 5, 'type', :type => :course_point, :scale => 1
-Fit::File::Definitions.add_field 32, 6, 'name', :type => :string
-
 Fit::File::Definitions.add_name 26, 'workout'
 Fit::File::Definitions.add_field 26, 4, 'sport', :type => :sport, :scale => 1
 Fit::File::Definitions.add_field 26, 5, 'capabilities', :type => :workout_capabilities
@@ -622,17 +517,6 @@ Fit::File::Definitions.add_field 28, 4, 'completed', :type => :bool, :scale => 1
 Fit::File::Definitions.add_field 28, 5, 'type', :type => :schedule, :scale => 1
 Fit::File::Definitions.add_field 28, 6, 'scheduled_time', :type => :local_date_time
 
-Fit::File::Definitions.add_name 33, 'totals'
-Fit::File::Definitions.add_field 33, 254, 'message_index', :type => :message_index
-Fit::File::Definitions.add_field 33, 253, 'timestamp', :type => :date_time, :unit => 's'
-Fit::File::Definitions.add_field 33, 0, 'timer_time', :type => :uint32, :unit => 's'
-Fit::File::Definitions.add_field 33, 1, 'distance', :type => :uint32, :unit => 'm'
-Fit::File::Definitions.add_field 33, 2, 'calories', :type => :uint32, :unit => 'kcal'
-Fit::File::Definitions.add_field 33, 3, 'sport', :type => :sport
-Fit::File::Definitions.add_field 33, 4, 'elapsed_time', :type => :uint32, :unit => 's'
-Fit::File::Definitions.add_field 33, 5, 'sessions', :type => :uint16
-Fit::File::Definitions.add_field 33, 6, 'active_time', :type => :uint32, :unit => 's'
-
 Fit::File::Definitions.add_name 30, 'weight_scale'
 Fit::File::Definitions.add_field 30, 253, 'timestamp', :type => :date_time, :scale => 1, :unit => 's'
 Fit::File::Definitions.add_field 30, 0, 'weight', :type => :weight, :scale => 100, :unit => 'kg'
@@ -648,6 +532,75 @@ Fit::File::Definitions.add_field 30, 10, 'metabolic_age', :type => :uint8, :scal
 Fit::File::Definitions.add_field 30, 11, 'visceral_fat_rating', :type => :uint8, :scale => 1
 Fit::File::Definitions.add_field 30, 12, 'user_profile_index', :type => :message_index
 
+Fit::File::Definitions.add_name 31, 'course'
+Fit::File::Definitions.add_field 31, 4, 'sport', :type => :sport
+Fit::File::Definitions.add_field 31, 5, 'name', :type => :string
+Fit::File::Definitions.add_field 31, 6, 'capabilities', :type => :course_capabilities
+
+Fit::File::Definitions.add_name 32, 'course_point'
+Fit::File::Definitions.add_field 32, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 32, 1, 'timestamp', :type => :date_time, :scale => 1
+Fit::File::Definitions.add_field 32, 2, 'position_lat', :type => :sint32, :scale => 1, :unit => 'semicircles'
+Fit::File::Definitions.add_field 32, 3, 'position_long', :type => :sint32, :scale => 1, :unit => 'semicircles'
+Fit::File::Definitions.add_field 32, 4, 'distance', :type => :uint32, :scale => 100, :unit => 'm'
+Fit::File::Definitions.add_field 32, 5, 'type', :type => :course_point, :scale => 1
+Fit::File::Definitions.add_field 32, 6, 'name', :type => :string
+
+Fit::File::Definitions.add_name 33, 'totals'
+Fit::File::Definitions.add_field 33, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 33, 253, 'timestamp', :type => :date_time, :unit => 's'
+Fit::File::Definitions.add_field 33, 0, 'timer_time', :type => :uint32, :unit => 's'
+Fit::File::Definitions.add_field 33, 1, 'distance', :type => :uint32, :unit => 'm'
+Fit::File::Definitions.add_field 33, 2, 'calories', :type => :uint32, :unit => 'kcal'
+Fit::File::Definitions.add_field 33, 3, 'sport', :type => :sport
+Fit::File::Definitions.add_field 33, 4, 'elapsed_time', :type => :uint32, :unit => 's'
+Fit::File::Definitions.add_field 33, 5, 'sessions', :type => :uint16
+Fit::File::Definitions.add_field 33, 6, 'active_time', :type => :uint32, :unit => 's'
+
+Fit::File::Definitions.add_name 34, 'activity'
+Fit::File::Definitions.add_field 34, 253, 'timestamp', :type => :date_time
+Fit::File::Definitions.add_field 34, 0, 'total_timer_time', :type => :uint32, :scale => 1000, :unit => 's'
+Fit::File::Definitions.add_field 34, 1, 'num_sessions', :type => :uint16, :scale => 1
+Fit::File::Definitions.add_field 34, 2, 'type', :type => :activity
+Fit::File::Definitions.add_field 34, 3, 'event', :type => :event
+Fit::File::Definitions.add_field 34, 4, 'event_type', :type => :event_type
+Fit::File::Definitions.add_field 34, 5, 'local_timestamp', :type => :local_date_time
+Fit::File::Definitions.add_field 34, 6, 'event_group', :type => :uint8
+
+Fit::File::Definitions.add_name 35, 'software'
+Fit::File::Definitions.add_field 35, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 35, 3, 'version', :type => :uint16, :scale => 100
+Fit::File::Definitions.add_field 35, 5, 'part_number', :type => :string
+
+Fit::File::Definitions.add_name 37, 'file_capabilities'
+Fit::File::Definitions.add_field 37, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 37, 0, 'type', :type => :file
+Fit::File::Definitions.add_field 37, 1, 'flags', :type => :file_flags
+Fit::File::Definitions.add_field 37, 2, 'directory', :type => :string
+Fit::File::Definitions.add_field 37, 3, 'max_count', :type => :uint16
+Fit::File::Definitions.add_field 37, 4, 'max_size', :type => :uint32, :unit => 'bytes'
+
+Fit::File::Definitions.add_name 38, 'mesg_capabilities'
+Fit::File::Definitions.add_field 38, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 38, 0, 'file', :type => :file
+Fit::File::Definitions.add_field 38, 1, 'mesg_num', :type => :mesg_num
+Fit::File::Definitions.add_field 38, 2, 'count_type', :type => :mesg_count
+Fit::File::Definitions.add_field 38, 3, 'count', :type => :uint16
+Fit::File::Definitions.add_field 38, 3, 'num_per_file', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:num_per_file]
+Fit::File::Definitions.add_field 38, 3, 'max_per_file', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:max_per_file]
+Fit::File::Definitions.add_field 38, 3, 'max_per_file_type', :type => :uint16, :ref_field_name => 'count_type', :ref_field_values => [:max_per_file_type]
+
+Fit::File::Definitions.add_name 39, 'field_capabilities'
+Fit::File::Definitions.add_field 39, 254, 'message_index', :type => :message_index
+Fit::File::Definitions.add_field 39, 0, 'file', :type => :file
+Fit::File::Definitions.add_field 39, 1, 'mesg_num', :type => :mesg_num
+Fit::File::Definitions.add_field 39, 2, 'field_num', :type => :uint8
+Fit::File::Definitions.add_field 39, 3, 'count', :type => :uint16
+
+Fit::File::Definitions.add_name 49, 'file_creator'
+Fit::File::Definitions.add_field 49, 0, 'software_version', :type => :uint16
+Fit::File::Definitions.add_field 49, 1, 'hardware_version', :type => :uint8
+
 Fit::File::Definitions.add_name 51, 'blood_pressure'
 Fit::File::Definitions.add_field 51, 253, 'timestamp', :type => :date_time, :scale => 1, :unit => 's'
 Fit::File::Definitions.add_field 51, 0, 'systolic_pressure', :type => :uint16, :scale => 1, :unit => 'mmHg'
@@ -661,13 +614,10 @@ Fit::File::Definitions.add_field 51, 7, 'heart_rate_type', :type => :hr_type
 Fit::File::Definitions.add_field 51, 8, 'status', :type => :bp_status
 Fit::File::Definitions.add_field 51, 9, 'user_profile_index', :type => :message_index
 
-Fit::File::Definitions.add_name 103, 'monitoring_info'
-Fit::File::Definitions.add_field 103, 253, 'timestamp', :type => :date_time
-Fit::File::Definitions.add_field 103, 0, 'local_timestamp', :type => :local_date_time
-Fit::File::Definitions.add_field 103, 1, 'activity_type', :type => :activity_type
-Fit::File::Definitions.add_field 103, 3, 'cycles_to_distance', :type => :uint16, :scale => 5000, :unit => 'm/cycle'
-Fit::File::Definitions.add_field 103, 4, 'cycles_to_calories', :type => :uint16, :scale => 5000, :unit => 'kcal/cycle'
-Fit::File::Definitions.add_field 103, 5, 'resting_metabolic_rate', :type => :uint16, :unit => 'kcal / day'
+Fit::File::Definitions.add_name 53, 'speed_zone'
+Fit::File::Definitions.add_field 53, 254, 'message_index', :type => :message_index, :scale => 1
+Fit::File::Definitions.add_field 53, 0, 'high_value', :type => :uint16, :scale => 1000, :unit => 'm/s'
+Fit::File::Definitions.add_field 53, 1, 'name', :type => :string, :scale => 1
 
 Fit::File::Definitions.add_name 55, 'monitoring'
 Fit::File::Definitions.add_field 55, 253, 'timestamp', :type => :date_time, :unit => 's'
@@ -698,11 +648,102 @@ Fit::File::Definitions.add_field 55, 28, 'intensity', :type => :uint8, :scale =>
 Fit::File::Definitions.add_field 55, 29, 'duration_min', :type => :uint16, :unit => 'min'
 Fit::File::Definitions.add_field 55, 30, 'duration', :type => :uint32, :unit => 's'
 
+Fit::File::Definitions.add_name 72, 'training_file'
+Fit::File::Definitions.add_field 72, 253, 'timestamp', :type => :date_time
+Fit::File::Definitions.add_field 72, 0, 'type', :type => :file
+Fit::File::Definitions.add_field 72, 1, 'manufacturer', :type => :manufacturer
+Fit::File::Definitions.add_field 72, 2, 'product', :type => :uint16
+Fit::File::Definitions.add_field 72, 2, 'garmin_product', :type => :garmin_product, :ref_field_name => 'manufacturer', :ref_field_values => [:garmin, :dynastream, :dynastream_oem]
+Fit::File::Definitions.add_field 72, 3, 'serial_number', :type => :uint32z
+Fit::File::Definitions.add_field 72, 4, 'time_created', :type => :date_time
+
+Fit::File::Definitions.add_name 78, 'hrv'
+Fit::File::Definitions.add_field 78, 0, 'time', :type => :uint16, :scale => 1000, :unit => 's'
+
+# 80
+# 81
+# 82
+
+Fit::File::Definitions.add_name 101, 'length'
+Fit::File::Definitions.add_field 101, 254, 'message_index', :type => :message_index, :scale => 1
+Fit::File::Definitions.add_field 101, 253, 'timestamp', :type => :date_time, :scale => 1
+Fit::File::Definitions.add_field 101, 0, 'event', :type => :event
+Fit::File::Definitions.add_field 101, 1, 'event_type', :type => :event_type
+Fit::File::Definitions.add_field 101, 2, 'start_time', :type => :date_time, :scale => 1
+Fit::File::Definitions.add_field 101, 3, 'total_elapsed_time', :type => :uint32, :scale => 1000, :unit => 's'
+Fit::File::Definitions.add_field 101, 4, 'total_timer_time', :type => :uint32, :scale => 1000, :unit => 's'
+Fit::File::Definitions.add_field 101, 5, 'total_strokes', :type => :uint16, :scale => 1, :unit => 'strokes'
+Fit::File::Definitions.add_field 101, 6, 'avg_speed', :type => :uint16, :scale => 1000, :unit => 'm/s'
+Fit::File::Definitions.add_field 101, 7, 'swim_stroke', :type => :swim_stroke, :unit => 'swim_stroke'
+Fit::File::Definitions.add_field 101, 9, 'avg_swimming_cadence', :type => :uint8, :unit => 'strokes/min'
+Fit::File::Definitions.add_field 101, 10, 'event_group', :type => :uint8
+Fit::File::Definitions.add_field 101, 11, 'total_calories', :type => :uint16, :unit => 'kcal'
+Fit::File::Definitions.add_field 101, 12, 'length_type', :type => :length_type
+Fit::File::Definitions.add_field 101, 18, 'player_score', :type => :uint16
+Fit::File::Definitions.add_field 101, 19, 'opponent_score', :type => :uint16
+Fit::File::Definitions.add_field 101, 20, 'stroke_count', :type => :uint16, :unit => 'counts'
+Fit::File::Definitions.add_field 101, 21, 'zone_count', :type => :uint16, :unit => 'counts'
+
+Fit::File::Definitions.add_name 103, 'monitoring_info'
+Fit::File::Definitions.add_field 103, 253, 'timestamp', :type => :date_time
+Fit::File::Definitions.add_field 103, 0, 'local_timestamp', :type => :local_date_time
+Fit::File::Definitions.add_field 103, 1, 'activity_type', :type => :activity_type
+Fit::File::Definitions.add_field 103, 3, 'cycles_to_distance', :type => :uint16, :scale => 5000, :unit => 'm/cycle'
+Fit::File::Definitions.add_field 103, 4, 'cycles_to_calories', :type => :uint16, :scale => 5000, :unit => 'kcal/cycle'
+Fit::File::Definitions.add_field 103, 5, 'resting_metabolic_rate', :type => :uint16, :unit => 'kcal / day'
+
+# 105
+
+Fit::File::Definitions.add_name 106, 'slave_device'
+Fit::File::Definitions.add_field 106, 0, 'manufacturer', :type => :manufacturer
+Fit::File::Definitions.add_field 106, 1, 'product', :type => :uint16
+Fit::File::Definitions.add_field 106, 1, 'garmin_product', :type => :garmin_product, :ref_field_name => 'manufacturer', :ref_field_values => [:garmin, :dynastream, :dynastream_oem]
+
+# 127
+# 128
+# 129
+
+Fit::File::Definitions.add_name 131, 'cadence_zone'
+Fit::File::Definitions.add_field 131, 254, 'message_index', :type => :message_index, :scale => 1
+Fit::File::Definitions.add_field 131, 0, 'high_value', :type => :uint8, :scale => 1, :unit => 'rpm'
+Fit::File::Definitions.add_field 131, 1, 'name', :type => :string, :scale => 1
+
+# 132
+# 142
+
 Fit::File::Definitions.add_name 145, 'memo_glob'
 Fit::File::Definitions.add_field 145, 250, 'part_index', :type => :uint32
 Fit::File::Definitions.add_field 145, 0, 'memo', :type => :byte
 Fit::File::Definitions.add_field 145, 1, 'message_number', :type => :uint16
 Fit::File::Definitions.add_field 145, 2, 'message_index', :type => :message_index
+
+# 148
+# 149
+# 150
+# 151
+# 158
+# 159
+# 160
+# 161
+# 162
+# 164
+# 165
+# 167
+# 169
+# 174
+# 177
+# 178
+# 184
+# 185
+# 186
+# 187
+# 188
+# 200
+# 201
+# 202
+# 206
+# 207
+# 208
 
 # =============================================================================
 # Warning, the definition below are not part of the official fit format
