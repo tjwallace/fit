@@ -54,6 +54,7 @@ Fit::File::Definitions.add_field 0, 2, 'garmin_product', :type => :garmin_produc
 Fit::File::Definitions.add_field 0, 3, 'serial_number', :type => :uint32z
 Fit::File::Definitions.add_field 0, 4, 'time_created', :type => :date_time
 Fit::File::Definitions.add_field 0, 5, 'number', :type => :uint16
+Fit::File::Definitions.add_field 0, 8, 'product_name', :type => :string
 
 Fit::File::Definitions.add_name 1, 'capabilities'
 Fit::File::Definitions.add_field 1, 0, 'languages', :type => :uint8z
@@ -741,8 +742,30 @@ Fit::File::Definitions.add_field 145, 2, 'message_index', :type => :message_inde
 # 200
 # 201
 # 202
-# 206
-# 207
+
+Fit::File::Definitions.add_name 206, 'field_description'
+Fit::File::Definitions.add_field 206, 0, 'developer_data_index', :type => :uint8
+Fit::File::Definitions.add_field 206, 1, 'field_definition_number', :type => :uint8
+Fit::File::Definitions.add_field 206, 2, 'fit_base_type_id ', :type => :fit_base_type
+Fit::File::Definitions.add_field 206, 3, 'field_name ', :type => :string
+Fit::File::Definitions.add_field 206, 4, 'array', :type => :uint8
+Fit::File::Definitions.add_field 206, 5, 'components ', :type => :string
+Fit::File::Definitions.add_field 206, 6, 'scale', :type => :uint8
+Fit::File::Definitions.add_field 206, 7, 'offset ', :type => :sint8
+Fit::File::Definitions.add_field 206, 8, 'units', :type => :string
+Fit::File::Definitions.add_field 206, 9, 'bits ', :type => :string
+Fit::File::Definitions.add_field 206, 10, 'accumulate ', :type => :string
+Fit::File::Definitions.add_field 206, 13, 'fit_base_unit_id ', :type => :fit_base_unit
+Fit::File::Definitions.add_field 206, 14, 'native_mesg_num', :type => :mesg_num
+Fit::File::Definitions.add_field 206, 15, 'native_field_num ', :type => :uint8
+
+Fit::File::Definitions.add_name 207, 'developer_data_id'
+Fit::File::Definitions.add_field 207, 0, 'developer_id ', :type => :byte
+Fit::File::Definitions.add_field 207, 1, 'application_id ', :type => :byte
+Fit::File::Definitions.add_field 207, 2, 'manufacturer_id', :type => :manufacturer
+Fit::File::Definitions.add_field 207, 3, 'developer_data_index ', :type => :uint8
+Fit::File::Definitions.add_field 207, 4, 'application_version', :type => :uint32
+
 # 208
 
 # =============================================================================
