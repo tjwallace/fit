@@ -28,7 +28,7 @@ describe Fit::File::Definitions do
       end
 
       it 'raised an error for dynamic field data' do
-        expect { described_class.add_field(999, 999, 'rspec_test_dyn') }.to raise_error
+        expect { described_class.add_field(999, 999, 'rspec_test_dyn') }.to raise_error(RuntimeError)
       end
     end
 
