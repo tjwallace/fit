@@ -19,7 +19,7 @@ module Fit
             end
           RUBY
 
-          definition.fields.each do |field|
+          definition.fit_fields.each do |field|
             code = ""
 
             # in case the field size is a multiple of the field length, we must build an array

@@ -110,7 +110,7 @@ module Fit
         uint16be 1
       end
       bit8 :field_count
-      array :fields, :type => Field, :initial_length => :field_count
+      array :fit_fields, :type => Field, :initial_length => :field_count
 
       def endianness
         architecture.snapshot == 0 ? :little : :big
