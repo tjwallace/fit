@@ -4,11 +4,12 @@ on: pull_request
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
         ruby-version: ['2.6', '2.7', '3.0']
+        
+    name: specs (${{ matrix.ruby-version }})
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
