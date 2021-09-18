@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe Fit::File::Definition do
-  context "given a sample definition message" do
-    describe ".read" do
+  context 'given a sample definition message' do
+    describe '.read' do
       subject do
         described_class.read example_file('record/message/definition')
       end

@@ -20,7 +20,7 @@ module Fit
       bit5 :time_offset, onlyif: :compressed_timestamp?
 
       def normal?
-        header_type == 0
+        header_type.zero?
       end
 
       def compressed_timestamp?

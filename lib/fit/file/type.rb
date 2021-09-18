@@ -6,7 +6,7 @@ module Fit
       @@types = {}
 
       def self.get_type(name)
-        return @@types[name] if @@types.has_key? name
+        return @@types[name] if @@types.key? name
 
         type = Types.get_type_definition name
         @@types[name] = type ? new(type) : nil
@@ -19,7 +19,7 @@ module Fit
       def value(val)
         return nil unless is_valid(val)
 
-        if @type.has_key? :method
+        if @type.key? :method
           Types.send(@type[:method], val, @type[:values], @type[:parameters])
         else
           values = @type[:values]
@@ -33,11 +33,11 @@ module Fit
       private
 
       def is_valid(val)
-        if @type.has_key? :invalid
-          invalid_value = @type[:invalid]
-        else
-          invalid_value = Types.get_type_definition(@type[:basic_type])[:invalid]
-        end
+        invalid_value = if @type.key? :invalid
+                          @type[:invalid]
+                        else
+                          Types.get_type_definition(@type[:basic_type])[:invalid]
+                        end
         return false if val == invalid_value
 
         true

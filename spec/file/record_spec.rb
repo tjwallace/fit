@@ -8,21 +8,21 @@ describe Fit::File::Record do
     described_class.read(example_file('record/definition_record_2.fit'))
   end
 
-  describe ".read" do
+  describe '.read' do
     subject { described_class.read(file) }
 
-    context "given a sample definition record" do
+    context 'given a sample definition record' do
       let(:file) { example_file('record/definition_record') }
 
       it { expect(subject.header).to be_a Fit::File::RecordHeader }
       it { expect(subject.content).to be_a Fit::File::Definition }
     end
 
-    context "given a sample data record" do
+    context 'given a sample data record' do
       let(:file) { nil }
     end
 
-    context "given a sample data record with a string non null terminated" do
+    context 'given a sample data record with a string non null terminated' do
       context 'string length is equal to field size' do
         let(:file) { example_file('record/data_record_2.fit') }
 
@@ -43,8 +43,8 @@ describe Fit::File::Record do
     end
   end
 
-  describe ".clear_definitions" do
-    it "should clear the definitions class variable" do
+  describe '.clear_definitions' do
+    it 'should clear the definitions class variable' do
       described_class.read example_file('record/definition_record')
       expect(described_class.definitions).to_not be_empty
       described_class.clear_definitions!

@@ -5,12 +5,14 @@ module Fit
     module Definitions
       @@fields = Hash.new { |h, k| h[k] = {} }
       @@dyn_fields = Hash.new { |h, k| h[k] = {} }
-      @@names  = Hash.new
+      @@names  = {}
 
       class << self
         def add_field(global_msg_num, field_def_num, name, options = {})
-          if @@fields[global_msg_num].has_key? field_def_num
-            raise "bad definition of dynamic field  (#{name}) without :ref_field_name or :ref_field_values" unless options.has_key?(:ref_field_name) && options.has_key?(:ref_field_values)
+          if @@fields[global_msg_num].key? field_def_num
+            unless options.key?(:ref_field_name) && options.key?(:ref_field_values)
+              raise "bad definition of dynamic field  (#{name}) without :ref_field_name or :ref_field_values"
+            end
 
             @@dyn_fields[global_msg_num][field_def_num] ||= {}
             @@dyn_fields[global_msg_num][field_def_num][name.to_sym] = options
@@ -19,9 +21,9 @@ module Fit
             # basic types are not found and returns nil (also some rspec dummy tests)
             if type
               type = type[:values].invert
-              @@dyn_fields[global_msg_num][field_def_num][name.to_sym][:ref_field_values] = options[:ref_field_values].map { |elt|
+              @@dyn_fields[global_msg_num][field_def_num][name.to_sym][:ref_field_values] = options[:ref_field_values].map do |elt|
                 type[elt.to_s]
-              }
+              end
             end
           else
             @@fields[global_msg_num][field_def_num] = options.merge(name: name)

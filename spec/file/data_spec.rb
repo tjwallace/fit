@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Fit::File::Data do
-  describe ".generate" do
+  describe '.generate' do
     context 'standard definition' do
       let(:definition) do
         Fit::File::Definition.read example_file('record/message/definition')
@@ -12,7 +12,7 @@ describe Fit::File::Data do
       subject { described_class.generate(definition) }
 
       its(:ancestors) { should include(BinData::Record) }
-      its("new.record_type") { should eq(:file_id) }
+      its('new.record_type') { should eq(:file_id) }
     end
 
     context 'definition with multiple time the same field' do
@@ -20,7 +20,7 @@ describe Fit::File::Data do
         @fields = Fit::File::Definitions.class_variable_get :@@fields
         @dyn_fields = Fit::File::Definitions.class_variable_get :@@dyn_fields
         # force a fake definition for scaling of arrays
-        Fit::File::Definitions.add_field 2, 2, "field_array", type: 6, scale: 10, offset: 0
+        Fit::File::Definitions.add_field 2, 2, 'field_array', type: 6, scale: 10, offset: 0
       end
 
       after :all do
@@ -31,11 +31,11 @@ describe Fit::File::Data do
       before :each do
         def_file = example_file('record/message/definition_field_array.fit')
         data_file = example_file('record/message/data_field_array.fit')
-        definition = described_class.generate(Fit::File::Definition.read def_file)
+        definition = described_class.generate(Fit::File::Definition.read(def_file))
         @result = definition.read(data_file)
       end
 
-      it "reads the entire record" do
+      it 'reads the entire record' do
         # read first the record definition
         expect(@result.raw_field_array).to be == [123456789, 987654321]
         expect(@result.raw_field_4).to be == [1, 3]
@@ -43,17 +43,17 @@ describe Fit::File::Data do
         expect(@result.raw_active_time_zone).to be == 0
       end
 
-      it "does not apply the scale equal to 1 for integer" do
+      it 'does not apply the scale equal to 1 for integer' do
         expect(@result.raw_active_time_zone).to be == 0
         expect(@result.active_time_zone.to_s).to be_eql '0'
       end
 
-      it "does not apply the scale equal to 1 for arrays" do
+      it 'does not apply the scale equal to 1 for arrays' do
         expect(@result.raw_field_4).to be == [1, 3]
         expect(@result.field_4.to_s).to be_eql '[1, 3]'
       end
 
-      it "does apply scale on each element of an array" do
+      it 'does apply scale on each element of an array' do
         expect(@result.raw_field_array).to be == [123456789, 987654321]
         expect(@result.field_array.to_s).to be_eql '[12345678.9, 98765432.1]'
       end
@@ -63,7 +63,7 @@ describe Fit::File::Data do
       before :each do
         def_file = example_file('record/message/definition_dynamic_fields.fit')
         data_file = example_file('record/message/data_dynamic_fields.fit')
-        definition = described_class.generate(Fit::File::Definition.read def_file)
+        definition = described_class.generate(Fit::File::Definition.read(def_file))
         @result = definition.read(data_file)
       end
 
@@ -77,7 +77,7 @@ describe Fit::File::Data do
       before :each do
         def_file = example_file('record/message/definition_dynamic_fields.fit')
         data_file = example_file('record/message/data_dynamic_fields.fit')
-        definition = described_class.generate(Fit::File::Definition.read def_file)
+        definition = described_class.generate(Fit::File::Definition.read(def_file))
         @result = definition.read(data_file)
       end
 
@@ -90,7 +90,7 @@ describe Fit::File::Data do
     context 'definition with bit field types' do
       before :each do
         def_file = example_file('record/message/definition_file_capabilities.fit')
-        @definition = described_class.generate(Fit::File::Definition.read def_file)
+        @definition = described_class.generate(Fit::File::Definition.read(def_file))
       end
 
       context 'when only 1 bit set' do
@@ -114,7 +114,7 @@ describe Fit::File::Data do
       context 'in lap message' do
         before :each do
           def_file = example_file('record/message/definition_lap.fit')
-          definition = described_class.generate(Fit::File::Definition.read def_file)
+          definition = described_class.generate(Fit::File::Definition.read(def_file))
           @res = definition.read(example_file('record/message/data_lap.fit'))
         end
         it 'returns the total_swim_time' do
@@ -136,7 +136,7 @@ describe Fit::File::Data do
       context 'in session message' do
         before :each do
           def_file = example_file('record/message/definition_session.fit')
-          definition = described_class.generate(Fit::File::Definition.read def_file)
+          definition = described_class.generate(Fit::File::Definition.read(def_file))
           @res = definition.read(example_file('record/message/data_session.fit'))
         end
 

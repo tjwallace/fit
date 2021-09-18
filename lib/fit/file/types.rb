@@ -11,7 +11,7 @@ module Fit
         end
 
         def get_type_definition(name)
-          return @@types[name] if @@types.has_key? name
+          return @@types[name] if @@types.key? name
 
           nil
         end

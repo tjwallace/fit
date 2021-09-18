@@ -59,13 +59,13 @@ module Fit
             # some cases found where string has the max field length
             # and is therefore not null terminated
             @length = 1
-            "string"
+            'string'
           when 8
             @length = 4
-            "float"
+            'float'
           when 9
             @length = 8
-            "double"
+            'double'
           when 10 # uint8z
             build_int_type 8, false
           when 11 # uint16z
@@ -91,9 +91,7 @@ module Fit
         end
 
         # return the length in byte of the given type
-        def length
-          @length
-        end
+        attr_reader :length
 
         private
 
@@ -116,7 +114,7 @@ module Fit
       array :fit_fields, type: Field, initial_length: :field_count
 
       def endianness
-        architecture.snapshot == 0 ? :little : :big
+        architecture.snapshot.zero? ? :little : :big
       end
 
       def record_type

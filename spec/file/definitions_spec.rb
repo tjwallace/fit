@@ -6,7 +6,7 @@ require 'spec_helper'
 # with already defined fields in definitions.rb and test are
 # not really independant of the code
 describe Fit::File::Definitions do
-  describe ".add_field" do
+  describe '.add_field' do
     before :all do
       @fields = described_class.class_variable_get :@@fields
       @dyn_fields = described_class.class_variable_get :@@dyn_fields
@@ -17,14 +17,14 @@ describe Fit::File::Definitions do
       Fit::File::Definitions.class_variable_set(:@@dyn_fields, @dyn_fields)
     end
 
-    context "without additional options" do
+    context 'without additional options' do
       before :each do
         Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
         Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
         described_class.add_field(999, 999, 'rspec_test')
       end
 
-      it "adds field data" do
+      it 'adds field data' do
         expect(described_class.get_field(999, 999)).to be_a(Hash)
         expect(described_class.get_field(999, 999)).to eql({ name: 'rspec_test' })
       end
@@ -34,7 +34,7 @@ describe Fit::File::Definitions do
       end
     end
 
-    context "with additional options" do
+    context 'with additional options' do
       before :each do
         Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
         Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
@@ -44,7 +44,7 @@ describe Fit::File::Definitions do
                                                               ref_field_values: nil)
       end
 
-      it "adds field data" do
+      it 'adds field data' do
         expect(described_class.get_field(999, 999)).to be_a(Hash)
         expect(described_class.get_field(999, 999)).to eql({ name: 'rspec_test', scale: 100, units: 'm' })
       end
@@ -58,8 +58,8 @@ describe Fit::File::Definitions do
     end
   end
 
-  describe ".get_field" do
-    it "returns nil if no field exists" do
+  describe '.get_field' do
+    it 'returns nil if no field exists' do
       expect(described_class.get_field(100, 100)).to be_nil
     end
   end
@@ -71,15 +71,15 @@ describe Fit::File::Definitions do
     end
   end
 
-  describe ".add_name" do
-    it "adds a name" do
+  describe '.add_name' do
+    it 'adds a name' do
       described_class.add_name(20, 'record')
       expect(described_class.get_name(20)).to eql('record')
     end
   end
 
-  describe ".get_name" do
-    it "returns nil if no name exists" do
+  describe '.get_name' do
+    it 'returns nil if no name exists' do
       expect(described_class.get_name(100)).to be_nil
     end
   end

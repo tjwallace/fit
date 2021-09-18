@@ -12,9 +12,7 @@ require 'rspec'
 require 'rspec/its'
 require 'fit'
 
-RSpec.configure do |config|
-  config.raise_errors_for_deprecations!
-end
+RSpec.configure(&:raise_errors_for_deprecations!)
 
 def example_file(filename)
   File.open File.join(SPEC_ROOT, 'support', 'examples', filename)

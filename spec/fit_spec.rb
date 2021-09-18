@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Fit do
-  describe "VERSION" do
+  describe 'VERSION' do
     subject { Fit::VERSION }
 
     it { is_expected.to be_a(String) }
