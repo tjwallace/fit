@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fit
   class File
     class Data < BinData::Record
@@ -20,7 +22,7 @@ module Fit
           RUBY
 
           definition.fit_fields.each do |field|
-            code = ""
+            code = +''
 
             # in case the field size is a multiple of the field length, we must build an array
             if (field.type != "string" and field.size > field.length)

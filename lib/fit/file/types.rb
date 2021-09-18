@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fit
   class File
     module Types
@@ -30,7 +32,7 @@ module Fit
         end
 
         def bitfield_value(bitfield, values, parameters = nil)
-          res = ''
+          res = +''
           values.each do |key, val|
             if key & bitfield != 0
               res << '/' unless res.empty?

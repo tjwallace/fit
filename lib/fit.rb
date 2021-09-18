@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bindata'
 require 'active_support'
 require 'active_support/core_ext/class'

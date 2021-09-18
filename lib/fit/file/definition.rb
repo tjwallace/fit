@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fit
   class File
     class Definition < BinData::Record
@@ -99,7 +101,9 @@ module Fit
         def build_int_type(length, signed)
           # @length is in byte not in bits, so divide by 8
           @length = length / 8
-          (signed ? '' : 'u') << 'int' << length.to_s
+
+          sign = (signed ? '' : 'u')
+          "#{sign}int#{length}"
         end
       end
 
