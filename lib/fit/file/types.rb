@@ -6,7 +6,7 @@ module Fit
 
       class << self
         def add_type(name, type, option = {})
-          @@types[name] = option.merge({basic_type: type})
+          @@types[name] = option.merge({ basic_type: type })
         end
 
         def get_type_definition(name)
@@ -135,9 +135,9 @@ Fit::File::Types.add_type :mesg_count, :enum, values: {
     1 => 'max_per_file',
     2 => 'max_per_file_type' }
 Fit::File::Types.add_type :date_time, :uint32, values: {
-    268435456 => 'min' }, method: :date_time_value, parameters: {utc: true}
+    268435456 => 'min' }, method: :date_time_value, parameters: { utc: true }
 Fit::File::Types.add_type :local_date_time, :uint32, values: {
-    268435456 => 'min' }, method: :date_time_value, parameters: {utc: false}
+    268435456 => 'min' }, method: :date_time_value, parameters: { utc: false }
 Fit::File::Types.add_type :message_index, :uint16, values: {
     32768 => 'selected',
     26872 => 'reserved',
