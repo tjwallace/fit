@@ -19,7 +19,7 @@ module Fit
           if time < val['min']
             time.to_s
           else
-            res= parameters[:utc] ? Time.utc(1989, 12, 31) + time : Time.local(1989, 12, 31) + time
+            res = parameters[:utc] ? Time.utc(1989, 12, 31) + time : Time.local(1989, 12, 31) + time
             res.to_s
           end
         end

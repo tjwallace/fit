@@ -11,12 +11,12 @@ describe Fit::File::Types do
 
   describe '.add_type' do
     before :each do
-      Fit::File::Types.class_variable_set(:@@types, Hash.new { |h, k| h[k]={} })
+      Fit::File::Types.class_variable_set(:@@types, Hash.new { |h, k| h[k] = {} })
     end
 
     context 'for enum type' do
       it 'add enum data' do
-        val = { values: { 1 => 'val1', 2=> 'val2', 3 => 'val3' } }
+        val = { values: { 1 => 'val1', 2 => 'val2', 3 => 'val3' } }
         described_class.add_type(:test_enum, :enum, val)
         expect(described_class.get_type_definition(:test_enum)).to eql val.merge({ basic_type: :enum })
       end

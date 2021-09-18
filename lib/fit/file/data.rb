@@ -24,7 +24,7 @@ module Fit
 
             # in case the field size is a multiple of the field length, we must build an array
             if (field.type != "string" and field.size > field.length)
-              code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size/field.length}\n"
+              code << "array :#{field.raw_name}, :type => :#{field.type}, :initial_length => #{field.size / field.length}\n"
             else
               # string are not null terminated when they have exactly the lenght of the field
               code << "#{field.type} :#{field.raw_name}"
