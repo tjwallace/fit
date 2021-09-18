@@ -31,7 +31,7 @@ module Fit
         end
 
         def get_dynamic_fields(global_msg_num, field_def_num)
-          @@dyn_fields[global_msg_num][field_def_num] 
+          @@dyn_fields[global_msg_num][field_def_num]
         end
 
         def add_name(global_msg_num, name)
@@ -46,6 +46,8 @@ module Fit
     end
   end
 end
+
+# rubocop:disable Layout/LineLength
 
 # DATA
 Fit::File::Definitions.add_name 0, 'file_id'
@@ -784,4 +786,4 @@ Fit::File::Definitions.add_field 18, 80, 'swolf', type: :uint16
 Fit::File::Definitions.add_field 19, 70, 'swim_time', type: :uint32, scale: 1000
 Fit::File::Definitions.add_field 19, 72, 'average_stroke', type: :uint16, scale: 10
 Fit::File::Definitions.add_field 19, 73, 'swolf', type: :uint16
-
+# rubocop:enable Layout/LineLength

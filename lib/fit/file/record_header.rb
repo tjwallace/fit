@@ -3,7 +3,7 @@
 module Fit
   class File
     class RecordHeader < BinData::Record
-      # described in section 4.1 Record Header Byte of the FIT Protocol documentation 
+      # described in section 4.1 Record Header Byte of the FIT Protocol documentation
       hide :reserved_bits
 
       bit1 :header_type
@@ -26,7 +26,7 @@ module Fit
       def compressed_timestamp?
         header_type == 1
       end
-      
+
       def developer_data?
         message_type_specific == 1
       end

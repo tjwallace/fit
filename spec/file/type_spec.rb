@@ -23,7 +23,7 @@ describe Fit::File::Type do
         expect(described_class.get_type(:int_type)).to equal described_class.get_type(:int_type)
       end
     end
-    
+
     context 'when invalid name' do
       it 'returns nil' do
         expect(described_class.get_type(:unknown_type)).to be_nil
@@ -41,7 +41,7 @@ describe Fit::File::Type do
           expect(type.value(2)).to eql 'two'
         end
       end
-      
+
       context 'unknown value requested' do
         it 'returns the input value' do
           expect(type.value(999)).to eql 999
@@ -65,12 +65,12 @@ describe Fit::File::Type do
 
     context 'when type has message_index value' do
       let(:type) { described_class.get_type(:message_index) }
-      
+
       it 'returns the message_index' do
         expect(type.value(10)).to eq(10)
         expect(type.value(32778)).to eq(10)
         expect(type.value(28682)).to eq(10)
-      end 
+      end
 
     end
 

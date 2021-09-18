@@ -47,7 +47,7 @@ describe Fit::File::Definitions do
         expect(described_class.get_field(999, 999)).to be_a(Hash)
         expect(described_class.get_field(999, 999)).to eql({ name: 'rspec_test', scale: 100, units: 'm' })
       end
-      
+
       it 'adds dynamic field data' do
         expect(described_class.get_dynamic_fields(999, 999)).to be_a(Hash)
         expect(described_class.get_dynamic_fields(999, 999)).to eql({ rspec_test_dyn: { type: 4, scale: 10, offset: 10, ref_field_name: nil, ref_field_values: nil } })

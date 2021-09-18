@@ -22,11 +22,11 @@ describe Fit::File::Record do
     context "given a sample data record" do
       let(:file) { nil }
     end
-  
+
     context "given a sample data record with a string non null terminated" do
 
       context 'string length is equal to field size' do
-      
+
         let(:file) { example_file('record/data_record_2.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }
@@ -35,7 +35,7 @@ describe Fit::File::Record do
       end
 
     context 'string length is smaller than field size' do
-      
+
         let(:file) { example_file('record/data_record_2bis.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }

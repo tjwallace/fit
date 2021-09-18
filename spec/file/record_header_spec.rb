@@ -21,7 +21,7 @@ describe Fit::File::RecordHeader do
   context "given a sample compressed timestamp header" do
     # TODO
   end
-  
+
   context "given a sample normal header with developer flag set" do
     subject do
       described_class.read example_file('record/normal_header_with_developer_flag')

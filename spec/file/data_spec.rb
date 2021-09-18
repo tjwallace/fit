@@ -42,12 +42,12 @@ describe Fit::File::Data do
         expect(@result.raw_field_8).to be == 1539
         expect(@result.raw_active_time_zone).to be == 0
       end
-    
+
       it "does not apply the scale equal to 1 for integer" do
         expect(@result.raw_active_time_zone).to be == 0
         expect(@result.active_time_zone.to_s).to be_eql '0'
       end
-      
+
       it "does not apply the scale equal to 1 for arrays" do
         expect(@result.raw_field_4).to be == [ 1, 3 ]
         expect(@result.field_4.to_s).to be_eql '[1, 3]'
@@ -109,7 +109,7 @@ describe Fit::File::Data do
         end
       end
     end
-    
+
     context 'definition with undocumented fields of garmin swim' do
 
       context 'in lap message' do
@@ -127,7 +127,7 @@ describe Fit::File::Data do
           expect(@res.raw_average_stroke).to eq(143)
           expect(@res.average_stroke).to eq(14.3)
         end
-        
+
         it 'returns the swolf' do
           expect(@res.raw_swolf).to eq(49)
           expect(@res.swolf).to eq(49)
@@ -155,7 +155,7 @@ describe Fit::File::Data do
           expect(@res.raw_average_stroke).to eq(134)
           expect(@res.average_stroke).to eq(13.4)
         end
-        
+
         it 'returns the swolf' do
           expect(@res.raw_swolf).to eq(44)
           expect(@res.swolf).to eq(44)

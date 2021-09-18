@@ -56,7 +56,7 @@ module Fit
 
             class_eval code , __FILE__, __LINE__ + 1
           end
-      
+
           private
 			      # return the dynamic value if relevant
             # otherwise, it returns value (scaled if necessary)

@@ -90,7 +90,7 @@ module Fit
         def size
           field_size
         end
-        
+
         # return the length in byte of the given type
         def length
           @length
