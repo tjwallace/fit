@@ -2,8 +2,8 @@ module Fit
   class File
     module Definitions
 
-      @@fields = Hash.new{ |h,k| h[k]= {} }
-      @@dyn_fields = Hash.new{ |h,k| h[k]= {} }
+      @@fields = Hash.new{ |h, k| h[k]= {} }
+      @@dyn_fields = Hash.new{ |h, k| h[k]= {} }
       @@names  = Hash.new
 
       class << self
