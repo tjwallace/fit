@@ -13,14 +13,14 @@ describe Fit::File::Definitions do
     end
 
     after :all do
-      Fit::File::Definitions.class_variable_set(:@@fields, @fields)
-      Fit::File::Definitions.class_variable_set(:@@dyn_fields, @dyn_fields)
+      described_class.class_variable_set(:@@fields, @fields)
+      described_class.class_variable_set(:@@dyn_fields, @dyn_fields)
     end
 
     context 'without additional options' do
-      before :each do
-        Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
-        Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
+      before do
+        described_class.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
+        described_class.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
         described_class.add_field(999, 999, 'rspec_test')
       end
 
@@ -35,9 +35,9 @@ describe Fit::File::Definitions do
     end
 
     context 'with additional options' do
-      before :each do
-        Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
-        Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
+      before do
+        described_class.class_variable_set(:@@fields, Hash.new { |h, k| h[k] = {} })
+        described_class.class_variable_set(:@@dyn_fields, Hash.new { |h, k| h[k] = {} })
 
         described_class.add_field(999, 999, 'rspec_test', scale: 100, units: 'm')
         described_class.add_field(999, 999, 'rspec_test_dyn', type: 4, scale: 10, offset: 10, ref_field_name: nil,

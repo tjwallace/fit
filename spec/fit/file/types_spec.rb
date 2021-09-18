@@ -8,12 +8,12 @@ describe Fit::File::Types do
   end
 
   after :all do
-    Fit::File::Types.class_variable_set(:@@types, @types)
+    described_class.class_variable_set(:@@types, @types)
   end
 
   describe '.add_type' do
-    before :each do
-      Fit::File::Types.class_variable_set(:@@types, Hash.new { |h, k| h[k] = {} })
+    before do
+      described_class.class_variable_set(:@@types, Hash.new { |h, k| h[k] = {} })
     end
 
     context 'for enum type' do

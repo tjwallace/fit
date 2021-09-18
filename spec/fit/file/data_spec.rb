@@ -5,14 +5,12 @@ require 'spec_helper'
 describe Fit::File::Data do
   describe '.generate' do
     context 'standard definition' do
-      let(:definition) do
-        Fit::File::Definition.read example_file('record/message/definition')
-      end
-
       subject { described_class.generate(definition) }
 
-      its(:ancestors) { should include(BinData::Record) }
-      its('new.record_type') { should eq(:file_id) }
+      let(:definition) { Fit::File::Definition.read example_file('record/message/definition') }
+
+      its(:ancestors) { is_expected.to include(BinData::Record) }
+      its('new.record_type') { is_expected.to eq(:file_id) }
     end
 
     context 'definition with multiple time the same field' do
@@ -28,7 +26,7 @@ describe Fit::File::Data do
         Fit::File::Definitions.class_variable_set :@@dyn_fields, @dyn_fields
       end
 
-      before :each do
+      before do
         def_file = example_file('record/message/definition_field_array.fit')
         data_file = example_file('record/message/data_field_array.fit')
         definition = described_class.generate(Fit::File::Definition.read(def_file))
@@ -60,7 +58,7 @@ describe Fit::File::Data do
     end
 
     context 'definition with dynamic fields' do
-      before :each do
+      before do
         def_file = example_file('record/message/definition_dynamic_fields.fit')
         data_file = example_file('record/message/data_dynamic_fields.fit')
         definition = described_class.generate(Fit::File::Definition.read(def_file))
@@ -74,7 +72,7 @@ describe Fit::File::Data do
     end
 
     context 'definition with non basic types' do
-      before :each do
+      before do
         def_file = example_file('record/message/definition_dynamic_fields.fit')
         data_file = example_file('record/message/data_dynamic_fields.fit')
         definition = described_class.generate(Fit::File::Definition.read(def_file))
@@ -88,7 +86,7 @@ describe Fit::File::Data do
     end
 
     context 'definition with bit field types' do
-      before :each do
+      before do
         def_file = example_file('record/message/definition_file_capabilities.fit')
         @definition = described_class.generate(Fit::File::Definition.read(def_file))
       end
@@ -112,11 +110,12 @@ describe Fit::File::Data do
 
     context 'definition with undocumented fields of garmin swim' do
       context 'in lap message' do
-        before :each do
+        before do
           def_file = example_file('record/message/definition_lap.fit')
           definition = described_class.generate(Fit::File::Definition.read(def_file))
           @res = definition.read(example_file('record/message/data_lap.fit'))
         end
+
         it 'returns the total_swim_time' do
           expect(@res.raw_swim_time).to eq(234321)
           expect(@res.swim_time).to eq(234.321)
@@ -134,7 +133,7 @@ describe Fit::File::Data do
       end
 
       context 'in session message' do
-        before :each do
+        before do
           def_file = example_file('record/message/definition_session.fit')
           definition = described_class.generate(Fit::File::Definition.read(def_file))
           @res = definition.read(example_file('record/message/data_session.fit'))

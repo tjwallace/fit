@@ -26,7 +26,7 @@ describe Fit::File::Record do
       context 'string length is equal to field size' do
         let(:file) { example_file('record/data_record_2.fit') }
 
-        its(:header) { should be_a(Fit::File::RecordHeader) }
+        its(:header) { is_expected.to be_a(Fit::File::RecordHeader) }
         it { expect(subject.content.raw_version).to be == 250 }
         it { expect(subject.content.raw_part_number).to be == '123-A1234-00' }
       end
@@ -34,7 +34,7 @@ describe Fit::File::Record do
       context 'string length is smaller than field size' do
         let(:file) { example_file('record/data_record_2bis.fit') }
 
-        its(:header) { should be_a(Fit::File::RecordHeader) }
+        its(:header) { is_expected.to be_a(Fit::File::RecordHeader) }
         it { expect(subject.content.raw_version).to be == 251 }
         it { expect(subject.content.version).to be == 2.51 }
         it { expect(subject.content.raw_part_number).to be == '123-A1234' }
@@ -44,9 +44,9 @@ describe Fit::File::Record do
   end
 
   describe '.clear_definitions' do
-    it 'should clear the definitions class variable' do
+    it 'clears the definitions class variable' do
       described_class.read example_file('record/definition_record')
-      expect(described_class.definitions).to_not be_empty
+      expect(described_class.definitions).not_to be_empty
       described_class.clear_definitions!
       expect(described_class.definitions).to be_empty
     end

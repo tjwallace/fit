@@ -16,7 +16,7 @@ describe Fit::File::Type do
   describe '.get_type' do
     context 'when valid name' do
       it 'returns a type' do
-        expect(described_class.get_type(:int_type)).to be_a Fit::File::Type
+        expect(described_class.get_type(:int_type)).to be_a described_class
       end
 
       it 'returns always the same instance' do
@@ -43,7 +43,7 @@ describe Fit::File::Type do
 
       context 'unknown value requested' do
         it 'returns the input value' do
-          expect(type.value(999)).to eql 999
+          expect(type.value(999)).to be 999
         end
       end
 
@@ -57,6 +57,7 @@ describe Fit::File::Type do
 
     context 'when type has date_time value' do
       let(:type) { described_class.get_type(:date_time) }
+
       it 'returns the date' do
         expect(type.value(790509304)).to eq('2015-01-18 09:55:04 UTC')
       end
@@ -74,6 +75,7 @@ describe Fit::File::Type do
 
     context 'when type has file_flags value' do
       let(:type) { described_class.get_type(:file_flags) }
+
       it 'returns the file_flags' do
         expect(type.value(10)).to eq('read/erase')
         expect(type.value(0x0A)).to eq('read/erase')
@@ -82,6 +84,7 @@ describe Fit::File::Type do
 
     context 'when type has bool value' do
       let(:type) { described_class.get_type(:bool) }
+
       it 'returns the boolean value' do
         expect(type.value(0)).to eq(false)
         expect(type.value(1)).to eq(true)
@@ -92,7 +95,7 @@ describe Fit::File::Type do
     context 'when type has no value' do
       it 'returns nil' do
         type = described_class.get_type(:int_type)
-        expect(type.value(1)).to eql 1
+        expect(type.value(1)).to be 1
       end
     end
   end
