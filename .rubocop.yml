@@ -1,0 +1,26 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
+Naming/VariableNumber:
+  Enabled: false
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_statement_only
+
+Style/NumericLiterals:
+  Enabled: false

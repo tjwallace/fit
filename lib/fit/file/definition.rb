@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module Fit
   class File
     class Definition < BinData::Record
-
       class Field < BinData::Record
         hide :reserved_bits
 
@@ -14,7 +15,7 @@ module Fit
         def data
           @data ||= Definitions.get_field(parent.parent.global_message_number.snapshot,
                                           field_definition_number.snapshot) ||
-                      { :name => "field_#{field_definition_number.snapshot}", :scale => nil }
+                    { name: "field_#{field_definition_number.snapshot}", scale: nil }
         end
 
         def dyn_data
@@ -58,13 +59,13 @@ module Fit
             # some cases found where string has the max field length
             # and is therefore not null terminated
             @length = 1
-            "string"
+            'string'
           when 8
             @length = 4
-            "float"
+            'float'
           when 9
             @length = 8
-            "double"
+            'double'
           when 10 # uint8z
             build_int_type 8, false
           when 11 # uint16z
@@ -88,39 +89,37 @@ module Fit
         def size
           field_size
         end
-        
+
         # return the length in byte of the given type
-        def length
-          @length
-        end
+        attr_reader :length
 
         private
 
         def build_int_type(length, signed)
           # @length is in byte not in bits, so divide by 8
-          @length = length/8
-          (signed ? '' : 'u') << 'int' << length.to_s
+          @length = length / 8
+
+          sign = (signed ? '' : 'u')
+          "#{sign}int#{length}"
         end
       end
 
-      skip :length => 1
+      skip length: 1
       bit8 :architecture
-      choice :global_message_number, :selection => :architecture do
+      choice :global_message_number, selection: :architecture do
         uint16le 0
         uint16be 1
       end
       bit8 :field_count
-      array :fit_fields, :type => Field, :initial_length => :field_count
+      array :fit_fields, type: Field, initial_length: :field_count
 
       def endianness
-        architecture.snapshot == 0 ? :little : :big
+        architecture.snapshot.zero? ? :little : :big
       end
 
       def record_type
         :definition
       end
-
     end
   end
 end
-

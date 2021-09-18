@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Fit
   class File
-
     def self.read(io)
       new.read(io)
     end
@@ -16,14 +17,11 @@ module Fit
 
       Record.clear_definitions!
 
-      while io.pos < @header.end_pos
-        @records << Record.read(io)
-      end
+      @records << Record.read(io) while io.pos < @header.end_pos
 
       @crc = io.read(2)
 
       self
     end
-
   end
 end
