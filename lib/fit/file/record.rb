@@ -3,7 +3,6 @@
 module Fit
   class File
     class Record
-
       @@definitions = {}
       mattr_reader :definitions, instance_reader: false
 
@@ -21,19 +20,19 @@ module Fit
         @header = RecordHeader.read(io)
 
         @content = case @header.message_type.snapshot
-        when 1
-          Definition.read(io).tap do |definition|
-            @@definitions[@header.local_message_type.snapshot] = Data.generate(definition)
-          end
-        when 0
-          definition = @@definitions[@header.local_message_type.snapshot]
-          raise "No definition for local message type: #{@header.local_message_type}" if definition.nil?
-          definition.read(io)
-        end
+                   when 1
+                     Definition.read(io).tap do |definition|
+                       @@definitions[@header.local_message_type.snapshot] = Data.generate(definition)
+                     end
+                   when 0
+                     definition = @@definitions[@header.local_message_type.snapshot]
+                     raise "No definition for local message type: #{@header.local_message_type}" if definition.nil?
+
+                     definition.read(io)
+                   end
 
         self
       end
-
     end
   end
 end

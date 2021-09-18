@@ -33,7 +33,6 @@ describe Fit::File::Type do
 
   describe '#value' do
     context 'when type has values' do
-
       let(:type) { described_class.get_type(:int_type_with_val) }
 
       context 'known value requested' do
@@ -71,7 +70,6 @@ describe Fit::File::Type do
         expect(type.value(32778)).to eq(10)
         expect(type.value(28682)).to eq(10)
       end
-
     end
 
     context 'when type has file_flags value' do

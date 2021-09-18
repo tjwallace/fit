@@ -42,17 +42,18 @@ describe Fit::File::Types do
     context 'when value is above min' do
       context 'with UTC mode' do
         it 'returns exact date UTC' do
-          expect(described_class.date_time_value(790509304, { 268435456 => 'min' }, { utc: true })).to eql '2015-01-18 09:55:04 UTC'
+          expect(described_class.date_time_value(790509304, { 268435456 => 'min' },
+                                                 { utc: true })).to eql '2015-01-18 09:55:04 UTC'
         end
       end
 
       context 'with local mode' do
         it 'returns exact date in locale time zone' do
           # TODO: manage answer based on current system local
-          expect(described_class.date_time_value(790509304, { 268435456 => 'min' }, { utc: false })).not_to match(/UTC$/)
+          expect(described_class.date_time_value(790509304, { 268435456 => 'min' },
+                                                 { utc: false })).not_to match(/UTC$/)
         end
       end
-
     end
   end
 
@@ -76,7 +77,6 @@ describe Fit::File::Types do
         expect(described_class.message_index_value(32778, values)).to eq(10)
       end
     end
-
   end
 
   describe '.bitfield_value' do
@@ -97,6 +97,4 @@ describe Fit::File::Types do
       end
     end
   end
-
 end
-

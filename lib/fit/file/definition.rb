@@ -3,7 +3,6 @@
 module Fit
   class File
     class Definition < BinData::Record
-
       class Field < BinData::Record
         hide :reserved_bits
 
@@ -16,7 +15,7 @@ module Fit
         def data
           @data ||= Definitions.get_field(parent.parent.global_message_number.snapshot,
                                           field_definition_number.snapshot) ||
-                      { name: "field_#{field_definition_number.snapshot}", scale: nil }
+                    { name: "field_#{field_definition_number.snapshot}", scale: nil }
         end
 
         def dyn_data
@@ -123,8 +122,6 @@ module Fit
       def record_type
         :definition
       end
-
     end
   end
 end
-

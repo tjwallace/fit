@@ -2,7 +2,6 @@
 
 module Fit
   class File
-
     def self.read(io)
       new.read(io)
     end
@@ -26,6 +25,5 @@ module Fit
 
       self
     end
-
   end
 end

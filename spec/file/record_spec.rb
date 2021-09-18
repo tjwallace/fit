@@ -16,7 +16,6 @@ describe Fit::File::Record do
 
       it { expect(subject.header).to be_a Fit::File::RecordHeader }
       it { expect(subject.content).to be_a Fit::File::Definition }
-
     end
 
     context "given a sample data record" do
@@ -24,9 +23,7 @@ describe Fit::File::Record do
     end
 
     context "given a sample data record with a string non null terminated" do
-
       context 'string length is equal to field size' do
-
         let(:file) { example_file('record/data_record_2.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }
@@ -34,8 +31,7 @@ describe Fit::File::Record do
         it { expect(subject.content.raw_part_number).to be == '123-A1234-00' }
       end
 
-    context 'string length is smaller than field size' do
-
+      context 'string length is smaller than field size' do
         let(:file) { example_file('record/data_record_2bis.fit') }
 
         its(:header) { should be_a(Fit::File::RecordHeader) }

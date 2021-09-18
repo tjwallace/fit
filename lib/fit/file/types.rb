@@ -3,7 +3,6 @@
 module Fit
   class File
     module Types
-
       @@types = {}
 
       class << self
@@ -13,6 +12,7 @@ module Fit
 
         def get_type_definition(name)
           return @@types[name] if @@types.has_key? name
+
           nil
         end
 
@@ -42,7 +42,6 @@ module Fit
           res
         end
       end
-
     end
   end
 end

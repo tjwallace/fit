@@ -10,7 +10,7 @@ describe Fit::File::RecordHeader do
 
     its(:header_type) { should == 0 }
     its(:message_type) { should == 1 }
-    its(:message_type_specific) { should == 0}
+    its(:message_type_specific) { should == 0 }
     its(:local_message_type) { should == 0 }
 
     it { is_expected.to be_normal }
@@ -29,7 +29,7 @@ describe Fit::File::RecordHeader do
 
     its(:header_type) { should == 0 }
     its(:message_type) { should == 1 }
-    its(:message_type_specific) { should == 1}
+    its(:message_type_specific) { should == 1 }
     its(:local_message_type) { should == 0 }
 
     it { is_expected.to be_normal }

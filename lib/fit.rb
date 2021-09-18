@@ -17,9 +17,7 @@ require 'fit/file/definitions'
 require 'fit/version'
 
 module Fit
-
   def self.load_file(path)
     File.read ::File.open(path)
   end
-
 end

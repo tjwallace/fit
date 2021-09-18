@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Fit::File do
-  let(:file) { described_class.read( example_file('file/full_file_with_wrong_crc.fit') ) }
+  let(:file) { described_class.read(example_file('file/full_file_with_wrong_crc.fit')) }
 
   it 'should have a header' do
     expect(file.header).to be_a Fit::File::Header
