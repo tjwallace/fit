@@ -50,7 +50,7 @@ Fit::File::Definitions.add_name 0, 'file_id'
 Fit::File::Definitions.add_field 0, 0, 'type', type: :file
 Fit::File::Definitions.add_field 0, 1, 'manufacturer', type: :manufacturer
 Fit::File::Definitions.add_field 0, 2, 'product', type: :uint16
-Fit::File::Definitions.add_field 0, 2, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: [:garmin, :dynastream, :dynastream_oem]
+Fit::File::Definitions.add_field 0, 2, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: %i[garmin dynastream dynastream_oem]
 Fit::File::Definitions.add_field 0, 3, 'serial_number', type: :uint32z
 Fit::File::Definitions.add_field 0, 4, 'time_created', type: :date_time
 Fit::File::Definitions.add_field 0, 5, 'number', type: :uint16
@@ -439,7 +439,7 @@ Fit::File::Definitions.add_field 21, 3, 'distance_duration_alert', type: :uint32
 Fit::File::Definitions.add_field 21, 3, 'calorie_duration_alert', type: :uint32, scale: 1, unit: 'calories', ref_field_name: 'event', ref_field_values: [:calorie_duration_alert]
 Fit::File::Definitions.add_field 21, 3, 'fitness_equipment_state', type: :fitness_equipment_state, scale: 1, ref_field_name: 'event', ref_field_values: [:fitness_equipment]
 Fit::File::Definitions.add_field 21, 3, 'sport_point', type: :uint32, scale: 1, ref_field_name: 'event', ref_field_values: [:sport_point]
-Fit::File::Definitions.add_field 21, 3, 'gear_change_data', type: :uint32, scale: 1, ref_field_name: 'event', ref_field_values: [:front_gear_change, :rear_gear_change]
+Fit::File::Definitions.add_field 21, 3, 'gear_change_data', type: :uint32, scale: 1, ref_field_name: 'event', ref_field_values: %i[front_gear_change rear_gear_change]
 Fit::File::Definitions.add_field 21, 4, 'event_group', type: :uint8
 Fit::File::Definitions.add_field 21, 7, 'score', type: :uint16
 Fit::File::Definitions.add_field 21, 8, 'opponent_score', type: :uint16
@@ -480,12 +480,12 @@ Fit::File::Definitions.add_field 27, 254, 'message_index', type: :message_index
 Fit::File::Definitions.add_field 27, 0, 'wkt_step_name', type: :string, scale: 1
 Fit::File::Definitions.add_field 27, 1, 'duration_type', type: :wkt_step_duration, scale: 1
 Fit::File::Definitions.add_field 27, 2, 'duration_value', type: :uint32, scale: 1
-Fit::File::Definitions.add_field 27, 2, 'duration_time', type: :uint32, scale: 1000, unit: 's', ref_field_name: 'duration_type', ref_field_values: [:time, :repetition_time]
+Fit::File::Definitions.add_field 27, 2, 'duration_time', type: :uint32, scale: 1000, unit: 's', ref_field_name: 'duration_type', ref_field_values: %i[time repetition_time]
 Fit::File::Definitions.add_field 27, 2, 'duration_distance', type: :uint32, scale: 100, unit: 'm', ref_field_name: 'duration_type', ref_field_values: [:distance]
-Fit::File::Definitions.add_field 27, 2, 'duration_hr', type: :workout_hr, scale: 1, unit: '% or bpm', ref_field_name: 'duration_type', ref_field_values: [:hr_less_than, :hr_greater_than]
+Fit::File::Definitions.add_field 27, 2, 'duration_hr', type: :workout_hr, scale: 1, unit: '% or bpm', ref_field_name: 'duration_type', ref_field_values: %i[hr_less_than hr_greater_than]
 Fit::File::Definitions.add_field 27, 2, 'duration_calories', type: :uint32, scale: 1, unit: 'calories', ref_field_name: 'duration_type', ref_field_values: [:calories]
-Fit::File::Definitions.add_field 27, 2, 'duration_step', type: :uint32, ref_field_name: 'duration_type', ref_field_values: [:repeat_until_steps_cmplt, :repeat_until_time, :repeat_until_distance, :repeat_until_calories, :repeat_until_hr_less_than, :repeat_until_hr_greater_than, :repeat_until_power_less_than,:repeat_until_power_greater_than]
-Fit::File::Definitions.add_field 27, 2, 'duration_power', type: :workout_power, scale: 1, unit: '% or watts', ref_field_name: 'duration_type', ref_field_values: [:power_less_than, :power_greater_than]
+Fit::File::Definitions.add_field 27, 2, 'duration_step', type: :uint32, ref_field_name: 'duration_type', ref_field_values: %i[repeat_until_steps_cmplt repeat_until_time repeat_until_distance repeat_until_calories repeat_until_hr_less_than repeat_until_hr_greater_than repeat_until_power_less_than repeat_until_power_greater_than]
+Fit::File::Definitions.add_field 27, 2, 'duration_power', type: :workout_power, scale: 1, unit: '% or watts', ref_field_name: 'duration_type', ref_field_values: %i[power_less_than power_greater_than]
 Fit::File::Definitions.add_field 27, 3, 'target_type', type: :wkt_step_target, scale: 1
 Fit::File::Definitions.add_field 27, 4, 'target_value', type: :uint32, scale: 1
 Fit::File::Definitions.add_field 27, 4, 'target_hr_zone', type: :uint32, ref_field_name: 'target_type', ref_field_values: [:heart_rate]
@@ -494,8 +494,8 @@ Fit::File::Definitions.add_field 27, 4, 'repeat_steps', type: :uint32, ref_field
 Fit::File::Definitions.add_field 27, 4, 'repeat_time', type: :uint32, scale: 1000, unit: 's', ref_field_name: 'duration_type', ref_field_values: [:repeat_until_time]
 Fit::File::Definitions.add_field 27, 4, 'repeat_distance', type: :uint32, scale: 100, unit: 'm', ref_field_name: 'duration_type', ref_field_values: [:repeat_until_distance]
 Fit::File::Definitions.add_field 27, 4, 'repeat_calories', type: :uint32, scale: 1, unit: 'calories', ref_field_name: 'duration_type', ref_field_values: [:repeat_until_calories]
-Fit::File::Definitions.add_field 27, 4, 'repeat_hr', type: :workout_hr, scale: 1, unit: '% or bpm', ref_field_name: 'duration_type', ref_field_values: [:repeat_until_hr_less_than, :repeat_until_hr_greater_than]
-Fit::File::Definitions.add_field 27, 4, 'repeat_power', type: :workout_power, scale: 1, unit: '% or watts', ref_field_name: 'duration_type', ref_field_values: [:repeat_until_power_less_than, :repeat_until_power_greater_than]
+Fit::File::Definitions.add_field 27, 4, 'repeat_hr', type: :workout_hr, scale: 1, unit: '% or bpm', ref_field_name: 'duration_type', ref_field_values: %i[repeat_until_hr_less_than repeat_until_hr_greater_than]
+Fit::File::Definitions.add_field 27, 4, 'repeat_power', type: :workout_power, scale: 1, unit: '% or watts', ref_field_name: 'duration_type', ref_field_values: %i[repeat_until_power_less_than repeat_until_power_greater_than]
 Fit::File::Definitions.add_field 27, 5, 'custom_target_value_low', type: :uint32, scale: 1
 Fit::File::Definitions.add_field 27, 5, 'custom_target_speed_low', type: :uint32, scale: 1000, unit: 'm/s', ref_field_name: 'target_type', ref_field_values: [:speed]
 Fit::File::Definitions.add_field 27, 5, 'custom_target_heart_rate_low', type: :workout_hr, scale: 1, unit: '% or bpm', ref_field_name: 'target_type', ref_field_values: [:heart_rate]
@@ -511,7 +511,7 @@ Fit::File::Definitions.add_field 27, 7, 'intensity', type: :intensity, scale: 1
 Fit::File::Definitions.add_name 28, 'schedule'
 Fit::File::Definitions.add_field 28, 0, 'manufacturer', type: :manufacturer
 Fit::File::Definitions.add_field 28, 1, 'product', type: :uint16
-Fit::File::Definitions.add_field 28, 1, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: [:garmin, :dynastream, :dynastream_oem]
+Fit::File::Definitions.add_field 28, 1, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: %i[garmin dynastream dynastream_oem]
 Fit::File::Definitions.add_field 28, 2, 'serial_number', type: :uint32z
 Fit::File::Definitions.add_field 28, 3, 'time_created', type: :date_time
 Fit::File::Definitions.add_field 28, 4, 'completed', type: :bool, scale: 1
@@ -626,8 +626,8 @@ Fit::File::Definitions.add_field 55, 0, 'device_index', type: :device_index
 Fit::File::Definitions.add_field 55, 1, 'calories', type: :uint16, unit: 'kcal'
 Fit::File::Definitions.add_field 55, 2, 'distance', type: :uint32, scale: 100, unit: 'm'
 Fit::File::Definitions.add_field 55, 3, 'cycles', type: :uint32, scale: 2, unit: 'cycles'
-Fit::File::Definitions.add_field 55, 3, 'steps', type: :uint32, scale: 1, unit: 'steps', ref_field_name: 'activity_type', ref_field_values: [:walking, :running]
-Fit::File::Definitions.add_field 55, 3, 'strokes', type: :uint32, scale: 2, unit: 'strokes', ref_field_name: 'activity_type', ref_field_values: [:cycling, :swimming]
+Fit::File::Definitions.add_field 55, 3, 'steps', type: :uint32, scale: 1, unit: 'steps', ref_field_name: 'activity_type', ref_field_values: %i[walking running]
+Fit::File::Definitions.add_field 55, 3, 'strokes', type: :uint32, scale: 2, unit: 'strokes', ref_field_name: 'activity_type', ref_field_values: %i[cycling swimming]
 Fit::File::Definitions.add_field 55, 4, 'active_time', type: :uint32, scale: 1000, unit: 's'
 Fit::File::Definitions.add_field 55, 5, 'activity_type', type: :activity_type
 Fit::File::Definitions.add_field 55, 6, 'activity_subtype', type: :activity_subtype
@@ -654,7 +654,7 @@ Fit::File::Definitions.add_field 72, 253, 'timestamp', type: :date_time
 Fit::File::Definitions.add_field 72, 0, 'type', type: :file
 Fit::File::Definitions.add_field 72, 1, 'manufacturer', type: :manufacturer
 Fit::File::Definitions.add_field 72, 2, 'product', type: :uint16
-Fit::File::Definitions.add_field 72, 2, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: [:garmin, :dynastream, :dynastream_oem]
+Fit::File::Definitions.add_field 72, 2, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: %i[garmin dynastream dynastream_oem]
 Fit::File::Definitions.add_field 72, 3, 'serial_number', type: :uint32z
 Fit::File::Definitions.add_field 72, 4, 'time_created', type: :date_time
 
@@ -698,7 +698,7 @@ Fit::File::Definitions.add_field 103, 5, 'resting_metabolic_rate', type: :uint16
 Fit::File::Definitions.add_name 106, 'slave_device'
 Fit::File::Definitions.add_field 106, 0, 'manufacturer', type: :manufacturer
 Fit::File::Definitions.add_field 106, 1, 'product', type: :uint16
-Fit::File::Definitions.add_field 106, 1, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: [:garmin, :dynastream, :dynastream_oem]
+Fit::File::Definitions.add_field 106, 1, 'garmin_product', type: :garmin_product, ref_field_name: 'manufacturer', ref_field_values: %i[garmin dynastream dynastream_oem]
 
 # 127
 # 128
