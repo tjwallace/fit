@@ -6,7 +6,7 @@ module Fit
 
       class << self
         def add_type(name, type, option = {})
-          @@types[name] = option.merge({:basic_type => type})
+          @@types[name] = option.merge({basic_type: type})
         end
 
         def get_type_definition(name)
@@ -46,23 +46,23 @@ module Fit
 end
 
 # basic types
-Fit::File::Types.add_type :enum, nil, :invalid => 0xFF
-Fit::File::Types.add_type :sint8, nil, :invalid => 0x7F
-Fit::File::Types.add_type :uint8, nil, :invalid => 0xFF
-Fit::File::Types.add_type :sint16, nil, :invalid => 0x7FFF
-Fit::File::Types.add_type :uint16, nil, :invalid => 0xFFFF
-Fit::File::Types.add_type :sint32, nil, :invalid => 0x7FFFFFFF
-Fit::File::Types.add_type :uint32, nil, :invalid => 0xFFFFFFFF
-Fit::File::Types.add_type :string, nil, :invalid => 0x00
-Fit::File::Types.add_type :float32, nil, :invalid => 0xFFFFFFFF
-Fit::File::Types.add_type :float64, nil, :invalid => 0xFFFFFFFFFFFFFFFF
-Fit::File::Types.add_type :uint8z, nil, :invalid => 0x00
-Fit::File::Types.add_type :uint16z, nil, :invalid => 0x0000
-Fit::File::Types.add_type :uint32z, nil, :invalid => 0x00000000
-Fit::File::Types.add_type :byte, nil, :invalid => 0xFF
+Fit::File::Types.add_type :enum, nil, invalid: 0xFF
+Fit::File::Types.add_type :sint8, nil, invalid: 0x7F
+Fit::File::Types.add_type :uint8, nil, invalid: 0xFF
+Fit::File::Types.add_type :sint16, nil, invalid: 0x7FFF
+Fit::File::Types.add_type :uint16, nil, invalid: 0xFFFF
+Fit::File::Types.add_type :sint32, nil, invalid: 0x7FFFFFFF
+Fit::File::Types.add_type :uint32, nil, invalid: 0xFFFFFFFF
+Fit::File::Types.add_type :string, nil, invalid: 0x00
+Fit::File::Types.add_type :float32, nil, invalid: 0xFFFFFFFF
+Fit::File::Types.add_type :float64, nil, invalid: 0xFFFFFFFFFFFFFFFF
+Fit::File::Types.add_type :uint8z, nil, invalid: 0x00
+Fit::File::Types.add_type :uint16z, nil, invalid: 0x0000
+Fit::File::Types.add_type :uint32z, nil, invalid: 0x00000000
+Fit::File::Types.add_type :byte, nil, invalid: 0xFF
 
 # derived types
-Fit::File::Types.add_type :file, :enum, :values => {
+Fit::File::Types.add_type :file, :enum, values: {
     1 => 'device',
     2 => 'settings',
     3 => 'sport',
@@ -78,7 +78,7 @@ Fit::File::Types.add_type :file, :enum, :values => {
     20 => 'activity_summary',
     28 => 'monitoring_daily',
     32 => 'monitoring_b' }
-Fit::File::Types.add_type :mesg_num, :uint16, :values => {
+Fit::File::Types.add_type :mesg_num, :uint16, values: {
     0 => 'file_id',
     1 => 'capabilities',
     2 => 'device_settings',
@@ -123,31 +123,31 @@ Fit::File::Types.add_type :mesg_num, :uint16, :values => {
     145 => 'memo_glob',
     65280 => 'mfg_range_min',
     65534 => 'mfg_range_max' }
-Fit::File::Types.add_type :checksum, :uint8, :values => {
+Fit::File::Types.add_type :checksum, :uint8, values: {
     0 => 'clear',
     1 => 'ok' }
-Fit::File::Types.add_type :file_flags, :uint8z, :values => {
+Fit::File::Types.add_type :file_flags, :uint8z, values: {
     0x02 => 'read',
     0x04 => 'write',
-    0x08 => 'erase' }, :method => :bitfield_value
-Fit::File::Types.add_type :mesg_count, :enum, :values => {
+    0x08 => 'erase' }, method: :bitfield_value
+Fit::File::Types.add_type :mesg_count, :enum, values: {
     0 => 'num_per_file',
     1 => 'max_per_file',
     2 => 'max_per_file_type' }
-Fit::File::Types.add_type :date_time, :uint32, :values => {
-    268435456 => 'min' }, :method => :date_time_value, :parameters => {:utc => true}
-Fit::File::Types.add_type :local_date_time, :uint32, :values => {
-    268435456 => 'min' }, :method => :date_time_value, :parameters => {:utc => false}
-Fit::File::Types.add_type :message_index, :uint16, :values => {
+Fit::File::Types.add_type :date_time, :uint32, values: {
+    268435456 => 'min' }, method: :date_time_value, parameters: {utc: true}
+Fit::File::Types.add_type :local_date_time, :uint32, values: {
+    268435456 => 'min' }, method: :date_time_value, parameters: {utc: false}
+Fit::File::Types.add_type :message_index, :uint16, values: {
     32768 => 'selected',
     26872 => 'reserved',
-    4095 => 'mask' }, :method => :message_index_value
-Fit::File::Types.add_type :device_index, :uint8, :values => {
+    4095 => 'mask' }, method: :message_index_value
+Fit::File::Types.add_type :device_index, :uint8, values: {
     0 => 'creator' }
-Fit::File::Types.add_type :gender, :enum, :values => {
+Fit::File::Types.add_type :gender, :enum, values: {
     0 => 'female',
     1 => 'male' }
-Fit::File::Types.add_type :language, :enum, :values => {
+Fit::File::Types.add_type :language, :enum, values: {
     0 => 'english',
     1 => 'french',
     2 => 'italian',
@@ -175,7 +175,7 @@ Fit::File::Types.add_type :language, :enum, :values => {
     24 => 'bulgarian',
     25 => 'romanian',
     254 => 'custom' }
-Fit::File::Types.add_type :time_zone, :enum, :values => {
+Fit::File::Types.add_type :time_zone, :enum, values: {
     0 => 'almaty',
     1 => 'bangkok',
     2 => 'bombay',
@@ -282,17 +282,17 @@ Fit::File::Types.add_type :time_zone, :enum, :values => {
     103 => 'santiago',
     253 => 'manual',
     254 => 'automatic' }
-Fit::File::Types.add_type :display_measure, :enum, :values => {
+Fit::File::Types.add_type :display_measure, :enum, values: {
     0 => 'metric',
     1 => 'statute' }
-Fit::File::Types.add_type :display_heart, :enum, :values => {
+Fit::File::Types.add_type :display_heart, :enum, values: {
     0 => 'bpm',
     1 => 'max',
     2 => 'reserve' }
-Fit::File::Types.add_type :display_power, :enum, :values => {
+Fit::File::Types.add_type :display_power, :enum, values: {
     0 => 'watts',
     1 => 'percent_ftp' }
-Fit::File::Types.add_type :display_position, :enum, :values => {
+Fit::File::Types.add_type :display_position, :enum, values: {
     0 => 'degree',
     1 => 'degree_minute',
     2 => 'degree_minute_second',
@@ -335,7 +335,7 @@ Fit::File::Types.add_type :display_position, :enum, :values => {
     39 => 'estonian_grid',
     40 => 'latvian_grid',
     41 => 'swedish_ref_99_grid' }
-Fit::File::Types.add_type :sport, :enum, :values => {
+Fit::File::Types.add_type :sport, :enum, values: {
     0 => 'generic',
     1 => 'running',
     2 => 'cycling',
@@ -357,7 +357,7 @@ Fit::File::Types.add_type :sport, :enum, :values => {
     18 => 'multisport',
     19 => 'paddling',
     254 => 'all' }
-Fit::File::Types.add_type :sport_bits_0, :uint8z, :values => {
+Fit::File::Types.add_type :sport_bits_0, :uint8z, values: {
     1 => 'generic',
     2 => 'running',
     4 => 'cycling',
@@ -366,7 +366,7 @@ Fit::File::Types.add_type :sport_bits_0, :uint8z, :values => {
     32 => 'swimming',
     64 => 'basketball',
     128 => 'soccer' }
-Fit::File::Types.add_type :sport_bits_1, :uint8z, :values => {
+Fit::File::Types.add_type :sport_bits_1, :uint8z, values: {
     1 => 'tennis',
     2 => 'american_football',
     4 => 'training',
@@ -375,12 +375,12 @@ Fit::File::Types.add_type :sport_bits_1, :uint8z, :values => {
     32 => 'alpine_skiing',
     64 => 'snowboarding',
     128 => 'rowing' }
-Fit::File::Types.add_type :sport_bits_2, :uint8z, :values => {
+Fit::File::Types.add_type :sport_bits_2, :uint8z, values: {
     1 => 'mountaineering',
     2 => 'hiking',
     4 => 'multisport',
     8 => 'paddling' }
-Fit::File::Types.add_type :sub_sport, :enum, :values => {
+Fit::File::Types.add_type :sub_sport, :enum, values: {
     0 => 'generic',
     1 => 'treadmill',
     2 => 'street',
@@ -409,20 +409,20 @@ Fit::File::Types.add_type :sub_sport, :enum, :values => {
     25 => 'indoor_skiing',
     26 => 'cardio_training',
     254 => 'all' }
-Fit::File::Types.add_type :activity, :enum, :values => {
+Fit::File::Types.add_type :activity, :enum, values: {
     0 => 'manual',
     1 => 'auto_multi_sport' }
-Fit::File::Types.add_type :intensity, :enum, :values => {
+Fit::File::Types.add_type :intensity, :enum, values: {
     0 => 'active',
     1 => 'rest',
     2 => 'warmup',
     3 => 'cooldown' }
-Fit::File::Types.add_type :session_trigger, :enum, :values => {
+Fit::File::Types.add_type :session_trigger, :enum, values: {
     0 => 'activity_end',
     1 => 'manual',
     2 => 'auto_multi_sport',
     3 => 'fitness_equipment' }
-Fit::File::Types.add_type :autolap_trigger, :enum, :values => {
+Fit::File::Types.add_type :autolap_trigger, :enum, values: {
     0 => 'time',
     1 => 'distance',
     2 => 'position_start',
@@ -430,7 +430,7 @@ Fit::File::Types.add_type :autolap_trigger, :enum, :values => {
     4 => 'position_waypoint',
     5 => 'position_marked',
     6 => 'off' }
-Fit::File::Types.add_type :lap_trigger, :enum, :values => {
+Fit::File::Types.add_type :lap_trigger, :enum, values: {
     0 => 'manual',
     1 => 'time',
     2 => 'distance',
@@ -440,7 +440,7 @@ Fit::File::Types.add_type :lap_trigger, :enum, :values => {
     6 => 'position_marked',
     7 => 'session_end',
     8 => 'fitness_equipment' }
-Fit::File::Types.add_type :event, :enum, :values => {
+Fit::File::Types.add_type :event, :enum, values: {
     0 => 'timer',
     3 => 'workout',
     4 => 'workout_step',
@@ -475,7 +475,7 @@ Fit::File::Types.add_type :event, :enum, :values => {
     43 => 'rear_gear_change',
     45 => 'elev_high_alert',
     46 => 'elev_low_alert' }
-Fit::File::Types.add_type :event_type, :enum, :values => {
+Fit::File::Types.add_type :event_type, :enum, values: {
     0 => 'start',
     1 => 'stop',
     2 => 'consecutive_depreciated',
@@ -486,27 +486,27 @@ Fit::File::Types.add_type :event_type, :enum, :values => {
     7 => 'end_all_depreciated',
     8 => 'stop_disable',
     9 => 'stop_disable_all' }
-Fit::File::Types.add_type :timer_trigger, :enum, :values => {
+Fit::File::Types.add_type :timer_trigger, :enum, values: {
     0 => 'manual',
     1 => 'auto',
     2 => 'fitness_equipment' }
-Fit::File::Types.add_type :fitness_equipment_state, :enum, :values => {
+Fit::File::Types.add_type :fitness_equipment_state, :enum, values: {
     0 => 'ready',
     1 => 'in_use',
     2 => 'paused',
     3 => 'unknown' }
-Fit::File::Types.add_type :activity_class, :enum, :values => {
+Fit::File::Types.add_type :activity_class, :enum, values: {
     127 => 'level',
     100 => 'level_max',
     128 => 'athlete' }
-Fit::File::Types.add_type :hr_zone_calc, :enum, :values => {
+Fit::File::Types.add_type :hr_zone_calc, :enum, values: {
     0 => 'custom',
     1 => 'percent_max_hr',
     2 => 'percent_hrr' }
-Fit::File::Types.add_type :pwr_zone_calc, :enum, :values => {
+Fit::File::Types.add_type :pwr_zone_calc, :enum, values: {
     0 => 'custom',
     1 => 'percent_ftp' }
-Fit::File::Types.add_type :wkt_step_duration, :enum, :values => {
+Fit::File::Types.add_type :wkt_step_duration, :enum, values: {
     0 => 'time',
     1 => 'distance',
     2 => 'hr_less_than',
@@ -524,7 +524,7 @@ Fit::File::Types.add_type :wkt_step_duration, :enum, :values => {
     14 => 'power_less_than',
     15 => 'power_greater_than',
     28 => 'repetition_time' }
-Fit::File::Types.add_type :wkt_step_target, :enum, :values => {
+Fit::File::Types.add_type :wkt_step_target, :enum, values: {
     0 => 'speed',
     1 => 'heart_rate',
     2 => 'open',
@@ -532,23 +532,23 @@ Fit::File::Types.add_type :wkt_step_target, :enum, :values => {
     4 => 'power',
     5 => 'grade',
     6 => 'resistance' }
-Fit::File::Types.add_type :goal, :enum, :values => {
+Fit::File::Types.add_type :goal, :enum, values: {
     0 => 'time',
     1 => 'distance',
     2 => 'calories',
     3 => 'frequency',
     4 => 'steps' }
-Fit::File::Types.add_type :goal_recurrence, :enum, :values => {
+Fit::File::Types.add_type :goal_recurrence, :enum, values: {
     0 => 'off',
     1 => 'daily',
     2 => 'weekly',
     3 => 'monthly',
     4 => 'yearly',
     5 => 'custom' }
-Fit::File::Types.add_type :schedule, :enum, :values => {
+Fit::File::Types.add_type :schedule, :enum, values: {
     0 => 'workout',
     1 => 'course' }
-Fit::File::Types.add_type :course_point, :enum, :values => {
+Fit::File::Types.add_type :course_point, :enum, values: {
     0 => 'generic',
     1 => 'summit',
     2 => 'valley',
@@ -573,7 +573,7 @@ Fit::File::Types.add_type :course_point, :enum, :values => {
     21 => 'slight_right',
     22 => 'sharp_right',
     23 => 'u_turn' }
-Fit::File::Types.add_type :manufacturer, :uint16, :values => {
+Fit::File::Types.add_type :manufacturer, :uint16, values: {
     1 => 'garmin',
     2 => 'garmin_fr405_antfs',
     3 => 'zephyr',
@@ -669,7 +669,7 @@ Fit::File::Types.add_type :manufacturer, :uint16, :values => {
     258 => 'lezyne',
     259 => 'scribe_labs',
     5759 => 'actigraphcorp' }
-Fit::File::Types.add_type :garmin_product, :uint16, :values => {
+Fit::File::Types.add_type :garmin_product, :uint16, values: {
     1 => 'hrm1',
     2 => 'axh01',
     3 => 'axb01',
@@ -751,7 +751,7 @@ Fit::File::Types.add_type :garmin_product, :uint16, :values => {
     20119 => 'training_center',
     65532 => 'android_antplus_plugin',
     65534 => 'connect' }
-Fit::File::Types.add_type :antplus_device_type, :uint8, :values => {
+Fit::File::Types.add_type :antplus_device_type, :uint8, values: {
     1 => 'antfs',
     11 => 'bike_power',
     12 => 'environment_sensor_legacy',
@@ -769,12 +769,12 @@ Fit::File::Types.add_type :antplus_device_type, :uint8, :values => {
     122 => 'bike_cadence',
     123 => 'bike_speed',
     124 => 'stride_speed_distance' }
-Fit::File::Types.add_type :ant_network, :enum, :values => {
+Fit::File::Types.add_type :ant_network, :enum, values: {
     0 => 'public',
     1 => 'antplus',
     2 => 'antfs',
     3 => 'private' }
-Fit::File::Types.add_type :workout_capabilities, :uint32z, :values => {
+Fit::File::Types.add_type :workout_capabilities, :uint32z, values: {
     0x00000001 => 'interval',
     0x00000002 => 'custom',
     0x00000004 => 'fitness_equipment',
@@ -788,17 +788,17 @@ Fit::File::Types.add_type :workout_capabilities, :uint32z, :values => {
     0x00000800 => 'power',
     0x00001000 => 'grade',
     0x00002000 => 'resistance',
-    0x00004000 => 'protected' }, :method => :bitfield_value
-Fit::File::Types.add_type :battery_status, :uint8, :values => {
+    0x00004000 => 'protected' }, method: :bitfield_value
+Fit::File::Types.add_type :battery_status, :uint8, values: {
     1 => 'new',
     2 => 'good',
     3 => 'ok',
     4 => 'low',
     5 => 'critical' }
-Fit::File::Types.add_type :hr_type, :enum, :values => {
+Fit::File::Types.add_type :hr_type, :enum, values: {
     0 => 'normal',
     1 => 'irregular' }
-Fit::File::Types.add_type :course_capabilities, :uint32z, :values => {
+Fit::File::Types.add_type :course_capabilities, :uint32z, values: {
     0x00000001 => 'processed',
     0x00000002 => 'valid',
     0x00000004 => 'time',
@@ -808,27 +808,27 @@ Fit::File::Types.add_type :course_capabilities, :uint32z, :values => {
     0x00000040 => 'power',
     0x00000080 => 'cadence',
     0x00000100 => 'training',
-    0x00000200 => 'navigation' }, :method => :bitfield_value
-Fit::File::Types.add_type :weight, :uint16, :values => {
+    0x00000200 => 'navigation' }, method: :bitfield_value
+Fit::File::Types.add_type :weight, :uint16, values: {
     65534 => 'calculating' }
-Fit::File::Types.add_type :workout_hr, :uint32, :values => {
+Fit::File::Types.add_type :workout_hr, :uint32, values: {
     100 => 'bpm_offset' }
-Fit::File::Types.add_type :workout_power, :uint32, :values => {
+Fit::File::Types.add_type :workout_power, :uint32, values: {
     1000 => 'watts_offset' }
-Fit::File::Types.add_type :bp_status, :enum, :values => {
+Fit::File::Types.add_type :bp_status, :enum, values: {
     0 => 'no_error',
     1 => 'error_incomplete_data',
     2 => 'error_no_measurement',
     3 => 'error_data_out_of_range',
     4 => 'error_irregular_heart_rate' }
-Fit::File::Types.add_type :user_local_id, :uint16, :values => {
+Fit::File::Types.add_type :user_local_id, :uint16, values: {
     0 => 'local_min',
     15 => 'local_max',
     16 => 'stationary_min',
     255 => 'stationary_max',
     256 => 'portable_min',
     65534 => 'portable_max' }
-Fit::File::Types.add_type :swim_stroke, :enum, :values => {
+Fit::File::Types.add_type :swim_stroke, :enum, values: {
     0 => 'freestyle',
     1 => 'backstroke',
     2 => 'breaststroke',
@@ -836,7 +836,7 @@ Fit::File::Types.add_type :swim_stroke, :enum, :values => {
     4 => 'drill',
     5 => 'mixed',
     6 => 'im' }
-Fit::File::Types.add_type :activity_type, :enum, :values => {
+Fit::File::Types.add_type :activity_type, :enum, values: {
     0 => 'generic',
     1 => 'running',
     2 => 'cycling',
@@ -845,7 +845,7 @@ Fit::File::Types.add_type :activity_type, :enum, :values => {
     5 => 'swimming',
     6 => 'walking',
     254 => 'all' }
-Fit::File::Types.add_type :activity_subtype, :enum, :values => {
+Fit::File::Types.add_type :activity_subtype, :enum, values: {
     0 => 'generic',
     1 => 'treadmill',
     2 => 'street',
@@ -866,20 +866,20 @@ Fit::File::Types.add_type :activity_subtype, :enum, :values => {
     17 => 'lap_swimming',
     18 => 'open_water',
     254 => 'all' }
-Fit::File::Types.add_type :activity_level, :enum, :values => {
+Fit::File::Types.add_type :activity_level, :enum, values: {
     0 => 'low',
     1 => 'medium',
     2 => 'high' }
-Fit::File::Types.add_type :left_right_balance, :uint8, :values => {
+Fit::File::Types.add_type :left_right_balance, :uint8, values: {
     127 => 'mask',
     128 => 'right' }
-Fit::File::Types.add_type :left_right_balance_100, :uint16, :values => {
+Fit::File::Types.add_type :left_right_balance_100, :uint16, values: {
     16383 => 'mask',
     32768 => 'right' }
-Fit::File::Types.add_type :length_type, :enum, :values => {
+Fit::File::Types.add_type :length_type, :enum, values: {
     0 => 'idle',
     1 => 'active' }
-Fit::File::Types.add_type :connectivity_capabilities, :uint32z, :values => {
+Fit::File::Types.add_type :connectivity_capabilities, :uint32z, values: {
     1 => 'bluetooth',
     2 => 'bluetooth_le',
     4 => 'ant',
@@ -894,14 +894,14 @@ Fit::File::Types.add_type :connectivity_capabilities, :uint32z, :values => {
     2048 => 'setup_incomplete',
     4096 => 'continue_sync_after_software_update',
     8192 => 'connect_iq_app_download' }
-Fit::File::Types.add_type :stroke_type, :enum, :values => {
+Fit::File::Types.add_type :stroke_type, :enum, values: {
     0 => 'no_event',
     1 => 'other',
     2 => 'serve',
     3 => 'forehand',
     4 => 'backhand',
     5 => 'smash' }
-Fit::File::Types.add_type :body_location, :enum, :values => {
+Fit::File::Types.add_type :body_location, :enum, values: {
     0 => 'left_leg',
     1 => 'left_calf',
     2 => 'left_shin',
@@ -938,7 +938,7 @@ Fit::File::Types.add_type :body_location, :enum, :values => {
     33 => 'right_forearm_extensors',
     34 => 'neck',
     35 => 'throat' }
-Fit::File::Types.add_type :source_type, :enum, :values => {
+Fit::File::Types.add_type :source_type, :enum, values: {
     0 => 'ant',
     1 => 'antplus',
     2 => 'bluetooth',
@@ -949,6 +949,6 @@ Fit::File::Types.add_type :source_type, :enum, :values => {
 # the type below is assigned to some fileds, but
 # it is not defined in terms of values and basic type in FIT SDK as
 # of 2015-01-29
-Fit::File::Types.add_type :bool, :uint8, :values => {
+Fit::File::Types.add_type :bool, :uint8, values: {
     0 => false,
     1 => true }

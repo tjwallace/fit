@@ -4,7 +4,7 @@ describe Fit::File::Type do
   before :all do
     @types = Fit::File::Types.class_variable_get :@@types
     Fit::File::Types.add_type(:int_type, :sint8)
-    Fit::File::Types.add_type(:int_type_with_val, :uint8, :values => {1 => 'one', 2 => 'two', 3 => 'three'})
+    Fit::File::Types.add_type(:int_type_with_val, :uint8, values: {1 => 'one', 2 => 'two', 3 => 'three'})
   end
 
   after :all do

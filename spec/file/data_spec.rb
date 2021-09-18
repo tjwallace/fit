@@ -18,7 +18,7 @@ describe Fit::File::Data do
         @fields = Fit::File::Definitions.class_variable_get :@@fields
         @dyn_fields = Fit::File::Definitions.class_variable_get :@@dyn_fields
         # force a fake definition for scaling of arrays
-        Fit::File::Definitions.add_field 2, 2, "field_array", :type => 6, :scale => 10, :offset => 0
+        Fit::File::Definitions.add_field 2, 2, "field_array", type: 6, scale: 10, offset: 0
       end
 
       after :all do

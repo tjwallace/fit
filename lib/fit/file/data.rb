@@ -2,7 +2,7 @@ module Fit
   class File
     class Data < BinData::Record
 
-      class_attribute :global_message_number, :instance_writer => false
+      class_attribute :global_message_number, instance_writer: false
 
       def self.generate(definition)
         msg_num = definition.global_message_number.snapshot

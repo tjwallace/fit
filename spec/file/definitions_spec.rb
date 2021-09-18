@@ -24,7 +24,7 @@ describe Fit::File::Definitions do
 
       it "adds field data" do
         expect(described_class.get_field(999,999)).to be_a(Hash)
-        expect(described_class.get_field(999,999)).to eql({ :name => 'rspec_test'})
+        expect(described_class.get_field(999,999)).to eql({ name: 'rspec_test'})
       end
 
       it 'raised an error for dynamic field data' do
@@ -37,18 +37,18 @@ describe Fit::File::Definitions do
         Fit::File::Definitions.class_variable_set(:@@fields, Hash.new { |h,k| h[k]={} })
         Fit::File::Definitions.class_variable_set(:@@dyn_fields, Hash.new { |h,k| h[k]={} })
 
-        described_class.add_field(999, 999, 'rspec_test', :scale => 100, :units => 'm')
-        described_class.add_field(999, 999, 'rspec_test_dyn', :type => 4, :scale => 10, :offset => 10, :ref_field_name => nil, :ref_field_values => nil)
+        described_class.add_field(999, 999, 'rspec_test', scale: 100, units: 'm')
+        described_class.add_field(999, 999, 'rspec_test_dyn', type: 4, scale: 10, offset: 10, ref_field_name: nil, ref_field_values: nil)
       end
 
       it "adds field data" do
         expect(described_class.get_field(999, 999)).to be_a(Hash)
-        expect(described_class.get_field(999, 999)).to eql({ :name => 'rspec_test', :scale => 100, :units => 'm'})
+        expect(described_class.get_field(999, 999)).to eql({ name: 'rspec_test', scale: 100, units: 'm'})
       end
       
       it 'adds dynamic field data' do
         expect(described_class.get_dynamic_fields(999, 999)).to be_a(Hash)
-        expect(described_class.get_dynamic_fields(999, 999)).to eql({ :rspec_test_dyn => {:type => 4, :scale => 10, :offset => 10, :ref_field_name => nil, :ref_field_values => nil} })
+        expect(described_class.get_dynamic_fields(999, 999)).to eql({ rspec_test_dyn: {type: 4, scale: 10, offset: 10, ref_field_name: nil, ref_field_values: nil} })
       end
     end
   end

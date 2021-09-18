@@ -14,7 +14,7 @@ module Fit
         def data
           @data ||= Definitions.get_field(parent.parent.global_message_number.snapshot,
                                           field_definition_number.snapshot) ||
-                      { :name => "field_#{field_definition_number.snapshot}", :scale => nil }
+                      { name: "field_#{field_definition_number.snapshot}", scale: nil }
         end
 
         def dyn_data
@@ -103,14 +103,14 @@ module Fit
         end
       end
 
-      skip :length => 1
+      skip length: 1
       bit8 :architecture
-      choice :global_message_number, :selection => :architecture do
+      choice :global_message_number, selection: :architecture do
         uint16le 0
         uint16be 1
       end
       bit8 :field_count
-      array :fit_fields, :type => Field, :initial_length => :field_count
+      array :fit_fields, type: Field, initial_length: :field_count
 
       def endianness
         architecture.snapshot == 0 ? :little : :big
