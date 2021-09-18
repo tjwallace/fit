@@ -37,6 +37,12 @@ describe Fit::File::Types do
         expect(described_class.date_time_value(9999, { 268435456 => 'min' }, { utc: true })).to eql '9999'
         expect(described_class.date_time_value(9999, { 268435456 => 'min' }, { utc: false })).to eql '9999'
       end
+
+      it 'returns offsetted system time when offset is defined' do
+        described_class.time_offset = 788392680
+        expect(described_class.date_time_value(738748, { 268435456 => 'min' },
+                                               { utc: true })).to eql '2015-01-02 11:10:28 UTC'
+      end
     end
 
     context 'when value is above min' do
@@ -49,9 +55,8 @@ describe Fit::File::Types do
 
       context 'with local mode' do
         it 'returns exact date in locale time zone' do
-          # TODO: manage answer based on current system local
           expect(described_class.date_time_value(790509304, { 268435456 => 'min' },
-                                                 { utc: false })).not_to match(/UTC$/)
+                                                 { utc: false })).to match(/^2015-01-18 09:55:04 [+-]\d{4}$/)
         end
       end
     end

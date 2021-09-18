@@ -17,7 +17,8 @@ require 'fit/file/definitions'
 require 'fit/version'
 
 module Fit
-  def self.load_file(path)
+  def self.load_file(path, time_offset = nil)
+    Fit::File::Types.time_offset = time_offset
     File.read ::File.open(path)
   end
 end

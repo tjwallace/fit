@@ -4,6 +4,7 @@ module Fit
   class File
     module Types
       @@types = {}
+      @@time_offset = nil
 
       class << self
         def add_type(name, type, option = {})
@@ -16,10 +17,20 @@ module Fit
           nil
         end
 
+        def time_offset=(time_offset)
+          @@time_offset = time_offset
+        end
+
         def date_time_value(time, values, parameters)
           val = values.invert
           if time < val['min']
-            time.to_s
+            if @@time_offset
+              offsetted_time = @@time_offset + time
+              res = parameters[:utc] ? Time.utc(1989, 12, 31) + offsetted_time : Time.local(1989, 12, 31) + offsetted_time
+              res.to_s
+            else
+              time.to_s
+            end
           else
             res = parameters[:utc] ? Time.utc(1989, 12, 31) + time : Time.local(1989, 12, 31) + time
             res.to_s

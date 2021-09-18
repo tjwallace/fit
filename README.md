@@ -14,6 +14,26 @@ fit_file = Fit.load_file(ARGV[0])
 records = fit_file.records.select{ |r| r.content.record_type != :definition }.map{ |r| r.content }
 ```
 
+If some times returned for your file are around 1989 or 1990, then you need to get the offset and pass it to the `load_file` method
+This requires loading the file 2 times (1 to get the offset, and 1 to read the file with the offseted date)
+```ruby
+require 'fit'
+
+fit_file = Fit.load_file(ARGV[0])
+
+offset = nil
+records = fit_file.records.select { |r| r.content.record_type == :activity }.map(&:content)
+rec = records[0]
+local_ts = rec.send(:raw_timestamp).to_i
+offset = rec.send(:raw_local_timestamp).to_i if local_ts < 268435456
+
+
+fit_file = Fit.load_file(ARGV[0], offset)
+
+records = fit_file.records.select{ |r| r.content.record_type != :definition }.map{ |r| r.content }
+
+```
+
 ## Supported files
 
 This library has been tested with files coming from the following devices:
